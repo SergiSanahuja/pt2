@@ -1,0 +1,18 @@
+PROJECTE ACTIVITAT DE COHESIO 
+	-Grups -> llistat de alumnes 
+	-Proves
+		- nom i descripció 
+		- lloc
+		- material
+	-Puntuació 
+
+DURANT L'ACTIVITAT 
+ 
+	- ordre passant grups x cada 
+	- Passar llista
+	- Puntuar
+
+GUANYADORS 
+
+	-Qui ha guanyat
+	-Diplomes 

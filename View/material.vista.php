@@ -58,7 +58,7 @@
                 <div>
                     <label for="nomMaterial">Nom material</label>
                     <input type="text" id="nomMaterial" name="nomMaterial">
-                    <input type="number" id="quantitatMaterial" name="quantitatMaterial" value="1">
+                    <input type="number" id="quantitatMaterial" name="quantitatMaterial" value="1" min="1">
                     <label for='arxiuPujat' class='btn btn-primary'>Search...</label>
                     <input id='arxiuPujat' type="file" class="btn btn-primary">
                     <button type="button" class="btn btn-primary" id="agregarAgregar">+</button>
@@ -69,7 +69,7 @@
                 <div>
                     <!--Cards-->
                     <div class="card" style="width: 18rem;">
-                        <img src="<?php buscarImatge(); ?>" class="card-img-top" alt="...">
+                        <img src="<?php  ?>" class="card-img-top" alt="...">
                         <div class="card-body">
                           <h5 class="card-title">Material 1</h5>
                             <p class="card-text">Quantitat: 10</p>

@@ -1,8 +1,4 @@
 <?php
 
-function buscarImatge(){
-    
-}
-
-require '../View/material.vista.html';
+require '../View/material.vista.php';
 ?>

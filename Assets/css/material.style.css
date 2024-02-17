@@ -19,7 +19,20 @@ input[type=file] {
     margin-bottom: 10px;
 
 }
-#quantitatMaterial{}
+
+.btn{
+    font-size:1.2rem;
+}
+
+#quantitatMaterial{
+    width: 10%;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    padding: 10px 0;
+    transition: border-color 0.3s;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 
 .navbar{
     background: linear-gradient(#6093CE,rgba(0, 0, 0, 0.034)) ;

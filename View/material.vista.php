@@ -70,39 +70,12 @@
                 <div class="container d-flex flex-wrapgr">
                     <!--Cards-->
                     <div class="card m-2" style="width: 18rem;">
-                        <img src="../Assets/img/material.jpg" class="card-img-top" alt="...">
+                        <?php afegirMaterial(); ?>
+                        <!--<img src="../Assets/img/material/" class="card-img-top" alt="...">
                         <div class="card-body">
                           <h5 class="card-title">Material 1</h5>
                             <p class="card-text">Quantitat: 10</p>
-                        </div>
-                    </div>
-                    <div class="card m-2" style="width: 18rem;">
-                        <img src="../Assets/img/material.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title">Material 2</h5>
-                            <p class="card-text">Quantitat: 4</p>
-                        </div>
-                    </div>
-                    <div class="card m-2" style="width: 18rem;">
-                        <img src="../Assets/img/material.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title">Material 2</h5>
-                            <p class="card-text">Quantitat: 4</p>
-                        </div>
-                    </div>
-                    <div class="card m-2" style="width: 18rem;">
-                        <img src="../Assets/img/material.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title">Material 2</h5>
-                            <p class="card-text">Quantitat: 4</p>
-                        </div>
-                    </div>
-                    <div class="card m-2" style="width: 18rem;">
-                        <img src="../Assets/img/material.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title">Material 2</h5>
-                            <p class="card-text">Quantitat: 4</p>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div> 

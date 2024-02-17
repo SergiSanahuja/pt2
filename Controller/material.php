@@ -1,6 +1,4 @@
 <?php
 
-
-
-require '../View/material.vista.html';
+require '../View/material.vista.php';
 ?>

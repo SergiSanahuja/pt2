@@ -7,6 +7,20 @@ input[type=file] {
     z-index: -1;
 }
 
+#nomMaterial{
+    width: 25%;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    font-size: 16px;
+    padding: 10px 0;
+    transition: border-color 0.3s;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+#quantitatMaterial{}
+
 .navbar{
     background: linear-gradient(#6093CE,rgba(0, 0, 0, 0.034)) ;
 }

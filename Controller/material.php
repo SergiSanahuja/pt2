@@ -8,10 +8,12 @@ function mostrarMaterial(){
     $sql->execute();
     $resultat = $sql->fetchAll();
     foreach ($resultat as $material) {
+        echo "<div class='card m-2' style='width: 18rem;'>";
         echo "<img src='../Assets/img/material/".$material['imatge']."' class='card-img-top' alt='".$material['imatge']."'>";
         echo "<div class='card-body'>";
         echo "<h5 class='card-title'>".$material['nom']."</h5>";
         echo "<p class='card-text'>Quantitat: ".$material['quantitat']."</p>";
+        echo "</div>";
         echo "</div>";
     }
 }

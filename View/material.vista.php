@@ -53,8 +53,9 @@
                 <h1>Material</h1>
                 <!--Desplegable para filtrar-->
                 <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
-                  <div class="dropdown">
-                      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                  <form method="post">
+                    <!-- Si no funciona el DropDown es por una clase de boostrap llamada clase="dropdown" -->
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                         Filtrar
                       </button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -62,24 +63,20 @@
                         <li><a class="dropdown-item" href="#">Per lletra</a></li>
                         <li><a class="dropdown-item" href="#">Per quantitat</a></li>
                       </ul>
-                  </div>
-                  
-                    <form method="post">
-                        <input type="text" id="nomMaterial" name="nomMaterial" aria-label="Nom material" placeholder="Nom Material">
-                        <input type="number" id="quantitatMaterial" name="quantitatMaterial" value="1" min="1">
-                        <label for='arxiuPujat' class='btn btn-primary'>Search...</label>
-                        <input id='arxiuPujat' type="file" class="btn btn-primary">
-                        
-                        <button type="submit" class="btn btn-primary" id="agregarAgregar" name="agregarAgregar">+</button>
-                        <button type="submit" class="btn btn-primary" id="eliminarMaterial" name="eliminarMaterial">-</button>
-                    </form>
+                    <input type="text" id="nomMaterial" name="nomMaterial" aria-label="Nom material" placeholder="Nom Material">
+                    <input type="number" id="quantitatMaterial" name="quantitatMaterial" value="1" min="1">
+                    <label for='arxiuPujat' class='btn btn-primary'>Search...</label>
+                    <input id='arxiuPujat' type="file" class="btn btn-primary">
+
+                    <button type="submit" class="btn btn-primary" id="agregarAgregar" name="agregarAgregar">+</button>
+                    <button type="submit" class="btn btn-primary" id="eliminarMaterial" name="eliminarMaterial">-</button>
+                  </form>
+
               </div>
                 <!--DIV -->
                 <div class="container d-flex flex-wrapgr">
                     <!--Cards-->
-                    <div class="card m-2" style="width: 18rem;">
-                        <?php mostrarMaterial(); ?>
-                    </div>
+                    <?php mostrarMaterial(); ?>
                 </div>
                 <?php
                 afegirMaterial();

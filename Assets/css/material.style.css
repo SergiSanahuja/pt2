@@ -8,7 +8,7 @@ input[type=file] {
 }
 
 #nomMaterial{
-    width: 25%;
+    width: 45%;
     box-sizing: border-box;
     border: none;
     border-bottom: 1px solid #ccc;

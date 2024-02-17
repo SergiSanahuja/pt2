@@ -1,4 +1,8 @@
 .navbar{
-    background: linear-gradient(#6093CE,rgba(0, 0, 0, 0.226)) ;
+    background: linear-gradient(#6093CE,rgba(0, 0, 0, 0.034)) ;
+}
 
+
+.nav-link {
+    color: white;
 }

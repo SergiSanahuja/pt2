@@ -1,0 +1,51 @@
+.navbar{
+    background: linear-gradient(#6093CE,rgba(0, 0, 0, 0.034)) ;
+}
+
+.nav-link {
+    color: white;
+}
+
+
+#divForm{
+    display: none;
+   
+    
+}
+
+.btn_Afegir_Taller{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #6093CE;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+#nom {
+    width: 50%;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    font-size: 16px;
+    padding: 10px 0;
+    transition: border-color 0.3s;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+}
+  
+#nom:active {
+    outline: none;
+}
+
+
+#form{
+    border-radius: 10px;
+}
+

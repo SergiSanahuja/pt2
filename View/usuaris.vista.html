@@ -10,7 +10,7 @@
      <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="../Assets/Css/grups.style.css" />
+    <link rel="stylesheet" href="../Assets/Css/users.style.css" />
     <link rel="stylesheet" href="../Assets/Css/global.css" />
 
      <!-- link google Font -->
@@ -45,9 +45,39 @@
       <div class="row">
         <div class="col-12 text-center-md text-center">
             <h1>Usuaris</h1>
-            
         </div>
-      </div>
     </div>
+
+    <div>
+      <input type="file" id="excelFile" accept=".xlsx, .xls" hidden>
+      <button onclick="document.getElementById('excelFile').click()">Importar Excel</button>
+    </div>
+    
+    <div id="taulaAlumnes" class="d-flex justify-content-center">
+        <table>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Edad</th>
+                <th>Curso</th>
+            </tr>
+            <tr>
+                <td>Alumno 1</td>
+                <td>Apellido 1</td>
+                <td>20</td>
+                <td>Curso 1</td>
+            </tr>
+            <tr>
+                <td>Alumno 2</td>
+                <td>Apellido 2</td>
+                <td>22</td>
+                <td>Curso 2</td>
+            </tr>
+            <!-- Agrega más alumnos según sea necesario -->
+        </table>
+    </div>
+    
+
+
   </body>
 </html>

@@ -13,6 +13,12 @@
  
      <!-- CSS -->
      <link rel="stylesheet" href="../Assets/Css/material.style.css">
+     <link rel="stylesheet" href="../Assets/Css/global.css" />
+
+      <!-- link google Font -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container-12">
@@ -46,16 +52,18 @@
             <div class="col-12 text-center-md text-center">
                 <h1>Material</h1>
                 <!--Desplegable para filtrar-->
-                <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                      Filtrar
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <li><a class="dropdown-item" href="#">Per lletra</a></li>
-                      <li><a class="dropdown-item" href="#">Per quantitat</a></li>
-                    </ul>
-                </div><br>
-                <div>
+                <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
+                  <div class="dropdown">
+                      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        Filtrar
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li></li>
+                        <li><a class="dropdown-item" href="#">Per lletra</a></li>
+                        <li><a class="dropdown-item" href="#">Per quantitat</a></li>
+                      </ul>
+                  </div>
+                  
                     <form method="post">
                         <input type="text" id="nomMaterial" name="nomMaterial" aria-label="Nom material" placeholder="Nom Material">
                         <input type="number" id="quantitatMaterial" name="quantitatMaterial" value="1" min="1">
@@ -65,7 +73,7 @@
                         <button type="submit" class="btn btn-primary" id="agregarAgregar" name="agregarAgregar">+</button>
                         <button type="submit" class="btn btn-primary" id="eliminarMaterial" name="eliminarMaterial">-</button>
                     </form>
-                </div>
+              </div>
                 <!--DIV -->
                 <div class="container d-flex flex-wrapgr">
                     <!--Cards-->

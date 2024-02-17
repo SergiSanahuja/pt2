@@ -1,0 +1,12 @@
+h1{
+    font-family: "permanent marker" ;
+    font-size: 5rem;
+}
+
+.navbar{
+    background: linear-gradient(#6093CE,rgba(0, 0, 0, 0.034)) ;
+}
+
+.nav-link {
+    color: white;
+}

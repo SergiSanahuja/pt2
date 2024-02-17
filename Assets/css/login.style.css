@@ -18,6 +18,10 @@ h1 {
     width: 50%;
     border-radius: 15px;
 }
+.navbar{
+    background: linear-gradient(#6093CE,rgba(0, 0, 0, 0.226)) ;
+
+}
 
 .container-12{
     margin: 0 auto;

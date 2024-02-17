@@ -65,7 +65,7 @@
                     <button type="button" class="btn btn-primary" id="eliminarMaterial">-</button>
                 </div>
                 <!--DIV -->
-                
+
                 <div>
                     <!--Cards-->
                     <div class="card" style="width: 18rem;">

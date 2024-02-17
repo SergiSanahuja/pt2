@@ -23,7 +23,7 @@
 <body>
     <div class="container-12">
         <nav class="navbar navbar-expand-lg ">
-        <img src="../Assets/img/logo.png" alt="logo" width="auto" height="50">
+            <img src="../Assets/img/logo.png" alt="logo" width="auto" height="50">
             <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarText">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -64,26 +64,29 @@
                       </ul>
                   </div>
                   
-                  <input type="text" id="nomMaterial" name="nomMaterial" aria-label="Nom material" placeholder="Nom Material">
-                  <input type="number" id="quantitatMaterial" name="quantitatMaterial" value="1" min="1">
-                  <label for='arxiuPujat' class='btn btn-primary'>Search...</label>
-                  <input id='arxiuPujat' type="file" class="btn btn-primary">
-                  
-                  <button type="button" class="btn btn-primary" id="agregarAgregar">+</button>
-                  <button type="button" class="btn btn-primary" id="eliminarMaterial">-</button>
+                    <form method="post">
+                        <input type="text" id="nomMaterial" name="nomMaterial" aria-label="Nom material" placeholder="Nom Material">
+                        <input type="number" id="quantitatMaterial" name="quantitatMaterial" value="1" min="1">
+                        <label for='arxiuPujat' class='btn btn-primary'>Search...</label>
+                        <input id='arxiuPujat' type="file" class="btn btn-primary">
+                        
+                        <button type="submit" class="btn btn-primary" id="agregarAgregar" name="agregarAgregar">+</button>
+                        <button type="submit" class="btn btn-primary" id="eliminarMaterial" name="eliminarMaterial">-</button>
+                    </form>
               </div>
                 <!--DIV -->
                 <div class="container d-flex flex-wrapgr">
                     <!--Cards-->
                     <div class="card m-2" style="width: 18rem;">
-                        <?php afegirMaterial(); ?>
-                        <!--<img src="../Assets/img/material/" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title">Material 1</h5>
-                            <p class="card-text">Quantitat: 10</p>
-                        </div>-->
+                        <?php mostrarMaterial(); ?>
                     </div>
                 </div>
+                <?php
+                afegirMaterial();
+                eliminarMaterial();
+                ?>
             </div> 
+        </div>
+    </div>
 </body>
 </html>

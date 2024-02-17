@@ -19,7 +19,7 @@
 </head>
 <body>
     <div class="container-12">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg ">
         <img src="../Assets/img/logo.png" alt="logo" width="auto" height="50">
             <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarText">
                 <span class="navbar-toggler-icon"></span>
@@ -48,26 +48,29 @@
                 <!-- btn para insertar talleres -->
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="afegirForm" data-bs-target="#modalTaller">Afegir taller</button>
 
-                <div class="modal bg-opacity-50 bg-black" id="divForm" style="display: none;">
-
-                  <div class="row justify-content-center mt-5">
+                <div class="modal bg-opacity-50 bg-black" id="divForm">
+                  <div class="row justify-content-center mt-5 " id="container">
                       <form class=" w-50 bg-light" id="form">
-                          <div class="row mb-1">
-                              <div class="col">
-                                  <label class="form-label" for="nom">nom</label>
-                                  <input class="form-control" type="text" id="nom">
+                          <div class="row mb-1 mt-2">
+                              <div class="col-12">
+                                  <!-- <label class="form-label" for="nom">nom</label> -->
+                                  <input class="form-control" type="text" id="nom" aria-label="Nom del tallaer" placeholder="Nom">
+                              </div>
+                              <div class="col mb-3">
+                                  <!-- <label class="form-label" for="professor">professor</label> -->
+                                  <input class="form-control" type="text" id="professor" aria-label="Nom del professor responsable" placeholder="Professor">
+                              </div>
+                              <div class="col mb-3">
+                                  <!-- <label class="form-label" for="professor">professor</label> -->
+                                  <input class="form-control" type="text" id="img" aria-label="Imatge del taller" placeholder="img">
                               </div>
                               <div class="col">
-                                  <label class="form-label" for="material">material</label>
-                                  <input class="form-control" type="text" id="material">
-                              </div>
-                              <div class="col">
-                                  <label class="form-label" for="professor">professor</label>
-                                  <input class="form-control" type="text" id="professor">
+                                  <!-- <label class="form-label" for="material">material</label> -->
+                                  <input class="form-control" type="text" id="material" aria-label="Material" placeholder="Material">
                               </div>
                           </div>
-                          <button class="mb-3" type="button" id="afegirFactura">Afegir Taller</button>
-                          <button class="mb-3" type="button" id="cancelar">Cancelar</button>
+                          <button class="mb-3 btn_Afegir_Taller" type="button" id="afegirFactura">Afegir Taller</button>
+                          <button class="mb-3 btn_Afegir_Taller" type="button" id="cancelar">Cancelar</button>
                       </form>
                   </div>
               </div>

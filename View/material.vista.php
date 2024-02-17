@@ -16,7 +16,7 @@
 </head>
 <body>
     <div class="container-12">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg ">
         <img src="../Assets/img/logo.png" alt="logo" width="auto" height="50">
             <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarText">
                 <span class="navbar-toggler-icon"></span>
@@ -58,18 +58,15 @@
                 <div>
                     <label for="nomMaterial">Nom material</label>
                     <input type="text" id="nomMaterial" name="nomMaterial">
-                    <input type="number" id="quantitatMaterial" name="quantitatMaterial" value="1" min="1">
-                    <label for='arxiuPujat' class='btn btn-primary'>Search...</label>
-                    <input id='arxiuPujat' type="file" class="btn btn-primary">
+                    <input type="number" id="quantitatMaterial" name="quantitatMaterial" value="1">
                     <button type="button" class="btn btn-primary" id="agregarAgregar">+</button>
                     <button type="button" class="btn btn-primary" id="eliminarMaterial">-</button>
                 </div>
                 <!--DIV -->
-
                 <div>
                     <!--Cards-->
                     <div class="card" style="width: 18rem;">
-                        <img src="<?php  ?>" class="card-img-top" alt="...">
+                        <img src="../Assets/img/material.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
                           <h5 class="card-title">Material 1</h5>
                             <p class="card-text">Quantitat: 10</p>

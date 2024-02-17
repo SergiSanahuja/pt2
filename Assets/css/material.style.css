@@ -1,7 +1,3 @@
-.navbar{
-    background: linear-gradient(#6093CE,rgba(0, 0, 0, 0.226)) ;
-}
-
 input[type=file] {
     width: 0.1px;
     height: 0.1px;
@@ -9,4 +5,13 @@ input[type=file] {
     overflow: hidden;
     position: absolute;
     z-index: -1;
+}
+
+.navbar{
+    background: linear-gradient(#6093CE,rgba(0, 0, 0, 0.034)) ;
+}
+
+
+.nav-link {
+    color: white;
 }

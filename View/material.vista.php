@@ -19,6 +19,9 @@
       <link rel="preconnect" href="https://fonts.googleapis.com">
      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
      <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+
+     <!--SCRIPTS-->
+      <script defer src="../Controller/js/material.js"></script>
 </head>
 <body>
     <div class="container-12">
@@ -55,18 +58,18 @@
                 <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
                   <form method="post">
                     <!-- Si no funciona el DropDown es por una clase de boostrap llamada clase="dropdown" -->
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" name="dropdownMenuButton">
                         Filtrar
                       </button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <li></li>
-                        <li><a class="dropdown-item" href="#">Per lletra</a></li>
-                        <li><a class="dropdown-item" href="#">Per quantitat</a></li>
+                        <li><a class="dropdown-item" href="?filtrar=nom" id="filtrarLletra" name="mostrarMaterial">Per lletra</a></li>
+                        <li><a class="dropdown-item" href="?filtrar=quantitat" id="filtrarQuantitat" name="filtrarQuantitat">Per quantitat</a></li>
                       </ul>
-                    <input type="text" id="nomMaterial" name="nomMaterial" aria-label="Nom material" placeholder="Nom Material">
-                    <input type="number" id="quantitatMaterial" name="quantitatMaterial" value="1" min="1">
-                    <label for='arxiuPujat' class='btn btn-primary'>Search...</label>
-                    <input id='arxiuPujat' type="file" class="btn btn-primary">
+                    <input type="text" id="nomMaterial" name="nomMaterial" aria-label="Nom material" placeholder="Nom Material" required>
+                    <input type="number" id="quantitatMaterial" name="quantitatMaterial" value="1" min="0">
+                    <label for='arxiuPujat' class='btn btn-primary' >Search...</label>
+                    <input id='arxiuPujat' type="file" class="btn btn-primary" name="arxiuUsuari">
 
                     <button type="submit" class="btn btn-primary" id="agregarAgregar" name="agregarAgregar">+</button>
                     <button type="submit" class="btn btn-primary" id="eliminarMaterial" name="eliminarMaterial">-</button>
@@ -74,13 +77,16 @@
 
               </div>
                 <!--DIV -->
-                <div class="container d-flex flex-wrapgr">
+                <div class="container d-flex flex-wrap">
                     <!--Cards-->
-                    <?php mostrarMaterial(); ?>
+                    <?php
+                    mostrarMaterial($_GET["filtrar"] ?? "default");
+                    ?>
                 </div>
                 <?php
                 afegirMaterial();
                 eliminarMaterial();
+
                 ?>
             </div> 
         </div>

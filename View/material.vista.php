@@ -83,9 +83,9 @@
                     ?>
                 </div>
                 <?php
+                canviarImg();
                 afegirMaterial();
                 eliminarMaterial();
-
                 ?>
             </div> 
         </div>

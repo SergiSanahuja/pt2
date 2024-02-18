@@ -63,10 +63,9 @@ function afegirMaterial(){
         ));
         $resultat = $name->fetch();
         if($resultat !== false && isset($resultat['nom'])){
-            $sql = $conn->prepare("UPDATE materials SET quantitat = quantitat + ? ,  imatge = ?  WHERE nom = ?");
+            $sql = $conn->prepare("UPDATE materials SET quantitat = quantitat + ? WHERE nom = ?");
             $sql->execute(array(
                 $_POST["quantitatMaterial"],
-                $img,
                 $_POST["nomMaterial"],
             ));
         }else{
@@ -78,6 +77,25 @@ function afegirMaterial(){
             ));
             //header("Location: ../View/material.vista.php");
         }
+    }
+}
+
+function canviarImg(){
+    if(empty($_POST["arxiuUsuari"])){
+
+    }else if(isset($_POST["arxiuUsuari"])){
+        $conn = connexio();
+        verificarImatge();
+        $img = "";
+        if(isset($_POST['arxiuUsuari'])){
+            $img = $_POST['arxiuUsuari'];
+        }
+        $sql = $conn->prepare("UPDATE materials SET imatge = ? WHERE nom = ?");
+        $sql->execute(array(
+            $img,
+            $_POST["nomMaterial"],
+        ));
+        //header("Location: ../View/material.vista.php");
     }
 }
 

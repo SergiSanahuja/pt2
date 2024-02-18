@@ -71,10 +71,9 @@
                     <button type="submit" class="btn btn-primary" id="agregarAgregar" name="agregarAgregar">+</button>
                     <button type="submit" class="btn btn-primary" id="eliminarMaterial" name="eliminarMaterial">-</button>
                   </form>
-
-              </div>
+                </div>
                 <!--DIV -->
-                <div class="container d-flex flex-wrapgr">
+                <div class="container d-flex flex-wrap">
                     <!--Cards-->
                     <?php mostrarMaterial(); ?>
                 </div>

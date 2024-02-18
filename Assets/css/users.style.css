@@ -12,6 +12,15 @@ th{
     text-align: left;
 }
 
+#clearStorage{
+    background-color: #dd4035;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    margin: 10px;
+    cursor: pointer;
+}
+
 td{
     border: 1px solid #ccc;
     padding: 10px;

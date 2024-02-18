@@ -6,3 +6,39 @@
 .nav-link {
     color: white;
 }
+
+/* CSS */
+.table-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.table-container table {
+    flex: 1 0 auto;
+    margin: 10px;
+    /* Add additional styling for your tables here */
+}
+
+table tr {
+    border-bottom: 1px solid #ddd;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: #6093CE;
+    color: white;
+}
+
+table tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Path: Assets/css/grups.style.css */
+
+

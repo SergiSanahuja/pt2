@@ -1,20 +1,39 @@
+class Excel {
+    constructor(content) {
+        this.content = content; 
+    }
 
-var fs = require('fs');
-var XLSX = require('xlsx');
-var wb = XLSX.utils.book_new();
-wb.Props = {
-    Title: "FileFomat",
-    Subject: "Developer Guide"
-};
-wb.SheetNames.push("Test Sheet");
-var ws_data = [['hello' , 'world']];
-var ws = XLSX.utils.aoa_to_sheet(ws_data);
-wb.Sheets["Test Sheet"] = ws;
-var wbout = XLSX.write(wb, {bookType:'xlsx', type: 'binary'});
+    headers() {
+        return this.content[0];
+    }
+
+    rows(){
+        return this.content.slice(1, this.content.length);
+    }
+
+}
 
 
 
 function init() {
+
+    const file = document.getElementById('excelFile');
+    
+    file.addEventListener('change', async function(e) {
+        const content = await readXlsxFile( file.files[0]);
+
+        const excel = new Excel(content);
+
+        $('#Alumnes').html('');
+        $('#Alumnes').append(`<tr>${excel.headers().map((header) => `<th>${header}</th>`).join('')}</tr>`);
+        excel.rows().forEach((row) => {
+            $('#Alumnes').append(`<tr>${row.map((cell) => `<td>${cell}</td>`).join('')}</tr>`);
+        });
+
+    }
+    );
+
+
     $('#afegirForm').click(() => {
         // $('#form')[0].reset();
         $('#divForm').show();

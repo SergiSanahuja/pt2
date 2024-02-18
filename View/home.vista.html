@@ -63,17 +63,20 @@
                               </div>
                               <div class="col mb-3">
                                   <!-- <label class="form-label" for="professor">professor</label> -->
-                                  <input class="form-control" type="text" id="professor" aria-label="Nom del professor responsable" placeholder="Professor">
+                                  <input class="form-control" type="text" accept=".xlsx, .xls" id="professor" aria-label="Nom del professor responsable" placeholder="Professor">
                               </div>
                               <div class="col mb-3">
                                   <!-- <label class="form-label" for="professor">professor</label> -->
-                                  <input class="form-control" type="text" id="img" aria-label="Imatge del taller" placeholder="img">
+                                  <input class="form-control" type="file" id="fil" aria-label="Imatge del taller" placeholder="img">
                               </div>
+                            </div>
+                            <div class="row">
+
                               <div class="col">
-                                  <!-- <label class="form-label" for="material">material</label> -->
-                                  <input class="form-control" type="text" id="material" aria-label="Material" placeholder="Material">
+                                <!-- <label class="form-label" for="material">material</label> -->
+                                <input class="form-control" type="text" id="material" aria-label="Material" placeholder="Material">
                               </div>
-                          </div>
+                            </div>
                           <button class="mb-3 btn_Afegir_Taller" type="button" id="afegirFactura">Afegir Taller</button>
                           <button class="mb-3 btn_Afegir_Taller" type="button" id="cancelar">Cancelar</button>
                       </form>

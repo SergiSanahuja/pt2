@@ -56,7 +56,7 @@
                 <h1>Material</h1>
                 <!--Desplegable para filtrar-->
                 <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
-                  <form method="post">
+                  <form method="post" enctype="multipart/form-data">
                     <!-- Si no funciona el DropDown es por una clase de boostrap llamada clase="dropdown" -->
                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" name="dropdownMenuButton">
                         Filtrar

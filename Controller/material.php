@@ -82,7 +82,6 @@ function afegirMaterial(){
 
 function canviarImg(){
     if(empty($_POST["arxiuUsuari"])){
-
     }else if(isset($_POST["arxiuUsuari"])){
         $conn = connexio();
         verificarImatge();

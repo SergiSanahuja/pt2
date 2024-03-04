@@ -22,6 +22,7 @@ function init() {
     file.addEventListener('change', async function(e) {
         const content = await readXlsxFile( file.files[0]);
 
+        //provar de utilitzar la classe Excel
         const excel = new Excel(content);
 
         localStorage.setItem('excel', JSON.stringify(content));

@@ -100,22 +100,34 @@ function canviarImg(){
 }
 
 function verificarImatge(){
-    if (isset($_FILES['arxiuUsuari'])) {
+    // if (isset($_FILES['arxiuUsuari'])) {
         
-        $file = $_FILES['arxiuUsuari'];
+    //     $file = $_FILES['arxiuUsuari'];
     
-        // Obtener el nombre del archivo
-        $fileName = $file['name'];
+    //     // Obtener el nombre del archivo
+    //     $fileName = $file['name'];
     
-        // Especificar la carpeta de destino
-        $destination = '../Assets/img/material/' . $fileName. '.png';
+    //     // Especificar la carpeta de destino
+    //     $destination = '../Assets/img/material/' . $fileName. '.png';
     
-        // Mover el archivo a la carpeta de destino
-        if (move_uploaded_file($file['tmp_name'], $destination)) {
-            echo 'El archivo se ha cargado correctamente.';
-        } else {
-            echo 'Ocurrió un error al cargar el archivo.';
-        }
+    //     // Mover el archivo a la carpeta de destino
+    //     if (move_uploaded_file($file['tmp_name'], $destination)) {
+    //         echo 'El archivo se ha cargado correctamente.';
+    //     } else {
+    //         echo 'Ocurrió un error al cargar el archivo.';
+    //     }
+    // }
+    $nom_imatge = $_FILES['foto']['name'];
+    $temporal = $_FILES['foto']['tmp_name'];
+    $carpeta = '../img';
+    $ruta = $carpeta.'/'.$nom_imatge;
+    move_uploaded_file($temporal, $ruta);
+
+    if($nom_imatge == null || $nom_imatge == ""){
+        echo "<script>alert('No has introduit cap imatge')</script>";
+    }else{
+        insertarImatge($ruta);
+        
     }
 }
 

@@ -82,7 +82,6 @@ function afegirMaterial(){
 
 function canviarImg(){
     if(empty($_POST["arxiuUsuari"])){
-
     }else if(isset($_POST["arxiuUsuari"])){
         $conn = connexio();
         verificarImatge();
@@ -99,17 +98,27 @@ function canviarImg(){
     }
 }
 
-function verificarImatge(){
+function verificarImatge() {
     if (isset($_FILES['arxiuUsuari'])) {
-        
         $file = $_FILES['arxiuUsuari'];
-    
+        
+        // Verifica si hay errores al subir el archivo
+        if ($file['error'] !== UPLOAD_ERR_OK) {
+            echo 'Ocurrió un error al cargar el archivo.';
+            return;
+        }
+
         // Obtener el nombre del archivo
-        $fileName = $file['name'];
-    
+        $fileName = basename($file['name']); // Solo el nombre del archivo, sin ruta
+
         // Especificar la carpeta de destino
-        $destination = '../Assets/img/material/' . $fileName. '.png';
-    
+        $destination = '../Assets/img/material/' . $fileName; // Quita '.png' del destino
+
+        // Verifica si la carpeta de destino existe, si no, créala
+        if (!file_exists('../Assets/img/material')) {
+            mkdir('../Assets/img/material', 0777, true); // Asegura que la carpeta se pueda escribir
+        }
+
         // Mover el archivo a la carpeta de destino
         if (move_uploaded_file($file['tmp_name'], $destination)) {
             echo 'El archivo se ha cargado correctamente.';

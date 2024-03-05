@@ -1,0 +1,1 @@
+Hacer que cuando se ponga cantida 0 y el mismo nombre cambiar la imagen

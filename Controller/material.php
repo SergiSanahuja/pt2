@@ -52,11 +52,7 @@ function afegirMaterial(){
         $name = $conn->prepare("SELECT nom FROM materials WHERE nom = ?");
 
         //Conseguir el nombre del archivo
-        verificarImatge();
-        $img = "";
-        if(isset($_POST['arxiuUsuari'])){
-            $img = $_POST['arxiuUsuari'];
-        }
+        $img = verificarImatge_Guardar() ?? "";
 
         $name->execute(array(
             $_POST["nomMaterial"],
@@ -84,11 +80,13 @@ function canviarImg(){
     if(empty($_POST["arxiuUsuari"])){
     }else if(isset($_POST["arxiuUsuari"])){
         $conn = connexio();
-        verificarImatge();
+        verificarImatge_Guardar();
         $img = "";
         if(isset($_POST['arxiuUsuari'])){
-            $img = $_POST['arxiuUsuari'];
+            $img = $_FILES['arxiuUsuari'];
+            echo "arribat";
         }
+        echo $img;
         $sql = $conn->prepare("UPDATE materials SET imatge = ? WHERE nom = ?");
         $sql->execute(array(
             $img,
@@ -98,7 +96,7 @@ function canviarImg(){
     }
 }
 
-function verificarImatge() {
+function verificarImatge_Guardar() {
     if (isset($_FILES['arxiuUsuari'])) {
         $file = $_FILES['arxiuUsuari'];
         
@@ -112,16 +110,12 @@ function verificarImatge() {
         $fileName = basename($file['name']); // Solo el nombre del archivo, sin ruta
 
         // Especificar la carpeta de destino
-        $destination = '../Assets/img/material/' . $fileName; // Quita '.png' del destino
-
-        // Verifica si la carpeta de destino existe, si no, créala
-        if (!file_exists('../Assets/img/material')) {
-            mkdir('../Assets/img/material', 0777, true); // Asegura que la carpeta se pueda escribir
-        }
+        $destination = '../Assets/img/material/' . $fileName;
 
         // Mover el archivo a la carpeta de destino
         if (move_uploaded_file($file['tmp_name'], $destination)) {
             echo 'El archivo se ha cargado correctamente.';
+            return $fileName;
         } else {
             echo 'Ocurrió un error al cargar el archivo.';
         }

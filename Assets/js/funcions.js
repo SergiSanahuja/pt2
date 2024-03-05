@@ -83,6 +83,33 @@ function init() {
     $('#cancelar').click(() => {
         $('#divForm').hide();
     });
+
+    
+
+    $('#afegirTaller').click(function() {
+        var formData = new FormData($('#form')[0]);
+        $.ajax({
+            type: 'POST',
+            url: '../Controller/afegirTaller.php',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                // Aquí manejamos la respuesta del servidor
+                var data = JSON.parse(response);
+                if(data.success) {
+                    alert('Taller añadido con éxito');
+                    $('#modalTaller').modal('hide'); // Ocultar el modal utilizando la función modal de Bootstrap
+                    $('#form')[0].reset(); // Limpiar el formulario
+                } else {
+                    alert('Error al añadir taller');
+                }
+            },
+            error: function() {
+                alert('Error en la solicitud AJAX');
+            }
+        });
+    });    
 }
 
 

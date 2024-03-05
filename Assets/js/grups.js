@@ -39,14 +39,26 @@ class Grup {
     
     
         crearGrup(){
-            this.excel = this.excel.filter((index) => index[0] != "Nombre");
-            this.temp = this.excel;
-            this.temp = lib.shuffleArray(this.temp);
+            this.excel = this.excel.filter((index) => index[0] != "Nombre");  
+            this.temp = lib.shuffleArray(this.excel);
+            localStorage.setItem('Grups', JSON.stringify(this.temp));
+            this.mostrarGrups();
+        }
 
-            let numGrups = 3; // Number of groups you want
+
+        mostrarGrups(){
+            
+            
+            if(localStorage.getItem('Grups') != null){
+                this.temp = JSON.parse(localStorage.getItem('Grups'));
+            }else{
+                return;
+            }
+            let numGrups = 4; // Number of groups you want
             let nGrup = Math.ceil((this.temp.length) / numGrups); // Size of each group, subtract 1 from excel.length to account for the skipped row
 
             let tableContainer = document.getElementById('llistatGrups');
+            tableContainer.innerHTML = "";
             for (let i = 0; i < numGrups; i++) { // Create Grups
                 let table = lib.crearElement('div',{class:'Grupos col-3',id:'grup'+i},"");
                 let tr = lib.crearElement('div',{class:'fila col-3 nGrup'},'Grup' + (i + 1));
@@ -60,7 +72,6 @@ class Grup {
                     this.temp = this.temp.filter((index) => index[0] != this.temp[j][0]);
                 }
             }
-
         }
 
 
@@ -68,11 +79,21 @@ class Grup {
 
 let excel = JSON.parse(localStorage.getItem('excel'));
 
-
+window.onload = function() {
+    let grup = new Grup(excel);
+    grup.mostrarGrups();
+}
 
 $('#crearGrups').on('click', function() {
 
     let grup = new Grup(excel);
-    grup.crearGrup();  
+    
+    if(localStorage.getItem('Grups') != null){
+        localStorage.removeItem('Grups');
+        grup.crearGrup();  
+    }else{
+        grup.crearGrup(); 
+    }
+
 
 });

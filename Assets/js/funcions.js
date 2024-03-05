@@ -21,39 +21,67 @@ function init() {
 
     file.addEventListener('change', async function(e) {
         const content = await readXlsxFile( file.files[0]);
-
-        //provar de utilitzar la classe Excel
-        const excel = new Excel(content);
-
-        localStorage.setItem('excel', JSON.stringify(content));
-
-        let excel2 = JSON.parse(localStorage.getItem('excel'));
-        let table = document.getElementById('Alumnes');    
-
-        excel2.forEach((row, index) => {
-            let tr = document.createElement('tr');
-            Object.values(row).forEach(cell => {
-                let cellElement;
-                if (index === 0) {
-                    // Si es la primera fila, crear un elemento th
-                    cellElement = document.createElement('th');
-                } else {
-                    // Si no es la primera fila, crear un elemento td
-                    cellElement = document.createElement('td');
-                }
-                cellElement.textContent = cell;
-                tr.appendChild(cellElement);
-            });
-            table.appendChild(tr);
-        }
-        );
+        localStorage.setItem('excel', JSON.stringify(content)); 
+        
+        mostrarUsers()
+        guardarEnBD();
     });
     
+    mostrarUsers();
+
+    $('#afegirForm').click(() => {
+        // $('#form')[0].reset();
+        $('#divForm').show();
+    });
+    
+    $('#cancelar').click(() => {
+        $('#divForm').hide();
+    });
+}
+
+function guardarEnBD() {
+    let table = $('#Alumnes');
+    let data = [];
+
+    table.find('tr').each(function (i, el) {
+        if (i !== 0) {
+            let $tds = $(this).find('td');
+            let rowData = $tds.map(function (i, el) {
+                return $(this).text();
+            }).get();
+            if (rowData.length > 0) {
+                data.push(rowData);
+            }
+        }
+    });
+
+    enviar(data, 'guardar');
+}
+
+
+function enviar(data, accio){
+    $.ajax({
+        url: './usuaris.php', // Fitxer controlador per afegir a la BD
+        method: 'POST',
+        data: {data: JSON.stringify(data), accio:accio},
+        success: function (data) {
+            alert('Data saved successfully');
+            alert(data);
+        },
+        error: function () {
+            alert('There was a problem saving the data');
+        }
+    });
+}
+
+function mostrarUsers() {
+
     let excel2 = JSON.parse(localStorage.getItem('excel'));
     let table = document.getElementById('Alumnes');  
 
     document.getElementById('clearStorage').addEventListener('click', function() {
         localStorage.removeItem('excel');
+        enviar([], 'eliminar');
         alert('LocalStorage de Excel borrado!');
     });      
 
@@ -67,6 +95,7 @@ function init() {
             } else {
                 // Si no es la primera fila, crear un elemento td
                 cellElement = document.createElement('td');
+                cellElement.setAttribute('name', cell);
             }
             cellElement.textContent = cell;
             tr.appendChild(cellElement);
@@ -75,45 +104,7 @@ function init() {
     }
     );
 
-    $('#afegirForm').click(() => {
-        // $('#form')[0].reset();
-        $('#divForm').show();
-    });
-    
-    $('#cancelar').click(() => {
-        $('#divForm').hide();
-    });
-
-    
-
-    $('#afegirTaller').click(function() {
-        var formData = new FormData($('#form')[0]);
-        $.ajax({
-            type: 'POST',
-            url: '../Controller/afegirTaller.php',
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function(response) {
-                // Aquí manejamos la respuesta del servidor
-                var data = JSON.parse(response);
-                if(data.success) {
-                    alert('Taller añadido con éxito');
-                    $('#modalTaller').modal('hide'); // Ocultar el modal utilizando la función modal de Bootstrap
-                    $('#form')[0].reset(); // Limpiar el formulario
-                } else {
-                    alert('Error al añadir taller');
-                }
-            },
-            error: function() {
-                alert('Error en la solicitud AJAX');
-            }
-        });
-    });    
 }
-
-
-
 
 
 init();

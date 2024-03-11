@@ -1,3 +1,4 @@
+import * as lib from './lib.js';
 class Excel {
     constructor(content) {
         this.content = content; 
@@ -21,6 +22,8 @@ function init() {
 
     file.addEventListener('change', async function(e) {
         const content = await readXlsxFile( file.files[0]);
+        content.shift();
+
         localStorage.setItem('excel', JSON.stringify(content)); 
         
         mostrarUsers()
@@ -37,9 +40,28 @@ function init() {
     $('#cancelar').click(() => {
         $('#divForm').hide();
     });
+
+    
 }
 
-function guardarEnBD() {
+//Esborrar les dades del localStorage d'alumnes
+$('#clearStorage').on('click', function() {
+      
+    if(confirm('Estas segur que vols esborrar les dades?')){
+        enviar([], 'eliminar');
+        alert('Dades esborrades');
+        localStorage.clear();
+        location.reload();
+
+    }else{
+
+        alert('Operació cancelada');
+
+    }
+});
+
+//Filtrar alumnes
+$('#filtrarLletra').on('click', function() {
     let table = $('#Alumnes');
     let data = [];
 
@@ -55,6 +77,80 @@ function guardarEnBD() {
         }
     });
 
+    data = data.sort((a, b) => {
+        return a[0].localeCompare(b[0]);
+    });
+
+
+    if(localStorage.getItem('excel') != null){
+        
+        localStorage.setItem('excel', JSON.stringify(data));
+        location.reload();
+    }
+    else{
+        alert('No hi ha cap alumne a la llista');
+    }
+   
+
+});
+
+$('#filtrarCurs').on('click', function() {
+    
+  let table = $('#Alumnes');
+    let data = [];
+
+    table.find('tr').each(function (i, el) {
+        if (i !== 0) {
+            let $tds = $(this).find('td');
+            let rowData = $tds.map(function (i, el) {
+                return $(this).text();
+            }).get();
+            if (rowData.length > 0) {
+                data.push(rowData);
+            }
+        }
+    });
+
+
+    //ToDo Filtrar per curs__________________________________________________
+    data = data.sort((a, b) => {
+        return compareNumbers(a[3], b[3]);  
+     });
+    
+
+    if(localStorage.getItem('excel') != null){
+        localStorage.setItem('excel', JSON.stringify(data));
+        location.reload();
+    }
+    else{
+        alert('No hi ha cap alumne a la llista');
+    }
+
+
+   
+});
+
+function compareNumbers(a, b) {
+    return a - b;
+  }
+
+//Guardar els usuaris a la BD
+function guardarEnBD() {
+    let table = $('#Alumnes');
+    let data = [];
+
+    table.find('tr').each(function (i, el) {
+        if (i !== 0) {
+            let $tds = $(this).find('td');
+            let rowData = $tds.map(function (i, el) {
+                return $(this).text();
+            }).get();
+            if (rowData.length > 0) {
+                data.push(rowData);
+            }
+        }
+    });
+    alert('Dades guardades');
     enviar(data, 'guardar');
 }
 
@@ -65,8 +161,8 @@ function enviar(data, accio){
         method: 'POST',
         data: {data: JSON.stringify(data), accio:accio},
         success: function (data) {
-            alert('Data saved successfully');
-            alert(data);
+            
+            
         },
         error: function () {
             alert('There was a problem saving the data');
@@ -79,13 +175,9 @@ function mostrarUsers() {
     let excel2 = JSON.parse(localStorage.getItem('excel'));
     let table = document.getElementById('Alumnes');  
 
-    document.getElementById('clearStorage').addEventListener('click', function() {
-        localStorage.removeItem('excel');
-        enviar([], 'eliminar');
-        alert('LocalStorage de Excel borrado!');
-    });      
+    if (excel2 == null) {
 
-    excel2.forEach((row, index) => {
+        excel2.forEach((row, index) => {
         let tr = document.createElement('tr');
         Object.values(row).forEach(cell => {
             let cellElement;
@@ -101,8 +193,34 @@ function mostrarUsers() {
             tr.appendChild(cellElement);
         });
         table.appendChild(tr);
+        }
+        );
+    }else{
+
+       let tr = document.createElement('tr');
+       tr.appendChild(lib.crearElement('th', {}, 'Nombre'));
+       tr.appendChild(lib.crearElement('th', {}, 'Apellidos'));
+       tr.appendChild(lib.crearElement('th', {}, 'Edad'));
+       tr.appendChild(lib.crearElement('th', {}, 'Curso'));
+       
+       table.appendChild(tr);
+           
+        excel2.forEach((row, index) => {
+            tr = document.createElement('tr');
+            Object.values(row).forEach(cell => {
+                let cellElement;
+               
+                    // Si no es la primera fila, crear un elemento td
+                cellElement = document.createElement('td');
+                cellElement.setAttribute('name', cell);
+                
+                cellElement.textContent = cell;
+                tr.appendChild(cellElement);
+            });
+            table.appendChild(tr);
+            }
+            );
     }
-    );
 
 }
 

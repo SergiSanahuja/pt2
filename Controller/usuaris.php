@@ -10,25 +10,29 @@
     
 
     
-if (isset($_POST['data'])) {
-    // Get the data
-    if(($_POST['accio'])=='guardar'){
-        $data = $_POST['data'];
-        $data = json_decode($data);
-        $servername = "localhost";
-        // print_r((array)$data);
-        insertarUsuari((array)$data);
+    if (isset($_POST['data'])) {
+        // Get the data
+        if(($_POST['accio'])=='guardar'){
+            $data = $_POST['data'];
+            $data = json_decode($data);
+            $servername = "localhost";
+            // print_r((array)$data);
+            insertarUsuari((array)$data);
 
-        exit(); 
-    }else if(($_POST['accio'])=='eliminar'){
+            exit(); 
+        }else if(($_POST['accio'])=='eliminar'){
+            
+            eliminarUsuari();
+
+            
+
+            exit();
         
-        eliminarUsuari();
-
-        exit();
+        }else if(($_POST['accio'])=='eliminar'){
+            
+        }
     
     }
-   
-}
         
     
  

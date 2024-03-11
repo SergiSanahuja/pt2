@@ -1,7 +1,6 @@
 <?php
 include_once 'connexio.php';
 
-
 function mostrarMaterial($order){
     $conn = connexio();
     if($order == "default"){
@@ -52,16 +51,24 @@ function afegirMaterial(){
         $name = $conn->prepare("SELECT nom FROM materials WHERE nom = ?");
 
         //Conseguir el nombre del archivo
-        $img = verificarImatge_Guardar() ?? "";
+        $img = verificarImatge_Guardar() ?? "default.jpg";
 
         $name->execute(array(
             $_POST["nomMaterial"],
         ));
         $resultat = $name->fetch();
+        if($_POST["quantitatMaterial"] == 0){
+            $sql = $conn->prepare("UPDATE materials SET imatge = ? WHERE nom = ?");
+            $sql->execute(array(
+                $img,
+                $_POST["nomMaterial"],
+            ));
+        }
         if($resultat !== false && isset($resultat['nom'])){
-            $sql = $conn->prepare("UPDATE materials SET quantitat = quantitat + ? WHERE nom = ?");
+            $sql = $conn->prepare("UPDATE materials SET quantitat = quantitat + ? , imatge = ? WHERE nom = ?");
             $sql->execute(array(
                 $_POST["quantitatMaterial"],
+                $img,
                 $_POST["nomMaterial"],
             ));
         }else{
@@ -71,7 +78,6 @@ function afegirMaterial(){
                 $_POST["quantitatMaterial"],
                 $img,
             ));
-            //header("Location: ../View/material.vista.php");
         }
     }
 }
@@ -102,7 +108,6 @@ function verificarImatge_Guardar() {
         
         // Verifica si hay errores al subir el archivo
         if ($file['error'] !== UPLOAD_ERR_OK) {
-            echo 'Ocurrió un error al cargar el archivo.';
             return;
         }
 
@@ -114,16 +119,19 @@ function verificarImatge_Guardar() {
 
         // Mover el archivo a la carpeta de destino
         if (move_uploaded_file($file['tmp_name'], $destination)) {
-            echo 'El archivo se ha cargado correctamente.';
             return $fileName;
         } else {
-            echo 'Ocurrió un error al cargar el archivo.';
         }
     }
 }
 
 function eliminarMaterial(){
     if(isset($_POST["eliminarMaterial"]) && !empty($_POST["nomMaterial"]) && !empty($_POST["quantitatMaterial"])){
+        ?>  <script>
+                let flag = confirmarEliminar();
+                if(flag){ 
+            </script> 
+        <?php
         $conn = connexio();
         $comprovarNum = $conn->prepare("SELECT quantitat FROM materials WHERE nom = ?");
         $comprovarNum->execute(array(
@@ -137,17 +145,70 @@ function eliminarMaterial(){
                 $_POST["nomMaterial"],
             ));
         }else if($resultat !== false && isset($resultat['quantitat']) && $resultat['quantitat'] == $_POST["quantitatMaterial"]){
+
+            
+            // Obtener el nombre de la imagen después de eliminar el material
+            $img = $conn->prepare("SELECT imatge FROM materials WHERE nom = ?");
+            $img->execute(array(
+                $_POST["nomMaterial"],
+            ));
+            $resultat = $img->fetch();
+            
+            // Verificar si se encontró una imagen y si no es la imagen predeterminada
+            if($resultat !== false && isset($resultat['imatge']) && $resultat['imatge'] != "default.jpg"){
+                // Mostrar la imagen
+                echo $resultat['imatge'];
+            
+                // Ruta de la imagen
+                $ruta_imagen = "../Assets/img/material/".$resultat['imatge'];
+            
+                // Verificar si el archivo de imagen existe antes de intentar eliminarlo
+                if (file_exists($ruta_imagen)) {
+                    // Eliminar la imagen
+                    if (unlink($ruta_imagen)) {
+                        //echo "La imagen ".$resultat['imatge']." fue eliminada con éxito.";
+                    } else {
+                        //echo "No se pudo eliminar la imagen ".$resultat['imatge'].".";
+                    }
+                } else {
+                    //echo "La imagen ".$resultat['imatge']." no existe.";
+                }
+            } else {
+                //echo "No se encontró ninguna imagen para eliminar.";
+            }
             $sql = $conn->prepare("DELETE FROM materials WHERE nom = ?");
             $sql->execute(array(
                 $_POST["nomMaterial"],
-            ));
+            ));       
         }else{
             ?>
-            <script>alert("No pots eliminar més material del que hi ha");</script>
+            <script>alert("No pots eliminar més material del que hi ha o no existeix el material");</script>
             <?php
         }
-        //header("Location: ../View/material.vista.php");
+        ?>
+        <script>
+            }
+        </script>
+        <?php
     }
 }
+
+?>
+<script>
+    function confirmarEliminar(){
+    var confirmar = confirm("Estas segur que vols eliminar aquest material?");
+        if(confirmar){
+            return true;
+        }else{
+            return false;
+        }
+    }
+</script>
+<?php
+
+if(isset($_POST["agregarAgregar"]) || isset($_POST["eliminarMaterial"])){
+    header("Refresh:0");
+}
+
 require '../View/material.vista.php';
 ?>

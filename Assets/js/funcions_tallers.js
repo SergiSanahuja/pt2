@@ -5,7 +5,7 @@ $(document).ready(function(){
       e.preventDefault();
       let formData = new FormData($('#form')[0]);
       $.ajax({
-        url: '/cohseio/controller/afegirTaller.php',
+        url: '../Controller/afegirTaller.php',
         type: 'POST',
         data: formData,
         success: function(data){

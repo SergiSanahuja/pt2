@@ -13,9 +13,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     //! Si estás subiendo una imagen, tendrás que manejar $_FILES['nombre_del_input']
     
     if ($nom && $professor && $material) {
-        // Preparación de la sentencia SQL para insertar datos
         $query = $db->prepare("INSERT INTO tallers (nom, material, professor) VALUES (?, ?, ?)");
-        $result = $query->execute([$nom, $professor, $material]);
+        $result = $query->execute([$nom, $material, $professor]);
         
         if($result) {
             echo json_encode(['success' => true]);

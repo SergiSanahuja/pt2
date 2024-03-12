@@ -111,23 +111,9 @@ $('#filtrarCurs').on('click', function() {
         }
     });
 
-
-    //ToDo Filtrar per curs__________________________________________________
     data = data.sort((a, b) => {
-        return compareNumbers(a[3], b[3]);  
-     });
-    
-
-    if(localStorage.getItem('excel') != null){
-        localStorage.setItem('excel', JSON.stringify(data));
-        location.reload();
-    }
-    else{
-        alert('No hi ha cap alumne a la llista');
-    }
-
-
-   
+        return a[3].localeCompare(b[3]);
+    });
 });
 
 function compareNumbers(a, b) {

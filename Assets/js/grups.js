@@ -39,37 +39,62 @@ class Grup {
     
     
         crearGrup(){
+
+            let numGrups = document.getElementById('numDeUsersXGrup').value; // Number of groups you want
             this.excel = this.excel.filter((index) => index[0] != "Nombre");  
-            this.temp = lib.shuffleArray(this.excel);
-            localStorage.setItem('Grups', JSON.stringify(this.temp));
-            this.mostrarGrups();
+            this.llista= lib.shuffleArray(this.excel);
+            localStorage.setItem('Grups', JSON.stringify(this.llista));
+            this.mostrarGrups(numGrups);
         }
 
 
-        mostrarGrups(){
-            
-            
+        mostrarGrups(numGrups){
+            let llista = [];   
+            let contador = 0         
             if(localStorage.getItem('Grups') != null){
-                this.temp = JSON.parse(localStorage.getItem('Grups'));
+                llista = JSON.parse(localStorage.getItem('Grups'));
             }else{
                 return;
             }
-            let numGrups = 4; // Number of groups you want
-            let nGrup = Math.ceil((this.temp.length) / numGrups); // Size of each group, subtract 1 from excel.length to account for the skipped row
+            if(numGrups == undefined){
+                numGrups = 3;
+            }
+
+            let nGrup =Math.floor(llista.length / numGrups); // Size of each group, subtract 1 from excel.length to account for the skipped row
+
+            if (numGrups > llista.length || numGrups <= 0) {
+                alert('El num de grups no pot ser inferior a 1 ni superior al nombre d\'usuaris.');
+                return;
+            }
+
+            let resto = llista.length % numGrups;
+
 
             let tableContainer = document.getElementById('llistatGrups');
             tableContainer.innerHTML = "";
             for (let i = 0; i < numGrups; i++) { // Create Grups
                 let table = lib.crearElement('div',{class:'Grupos col-3',id:'grup'+i},"");
-                let tr = lib.crearElement('div',{class:'fila col-3 nGrup'},'Grup' + (i + 1));
+                let tr = lib.crearElement('div',{class:'fila col-3 nGrup',},'Grup' + (i + 1));
+                table.addEventListener('drop', drop);
+                table.addEventListener('dragover', allowDrop);
                 table.appendChild(tr);
                 tableContainer.appendChild(table);
 
-                for (let j = 0; j < nGrup; j++) { //Afegir usuaris
-                    let tr = lib.crearElement('div',{class:'fila col-3'},'');
-                    tr.textContent = this.temp[j][0]; // Assuming you want to display the first value of each element
+                let alXGrup;
+
+                if(resto > 0){
+                    alXGrup = nGrup + 1;
+                    resto--;
+                } else {
+                    alXGrup = nGrup;
+                }
+
+                for (let j = 0; j < alXGrup; j++) { //Afegir usuaris
+                    let tr = lib.crearElement('div',{class:'fila col-3',draggable:'true',id:'usuari'+contador++},'');
+                    tr.textContent = llista[0][0]; // Assuming you want to display the first value of each element
+                    tr.addEventListener('dragstart', drag);
                     table.appendChild(tr);
-                    this.temp = this.temp.filter((index) => index[0] != this.temp[j][0]);
+                    llista = llista.slice(1);
                 }
             }
         }
@@ -82,7 +107,26 @@ let excel = JSON.parse(localStorage.getItem('excel'));
 window.onload = function() {
     let grup = new Grup(excel);
     grup.mostrarGrups();
+
 }
+
+    
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+
+    
+
+}
+
+function allowDrop(ev) {
+    ev.preventDefault();
+  }
 
 $('#crearGrups').on('click', function() {
 

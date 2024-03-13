@@ -65,12 +65,21 @@ function afegirMaterial(){
             ));
         }
         if($resultat !== false && isset($resultat['nom'])){
-            $sql = $conn->prepare("UPDATE materials SET quantitat = quantitat + ? , imatge = ? WHERE nom = ?");
-            $sql->execute(array(
-                $_POST["quantitatMaterial"],
-                $img,
-                $_POST["nomMaterial"],
-            ));
+            if($img == "default.jpg"){
+                $sql = $conn->prepare("UPDATE materials SET quantitat = quantitat + ? WHERE nom = ?");
+                $sql->execute(array(
+                    $_POST["quantitatMaterial"],
+                    $_POST["nomMaterial"],
+                ));
+            }else{
+                $sql = $conn->prepare("UPDATE materials SET quantitat = quantitat + ? , imatge = ? WHERE nom = ?");
+                $sql->execute(array(
+                    $_POST["quantitatMaterial"],
+                    $img,
+                    $_POST["nomMaterial"],
+                ));
+            }
+
         }else{
             $sql = $conn->prepare("INSERT INTO materials (nom, quantitat, imatge) VALUES (?, ?, ?)");
             $sql->execute(array(
@@ -126,14 +135,13 @@ function verificarImatge_Guardar() {
 }
 
 function eliminarMaterial(){
-    if(isset($_POST["eliminarMaterial"]) && !empty($_POST["nomMaterial"]) && !empty($_POST["quantitatMaterial"])){
+    if(!empty($_POST["nomMaterial"]) && !empty($_POST["quantitatMaterial"])){
         ?>  <script>
-                let flag = confirmarEliminar();
-                if(flag){ 
+                confirmarEliminar();
             </script> 
         <?php
         $conn = connexio();
-        $comprovarNum = $conn->prepare("SELECT quantitat FROM materials WHERE nom = ?");
+        $comprovarNum = $conn->prepare("SELECT * FROM materials WHERE nom = ?");
         $comprovarNum->execute(array(
             $_POST["nomMaterial"],
         ));
@@ -145,23 +153,16 @@ function eliminarMaterial(){
                 $_POST["nomMaterial"],
             ));
         }else if($resultat !== false && isset($resultat['quantitat']) && $resultat['quantitat'] == $_POST["quantitatMaterial"]){
-
-            
-            // Obtener el nombre de la imagen después de eliminar el material
-            $img = $conn->prepare("SELECT imatge FROM materials WHERE nom = ?");
-            $img->execute(array(
-                $_POST["nomMaterial"],
+            // Verificar si la imagen está siendo utilizada por otros materiales
+            $num_usos_imagen = $conn->prepare("SELECT COUNT(*) as total FROM materials WHERE imatge = ?");
+            $num_usos_imagen->execute(array(
+                $resultat['imatge'],
             ));
-            $resultat = $img->fetch();
-            
-            // Verificar si se encontró una imagen y si no es la imagen predeterminada
-            if($resultat !== false && isset($resultat['imatge']) && $resultat['imatge'] != "default.jpg"){
-                // Mostrar la imagen
-                echo $resultat['imatge'];
-            
+            $num_usos_result = $num_usos_imagen->fetch();
+            if ($num_usos_result['total'] <= 1) {
+                // Solo eliminar la imagen si es el único artículo que la está utilizando
                 // Ruta de la imagen
                 $ruta_imagen = "../Assets/img/material/".$resultat['imatge'];
-            
                 // Verificar si el archivo de imagen existe antes de intentar eliminarlo
                 if (file_exists($ruta_imagen)) {
                     // Eliminar la imagen
@@ -173,9 +174,8 @@ function eliminarMaterial(){
                 } else {
                     //echo "La imagen ".$resultat['imatge']." no existe.";
                 }
-            } else {
-                //echo "No se encontró ninguna imagen para eliminar.";
             }
+            // Eliminar el material de la base de datos
             $sql = $conn->prepare("DELETE FROM materials WHERE nom = ?");
             $sql->execute(array(
                 $_POST["nomMaterial"],
@@ -186,19 +186,18 @@ function eliminarMaterial(){
             <?php
         }
         ?>
-        <script>
-            }
-        </script>
+
         <?php
     }
 }
+
 
 ?>
 <script>
     function confirmarEliminar(){
     var confirmar = confirm("Estas segur que vols eliminar aquest material?");
         if(confirmar){
-            return true;
+            <?php eliminarMaterial(); ?>
         }else{
             return false;
         }

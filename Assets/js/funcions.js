@@ -94,7 +94,7 @@ $('#filtrarLletra').on('click', function() {
 
 });
 
-$('#filtrarCurs').on('click', function() {
+$('#filtrarEdat').on('click', function() {
     
   let table = $('#Alumnes');
     let data = [];
@@ -111,10 +111,52 @@ $('#filtrarCurs').on('click', function() {
         }
     });
 
-    data = data.sort((a, b) => {
-        return a[3].localeCompare(b[3]);
+    data = data.sort( (a, b) => {
+        return compareNumbers(parseInt(a[2]), parseInt(b[2]));
     });
+
+    if(localStorage.getItem('excel') != null){
+            
+            localStorage.setItem('excel', JSON.stringify(data));
+            location.reload();
+        }
+        else{
+            alert('No hi ha cap alumne a la llista');
+        }
+
 });
+
+$('#filtrarCurs').on('click', function() {
+    
+    let table = $('#Alumnes');
+      let data = [];
+  
+      table.find('tr').each(function (i, el) {
+          if (i !== 0) {
+              let $tds = $(this).find('td');
+              let rowData = $tds.map(function (i, el) {
+                  return $(this).text();
+              }).get();
+              if (rowData.length > 0) {
+                  data.push(rowData);
+              }
+          }
+      });
+  
+      data = data.sort( (a, b) => {
+          return a[3].localeCompare(b[3]);
+      });
+  
+      if(localStorage.getItem('excel') != null){
+              
+              localStorage.setItem('excel', JSON.stringify(data));
+              location.reload();
+          }
+          else{
+              alert('No hi ha cap alumne a la llista');
+          }
+  
+  });
 
 function compareNumbers(a, b) {
     return a - b;
@@ -209,6 +251,25 @@ function mostrarUsers() {
     }
 
 }
+
+$('#nomMaterial').on('keyup', function() {
+    let input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("nomMaterial");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("Alumnes");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if(td){
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            }else{
+                tr[i].style.display = "none";
+            }
+        }
+    }
+});
 
 
 init();

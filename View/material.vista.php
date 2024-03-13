@@ -51,7 +51,7 @@
             </div>
           </nav>
 
-          <div class="row">
+          <div class="row-12">
             <div class="col-12 text-center-md text-center">
                 <h1>Material</h1>
                 <!--Desplegable para filtrar-->

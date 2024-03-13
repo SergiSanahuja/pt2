@@ -1,4 +1,7 @@
 import * as lib from './lib.js';
+
+let afegirUser = document.getElementById('newF');
+
 class Excel {
     constructor(content) {
         this.content = content; 
@@ -252,9 +255,10 @@ function mostrarUsers() {
 
 }
 
-$('#nomMaterial').on('keyup', function() {
+//Filtrar alumnes per nom
+$('#nomUsuari').on('keyup', function() {
     let input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("nomMaterial");
+    input = document.getElementById("nomUsuari");
     filter = input.value.toUpperCase();
     table = document.getElementById("Alumnes");
     tr = table.getElementsByTagName("tr");
@@ -271,5 +275,24 @@ $('#nomMaterial').on('keyup', function() {
     }
 });
 
+
+//Afegir un nou alumne
+
+$('#AfegirUsuari').on('click', function() {
+    afegirUser.showModal();
+
+});
+
+afegirUser.addEventListener("click", ev => {
+    const x = ev.clientX;
+    const y = ev.clientY;
+    const rect = afegirUser.getBoundingClientRect();    // Rectangle que ocupa el diàleg
+
+    if (x < rect.left || x >= rect.right || y < rect.top || y >= rect.bottom) cerrarDialog();
+});
+function cerrarDialog() {
+    afegirUser.close();
+    $('#cont').css('filter', 'none');
+}
 
 init();

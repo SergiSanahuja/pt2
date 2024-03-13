@@ -25,3 +25,10 @@ td{
     border: 1px solid #ccc;
     padding: 10px;
 }
+
+
+dialog{
+    border: none;
+    border-radius: 5px;
+   
+}

@@ -68,7 +68,7 @@
             <li><a class="dropdown-item" id="filtrarCurs" name="filtrarCurs">Per Curs</a></li>
             <li><a class="dropdown-item" id="filtrarEdat" name="filtrarEdat">Per Edat</a></li>
           </ul>
-        <input type="text" id="nomMaterial" name="nomMaterial" aria-label="Nom material" placeholder="Nom Usuari" required>
+        <input type="text" id="nomUsuari" name="nomUsuari" aria-label="Nom Usuari" placeholder="Nom Usuari" required>
         <button type="submit" class="btn btn-primary" id="AfegirUsuari" name="AfegirUsuari">+</button>
         <button type="submit" class="btn btn-primary" id="EliminarUsuari" name="EliminarUsuari">-</button>
       </form>
@@ -86,7 +86,33 @@
         </table>
     </div>
     
+    <dialog  id="newF">
+      <h3>Dades de la factura i del client</h3>
+      <table id="newUserTable">
+
+          <tr>
+              <th>Nom</th>
+              <td><input type="text" id="newNom" placeholder="Sergi"></td>
+          </tr>
+          <tr>
+              <th>Cognom</th>
+              <td><input type="text" id="newCognom" placeholder="Sanahuja Torrent"></td>
+          </tr>
+          <tr>
+              <th>Edat</th>
+              <td><input type="text" id="Edat" placeholder="21"></td>
+          </tr>
+          <tr><th class="spacing"></th></tr>
+          <tr>
+              <th>Curs</th>
+              <td><input type="text" id="newCurs" placeholder="DAW2"></td>
+          </tr>
+          <tr><th class="spacing"></th></tr>
+      </table>
+      <div id="newFGuardar"><button id="Guardar">Guardar</button></div>
+  </dialog>
 
 
   </body>
+  
 </html>

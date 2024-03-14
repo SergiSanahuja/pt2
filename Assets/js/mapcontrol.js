@@ -5,8 +5,6 @@ var markers = [];
 window.onload = function() {
     $.getScript("https://maps.googleapis.com/maps/api/js?key=" + googleApiKey + "&callback=initMap");
     window.initMap = initMap;
-    
-    document.getElementById('btnMapa').addEventListener('click', marcarMarcador);
 }
 
 var map;
@@ -23,6 +21,13 @@ function initMap() {
     });
 }
 
+function eliminarMarcador() {
+    if (markers.length > 0) {
+        let lastMarker = markers.pop(); // Obtiene el último marcador
+        lastMarker.setMap(null); // Elimina el marcador del mapa
+    }
+}
+
 function marcarMarcador() {
     map.addListener('click', function(event) {
         var marker = new google.maps.Marker({
@@ -31,4 +36,10 @@ function marcarMarcador() {
         });
         markers.push(marker);
     });
+    
 }
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById('btnMapaAfegirMarcador').addEventListener('click', marcarMarcador);
+    document.getElementById('btnMapaEliminarMarcador').addEventListener('click', eliminarMarcador);
+});

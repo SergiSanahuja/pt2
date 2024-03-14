@@ -1,6 +1,9 @@
 import * as lib from './lib.js';
 
+
 let afegirUser = document.getElementById('newF');
+let llistaUsers = [];
+
 
 class Excel {
     constructor(content) {
@@ -19,21 +22,25 @@ class Excel {
 
 ;
 
-function init() {
+async function init() {
 
     const file = document.getElementById('excelFile');
 
     file.addEventListener('change', async function(e) {
-        const content = await readXlsxFile( file.files[0]);
+        let content = await readXlsxFile( file.files[0]);
         content.shift();
 
-        localStorage.setItem('excel', JSON.stringify(content)); 
+
+        //localStorage.setItem('excel', JSON.stringify(content)); 
         
-        mostrarUsers()
-        guardarEnBD();
+        mostrarUsers(content);
+        guardarEnBD(content);
     });
+
+    llistaUsers = JSON.parse(await enviar([], 'mostrar'));
+
     
-    mostrarUsers();
+    mostrarUsers(llistaUsers);
 
     $('#afegirForm').click(() => {
         // $('#form')[0].reset();
@@ -63,109 +70,41 @@ $('#clearStorage').on('click', function() {
     }
 });
 
-//Filtrar alumnes
-$('#filtrarLletra').on('click', function() {
-    let table = $('#Alumnes');
-    let data = [];
-
-    table.find('tr').each(function (i, el) {
-        if (i !== 0) {
-            let $tds = $(this).find('td');
-            let rowData = $tds.map(function (i, el) {
-                return $(this).text();
-            }).get();
-            if (rowData.length > 0) {
-                data.push(rowData);
-            }
-        }
-    });
-
-    data = data.sort((a, b) => {
-        return a[0].localeCompare(b[0]);
-    });
-
-
-    if(localStorage.getItem('excel') != null){
-        
-        localStorage.setItem('excel', JSON.stringify(data));
-        location.reload();
-    }
-    else{
-        alert('No hi ha cap alumne a la llista');
-    }
+//-------------------------------------------Filtrar alumnes-------------------------
+$('#filtrarLletra').on('click', async function() {
    
+   enviar([], 'mostrarPerLletra');
+
+   llistaUsers = JSON.parse(await enviar([], 'mostrarPerLletra'));
+   
+   mostrarUsers(llistaUsers);
+
+
 
 });
 
-$('#filtrarEdat').on('click', function() {
+$('#filtrarEdat').on('click', async function() {
+    enviar([], 'mostrarPerEdat');
+
+    llistaUsers = JSON.parse(await enviar([], 'mostrarPerEdat'));
     
-  let table = $('#Alumnes');
-    let data = [];
-
-    table.find('tr').each(function (i, el) {
-        if (i !== 0) {
-            let $tds = $(this).find('td');
-            let rowData = $tds.map(function (i, el) {
-                return $(this).text();
-            }).get();
-            if (rowData.length > 0) {
-                data.push(rowData);
-            }
-        }
-    });
-
-    data = data.sort( (a, b) => {
-        return compareNumbers(parseInt(a[2]), parseInt(b[2]));
-    });
-
-    if(localStorage.getItem('excel') != null){
-            
-            localStorage.setItem('excel', JSON.stringify(data));
-            location.reload();
-        }
-        else{
-            alert('No hi ha cap alumne a la llista');
-        }
+    mostrarUsers(llistaUsers);
 
 });
 
-$('#filtrarCurs').on('click', function() {
+$('#filtrarCurs').on('click', async function() {
     
-    let table = $('#Alumnes');
-      let data = [];
-  
-      table.find('tr').each(function (i, el) {
-          if (i !== 0) {
-              let $tds = $(this).find('td');
-              let rowData = $tds.map(function (i, el) {
-                  return $(this).text();
-              }).get();
-              if (rowData.length > 0) {
-                  data.push(rowData);
-              }
-          }
-      });
-  
-      data = data.sort( (a, b) => {
-          return a[3].localeCompare(b[3]);
-      });
-  
-      if(localStorage.getItem('excel') != null){
-              
-              localStorage.setItem('excel', JSON.stringify(data));
-              location.reload();
-          }
-          else{
-              alert('No hi ha cap alumne a la llista');
-          }
+    enviar([], 'mostrarPerCurs');
+
+    llistaUsers = JSON.parse(await enviar([], 'mostrarPerCurs'));
+    
+    mostrarUsers(llistaUsers);
   
   });
 
-function compareNumbers(a, b) {
-    return a - b;
-  }
 
-//Guardar els usuaris a la BD
+
+//------------------------------Guardar els usuaris a la BD---------------------------
 function guardarEnBD() {
     let table = $('#Alumnes');
     let data = [];
@@ -185,26 +124,26 @@ function guardarEnBD() {
     enviar(data, 'guardar');
 }
 
-
-function enviar(data, accio){
-    $.ajax({
+//------------------------Petició AJAX per enviar les dades a la BD-------------------
+async function enviar(data, accio){
+    return $.ajax({
         url: './usuaris.php', // Fitxer controlador per afegir a la BD
         method: 'POST',
         data: {data: JSON.stringify(data), accio:accio},
-        success: function (data) {
-            
-            
-        },
+        // success: function (response) {
+        //     return response;
+        // },
         error: function () {
             alert('There was a problem saving the data');
         }
     });
 }
 
-function mostrarUsers() {
+function mostrarUsers(t) {
 
-    let excel2 = JSON.parse(localStorage.getItem('excel'));
+    let excel2 = t;
     let table = document.getElementById('Alumnes');  
+    table.innerHTML = '';
 
     if (excel2 == null) {
 
@@ -294,5 +233,25 @@ function cerrarDialog() {
     afegirUser.close();
     $('#cont').css('filter', 'none');
 }
+
+
+$('#Guardar').on('click', function() {
+    let nom = $('#newNom').val();
+    let cognom = $('#newCognom').val();
+    let edat = $('#Edat').val();
+    let curs = $('#Curs').val();
+    let table = $('#Alumnes');
+    let tr = document.createElement('tr');
+    tr.appendChild(lib.crearElement('td', {}, nom));
+    tr.appendChild(lib.crearElement('td', {}, cognom));
+    tr.appendChild(lib.crearElement('td', {}, edat));
+    tr.appendChild(lib.crearElement('td', {}, curs));
+    table.append(tr);
+    $('#divForm').hide();
+    afegirUser.close();
+    $('#cont').css('filter', 'none');
+    enviar([],'mostrar');
+    guardarEnBD();
+});
 
 init();

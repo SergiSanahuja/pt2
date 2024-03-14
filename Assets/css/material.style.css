@@ -8,7 +8,7 @@ input[type=file] {
 }
 
 #nomMaterial{
-    width: 45%;
+    width: 30%;
     box-sizing: border-box;
     border: none;
     border-bottom: 1px solid #ccc;
@@ -41,4 +41,9 @@ input[type=file] {
 
 .nav-link {
     color: white;
+}
+
+#eliminarMaterial {
+    background-color: #ff0000;
+    color: #ffffff;
 }

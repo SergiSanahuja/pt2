@@ -19,6 +19,7 @@ function insertarUsuari($data){
 
 
     foreach($data as $row){
+        
         $stmt = $conection->prepare($sql);
         $stmt->bindValue(1, $row[0]);
         $stmt->bindParam(2, $row[1]);

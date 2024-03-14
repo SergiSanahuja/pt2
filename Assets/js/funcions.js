@@ -37,6 +37,7 @@ async function init() {
         guardarEnBD(content);
     });
 
+    
     llistaUsers = JSON.parse(await enviar([], 'mostrar'));
 
     
@@ -102,6 +103,25 @@ $('#filtrarCurs').on('click', async function() {
   
   });
 
+  //---------------------------Filtrar alumnes per nom-------------------
+$('#nomUsuari').on('keyup', function() {
+    let input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("nomUsuari");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("Alumnes");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if(td){
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            }else{
+                tr[i].style.display = "none";
+            }
+        }
+    }
+});
 
 
 //------------------------------Guardar els usuaris a la BD---------------------------
@@ -138,7 +158,7 @@ async function enviar(data, accio){
         }
     });
 }
-
+//------------------------Mostrar alumnes a la taula-------------------
 function mostrarUsers(t) {
 
     let excel2 = t;
@@ -194,25 +214,7 @@ function mostrarUsers(t) {
 
 }
 
-//Filtrar alumnes per nom
-$('#nomUsuari').on('keyup', function() {
-    let input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("nomUsuari");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("Alumnes");
-    tr = table.getElementsByTagName("tr");
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if(td){
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            }else{
-                tr[i].style.display = "none";
-            }
-        }
-    }
-});
+
 
 
 //Afegir un nou alumne
@@ -240,6 +242,16 @@ $('#Guardar').on('click', function() {
     let cognom = $('#newCognom').val();
     let edat = $('#Edat').val();
     let curs = $('#Curs').val();
+
+    let data = [nom, cognom, edat, curs];
+
+    if (nom === '' || cognom === '' || edat === '' || curs === '') {
+        alert('Has d\'omplir tots els camps');
+        return;
+    }
+
+    enviar([data], 'guardar');
+
     let table = $('#Alumnes');
     let tr = document.createElement('tr');
     tr.appendChild(lib.crearElement('td', {}, nom));
@@ -250,8 +262,9 @@ $('#Guardar').on('click', function() {
     $('#divForm').hide();
     afegirUser.close();
     $('#cont').css('filter', 'none');
-    enviar([],'mostrar');
-    guardarEnBD();
+    
+
+   
 });
 
 init();

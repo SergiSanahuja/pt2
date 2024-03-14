@@ -17,14 +17,14 @@
             $servername = "localhost";
             // print_r((array)$data);
             insertarUsuari((array)$data);
+            // echo ((array) $data);
             echo json_encode(mostrarUsuari());
 
             exit(); 
-        }else if(($_POST['accio'])=='eliminar'){
+        }
+        else if(($_POST['accio'])=='eliminar'){
             
             eliminarUsuari();
-
-            
 
             exit();
         

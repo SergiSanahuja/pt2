@@ -19,7 +19,7 @@ function insertarUsuari($data){
 
 
     foreach($data as $row){
-        
+
         $stmt = $conection->prepare($sql);
         $stmt->bindValue(1, $row[0]);
         $stmt->bindParam(2, $row[1]);
@@ -54,6 +54,20 @@ function mostrarUsuari(){
     try{
     $conection = connection();
     $sql = "SELECT nom,cognom,edat,curs FROM `usuaris`"; // Replace with your table and column names
+    $stmt = $conection->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
+    }catch(Exception $e){
+        echo "Error: " . $e->getMessage();
+        die();
+    }
+}
+
+function mostrarNom(){
+    try{
+    $conection = connection();
+    $sql = "SELECT nom FROM `usuaris`"; // Replace with your table and column names
     $stmt = $conection->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

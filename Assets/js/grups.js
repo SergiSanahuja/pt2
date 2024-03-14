@@ -7,35 +7,6 @@ class Grup {
         this.excel = excel;
     }
 
-   
-        // crearGrup() {
-        //     let numGrups = 3; // Number of groups you want
-        //     let nGrup = Math.ceil((excel.length - 1) / numGrups); // Size of each group, subtract 1 from excel.length to account for the skipped row
-        
-        //     let tableContainer = document.getElementById('llistatGrups');
-        //     for (let i = 0; i < numGrups; i++) { // Create groups
-        //         let table = lib.crearElement('div',{class:'Grupos col-3',id:'grup'+i},"");
-        //         let tr = lib.crearElement('div',{class:'fila col-3 nGrup'},'Grup' + (i + 1));
-        //         table.appendChild(tr);
-        //         tableContainer.appendChild(table);
-        
-        //         // Calculate the start and end indices for each group
-        //         let start = i * nGrup + 1; // Start from 1 to skip the first row
-        //         let end = start + nGrup;
-        //         if (i === numGrups - 1) { // For the last group, make sure to include all remaining elements
-        //             end = excel.length;
-        //         }
-        
-        //         // Add elements to the group
-        //         for (let j = start; j < end; j++) {
-        //             let tr = lib.crearElement('div',{class:'fila col-3'},'');
-        //             tr.textContent = excel[j][0]; // Assuming you want to display the first value of each element
-        //             table.appendChild(tr);
-        //         }
-        //     }
-
-        //     tableContainer.appendChild(table);
-        // }
     
     
         crearGrup(){
@@ -91,7 +62,7 @@ class Grup {
 
                 for (let j = 0; j < alXGrup; j++) { //Afegir usuaris
                     let tr = lib.crearElement('div',{class:'fila col-3',draggable:'true',id:'usuari'+contador++},'');
-                    tr.textContent = llista[0][0]; // Assuming you want to display the first value of each element
+                    tr.textContent = llista[0].nom; // Assuming you want to display the first value of each element
                     tr.addEventListener('dragstart', drag);
                     table.appendChild(tr);
                     llista = llista.slice(1);
@@ -110,6 +81,19 @@ window.onload = function() {
 
 }
 
+async function enviar(data, accio){
+    return $.ajax({
+        url: './grups.php', // Fitxer controlador per afegir a la BD
+        method: 'POST',
+        data: {data: JSON.stringify(data), accio:accio},
+        // success: function (response) {
+        //     return response;
+        // },
+        error: function () {
+            alert('There was a problem saving the data');
+        }
+    });
+}
     
 function drag(ev) {
     ev.dataTransfer.setData("text", ev.target.id);
@@ -125,16 +109,13 @@ function allowDrop(ev) {
     ev.preventDefault();
   }
 
-$('#crearGrups').on('click', function() {
+$('#crearGrups').on('click', async function() {
 
-    let grup = new Grup(excel);
-    
-    if(localStorage.getItem('Grups') != null){
-        localStorage.removeItem('Grups');
-        grup.crearGrup();  
-    }else{
-        grup.crearGrup(); 
-    }
+    let llistaUsers = JSON.parse(await enviar([], 'getUsuaris'));
+   
+    let grup = new Grup(llistaUsers);
+
+    grup.crearGrup();
 
 
 });

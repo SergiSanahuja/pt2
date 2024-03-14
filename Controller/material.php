@@ -46,24 +46,26 @@ function mostrarMaterial($order){
 }
 
 function afegirMaterial(){
-    if(isset($_POST["agregarAgregar"]) && !empty($_POST["nomMaterial"]) && !empty($_POST["quantitatMaterial"])){
+    if(isset($_POST["agregarMaterial"]) && !empty($_POST["nomMaterial"]) && isset($_POST["quantitatMaterial"])){
         $conn = connexio();
         $name = $conn->prepare("SELECT nom FROM materials WHERE nom = ?");
 
-        //Conseguir el nombre del archivo
+        // Conseguir el nombre del archivo
         $img = verificarImatge_Guardar() ?? "default.jpg";
 
-        $name->execute(array(
-            $_POST["nomMaterial"],
-        ));
-        $resultat = $name->fetch();
-        if($_POST["quantitatMaterial"] == 0){
+        // Verificar si la cantidad es 0 y actualizar la imagen si es necesario
+        if(intval($_POST["quantitatMaterial"]) == 0){
             $sql = $conn->prepare("UPDATE materials SET imatge = ? WHERE nom = ?");
             $sql->execute(array(
                 $img,
                 $_POST["nomMaterial"],
             ));
         }
+
+        $name->execute(array(
+            $_POST["nomMaterial"],
+        ));
+        $resultat = $name->fetch();
         if($resultat !== false && isset($resultat['nom'])){
             if($img == "default.jpg"){
                 $sql = $conn->prepare("UPDATE materials SET quantitat = quantitat + ? WHERE nom = ?");
@@ -90,6 +92,7 @@ function afegirMaterial(){
         }
     }
 }
+
 
 function canviarImg(){
     if(empty($_POST["arxiuUsuari"])){
@@ -136,10 +139,6 @@ function verificarImatge_Guardar() {
 
 function eliminarMaterial(){
     if(!empty($_POST["nomMaterial"]) && !empty($_POST["quantitatMaterial"])){
-        ?>  <script>
-                confirmarEliminar();
-            </script> 
-        <?php
         $conn = connexio();
         $comprovarNum = $conn->prepare("SELECT * FROM materials WHERE nom = ?");
         $comprovarNum->execute(array(
@@ -180,32 +179,40 @@ function eliminarMaterial(){
             $sql->execute(array(
                 $_POST["nomMaterial"],
             ));       
-        }else{
-            ?>
-            <script>alert("No pots eliminar més material del que hi ha o no existeix el material");</script>
-            <?php
         }
-        ?>
+    }else{
+        echo "<script>Falta omplir algun camp</script>";
+    }
+}
 
-        <?php
+function mostrarError(){
+    if(!empty($_POST["nomMaterial"]) && !empty($_POST["quantitatMaterial"])){
+        //función para verificar si se ha excedido de la cantidad
+        $conn = connexio();
+        $comprovarNum = $conn->prepare("SELECT * FROM materials WHERE nom = ?");
+        $comprovarNum->execute(array(
+            $_POST["nomMaterial"],
+        ));
+        $resultat = $comprovarNum->fetch();
+        if($resultat !== false && isset($resultat['quantitat']) && $resultat['quantitat'] < $_POST["quantitatMaterial"]){
+            echo "<script> alert('No puedes eliminar más material del que tienes'); </script>";
+        }else{
+            // Mostrar confirmación en JavaScript
+            echo "<script>
+                var confirmar = confirm('¿Estás seguro que quieres eliminar el material?');
+                if(confirmar){
+                    // Submit the form if user confirms
+                    document.getElementById('formulariMaterial').submit();
+                }
+            </script>";
+        }
+    }else {
+        echo "<script>alert('Falta completar algún campo');</script>";
     }
 }
 
 
-?>
-<script>
-    function confirmarEliminar(){
-    var confirmar = confirm("Estas segur que vols eliminar aquest material?");
-        if(confirmar){
-            <?php eliminarMaterial(); ?>
-        }else{
-            return false;
-        }
-    }
-</script>
-<?php
-
-if(isset($_POST["agregarAgregar"]) || isset($_POST["eliminarMaterial"])){
+if(isset($_POST["agregarMaterial"]) || isset($_POST["eliminarMaterial"])){
     header("Refresh:0");
 }
 

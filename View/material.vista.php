@@ -56,7 +56,7 @@
                 <h1>Material</h1>
                 <!--Desplegable para filtrar-->
                 <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
-                  <form method="post" enctype="multipart/form-data">
+                  <form method="post" enctype="multipart/form-data" id="formulariMaterial">
                     <!-- Si no funciona el DropDown es por una clase de boostrap llamada clase="dropdown" -->
                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" name="dropdownMenuButton">
                         Filtrar
@@ -71,7 +71,7 @@
                     <label for='arxiuPujat' class='btn btn-primary' >Search...</label>
                     <input id='arxiuPujat' type="file" class="btn btn-primary" name="arxiuUsuari">
 
-                    <button type="submit" class="btn btn-primary" id="agregarAgregar" name="agregarAgregar">+</button>
+                    <button type="submit" class="btn btn-primary" id="agregarMaterial" name="agregarMaterial">+</button>
                     <button type="submit" class="btn btn-primary" id="eliminarMaterial" name="eliminarMaterial">-</button>
                   </form>
                 </div>
@@ -83,9 +83,13 @@
                     ?>
                 </div>
                 <?php
-                canviarImg();
-                afegirMaterial();
-                eliminarMaterial();
+                if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                  canviarImg();
+                  afegirMaterial();
+                  if(isset($_POST["eliminarMaterial"])){
+                    mostrarError();
+                  }
+                }
                 ?>
             </div> 
         </div>

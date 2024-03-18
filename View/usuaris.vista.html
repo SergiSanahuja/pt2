@@ -12,8 +12,9 @@
      
      <!-- JS -->
      <script type="module" src="../Assets/js/funcions.js"></script>
+     <script type="module" src="../Assets/js/usuaris.js"></script>
 
-  <!-- leer Excel con js -->
+    <!-- leer Excel con js -->
     <script src="https://unpkg.com/read-excel-file@5.x/bundle/read-excel-file.min.js"></script>
 
 
@@ -33,6 +34,7 @@
         <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarText">
             <span class="navbar-toggler-icon"></span>
         </button>
+        
         <div class="collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
@@ -50,15 +52,32 @@
           </ul>
         </div>
       </nav>
-      <div class="row">
+      <div class="row-12">
         <div class="col-12 text-center-md text-center">
             <h1>Usuaris</h1>
         </div>
     </div>
+    <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
+      <form method="post" enctype="multipart/form-data">
+        <!-- Si no funciona el DropDown es por una clase de boostrap llamada clase="dropdown" -->
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" name="dropdownMenuButton">
+            Filtrar
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li></li>
+            <li><a class="dropdown-item" id="filtrarLletra" name="mostrarMaterial">Per lletra</a></li>
+            <li><a class="dropdown-item" id="filtrarCurs" name="filtrarCurs">Per Curs</a></li>
+            <li><a class="dropdown-item" id="filtrarEdat" name="filtrarEdat">Per Edat</a></li>
+          </ul>
+        <input type="text" id="nomUsuari" name="nomUsuari" aria-label="Nom Usuari" placeholder="Nom Usuari" required>
+        <button type="submit" class="btn btn-primary" id="AfegirUsuari" name="AfegirUsuari">+</button>
+        <button type="submit" class="btn btn-primary" id="EliminarUsuari" name="EliminarUsuari">-</button>
+      </form>
+    </div>
 
     <div class="m-5">
       <input type="file" id="excelFile" class="form-control">     
-      <button type="submit" class="mt-3" id="clearStorage">Borrar Excel</button>
+      <button type="submit" class="mt-3" id="clearStorage">Borrar Ususaris</button>
     </div>
     
     <div id="taulaAlumnes" class="d-flex justify-content-center">
@@ -68,7 +87,41 @@
         </table>
     </div>
     
+    <dialog  id="newF">
+      <h3>Dades de la factura i del client</h3>
+      <table id="newUserTable">
+
+          <tr>
+              <th>Nom</th>
+              <td><input type="text" id="newNom" required placeholder="Sergi"></td>
+          </tr>
+          <tr>
+              <th>Cognom</th>
+              <td><input type="text" id="newCognom" required placeholder="Sanahuja Torrent"></td>
+          </tr>
+          <tr>
+              <th>Edat</th>
+              <td><input type="text" id="Edat" required placeholder="21"></td>
+          </tr>
+          <tr><th class="spacing"></th></tr>
+          <tr>
+              <th>Curs</th>
+              <td><select id="Curs">
+                <option value="ASIX1">ASIX1</option>
+                <option value="ASIX2">ASIX2</option>
+                <option value="DAW1">DAW1</option>
+                <option value="DAW2">DAW2</option>
+                <option value="SMX1">SMX1</option>
+                <option value="SMX2">SMX2</option>
+             
+              </select></td>
+          </tr>
+          <tr><th class="spacing"></th></tr>
+      </table>
+      <div id="newFGuardar"><button id="Guardar">Guardar</button></div>
+  </dialog>
 
 
   </body>
+  
 </html>

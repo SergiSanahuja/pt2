@@ -97,10 +97,20 @@
       </div>
     </div>
   </div>
-     <div class="col mapa">
-      <div id="mapa" class="mapa"></div>
-      <button class="btn btn-primary btn-mapa" id="btnMapa">Afagir marcador</button>
+  <div class="col mapa">
+    <div id="mapa" class="mapa"></div>
+    <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-primary btn-mapa" id="btnMapaAfegirMarcador">Afegir marcador</button>
+        <button type="button" class="btn btn-primary btn-mapa" id="btnMapaModificarMarcador">Modificar marcador</button>
+        <button type="button" class="btn btn-danger btn-mapa" id="btnMapaEliminarMarcador">Eliminar marcador</button>
     </div>
+    <div class="row">
+        <button type="button" class="btn btn-danger btn-mapa" id="btnMapaEliminarTodosMarcadores">Eliminar todos los marcadores</button>
+    </div>
+    <!-- <div>
+      <button type="button" class="btn btn-primary btn-mapa" id="btnObtenerLatLngCentro">Centrar marcador</button>
+    </div> -->
+</div>
 </body>
 
 </html>

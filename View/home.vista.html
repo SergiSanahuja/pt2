@@ -70,6 +70,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
+                <div id="modalMap" style="height: 300px;"></div>
                 <form id="form">
                   <div class="mb-3">
                     <input class="form-control" type="text" id="nom" name="nom" aria-label="Nom del taller"placeholder="Nom del taller">
@@ -85,6 +86,8 @@
                   <div class="mb-3">
                     <textarea class="form-control" id="material" name="material" aria-label="Material" placeholder="Material" rows="3"></textarea>
                   </div>
+                  <input type="hidden" id="modalLat" name="lat">
+                  <input type="hidden" id="modalLng" name="lng">
                 </form>
               </div>
               <div class="modal-footer">

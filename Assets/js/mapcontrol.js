@@ -120,3 +120,4 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('btnMapaEliminarTodosMarcadores').addEventListener('click', eliminarTodosMarcadores);
     document.getElementById('btnMapaModificarMarcador').addEventListener('click', modificarMarcador);
 });
+

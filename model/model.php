@@ -15,6 +15,7 @@ function connection(){
 function insertarUsuari($data){
     try{
     $conection = connection();
+    
     $sql = "INSERT INTO `usuaris`(`nom`, `cognom`, `edat`, `curs`, `grup`, `admin`, `prof`) VALUES (?, ?, ?, ?, 0, 0, 0)"; // Replace with your table and column names
 
 
@@ -38,6 +39,34 @@ function insertarUsuari($data){
 }
 
 
+function modificarUser($data){
+    
+    try{
+        $conection = connection();
+
+        $sql = "UPDATE `usuaris` SET `nom`=?,`cognom`=?,`edat`=?,`curs`=? WHERE `id`=?"; // Replace with your table and column names
+        
+    foreach($data as $row){
+
+        $stmt = $conection->prepare($sql);
+        $stmt->bindValue(1, $row[0]);
+        $stmt->bindParam(2, $row[1]);
+        $stmt->bindParam(3, $row[2]);
+        $stmt->bindParam(4, $row[3]);
+        $stmt->bindParam(5, $row[4]);
+        // $stmt->bindParam(5, 0);
+        // $stmt->bindParam(6, 0);
+        // $stmt->bindParam(7, 0);
+        $stmt->execute();
+    }
+    }catch(Exception $e){
+        echo "Error: " . $e->getMessage();
+
+    }
+}
+
+
+
 function eliminarUsuari(){
     try{
     $conection = connection();
@@ -50,10 +79,27 @@ function eliminarUsuari(){
     }
 }
 
+function borrarUsuari($data){
+    try{
+    $conection = connection();
+    $sql = "DELETE FROM `usuaris` WHERE id = ?"; // Replace with your table and column names
+ 
+    foreach($data as $row){
+
+        $stmt = $conection->prepare($sql);
+        $stmt->bindParam(1, $row[0]);
+        $stmt->execute();
+    }
+    }catch(Exception $e){
+        echo "Error: " . $e->getMessage();
+        die();
+    }
+}
+
 function mostrarUsuari(){
     try{
     $conection = connection();
-    $sql = "SELECT nom,cognom,edat,curs FROM `usuaris`"; // Replace with your table and column names
+    $sql = "SELECT id,nom,cognom,edat,curs FROM `usuaris`"; // Replace with your table and column names
     $stmt = $conection->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -83,7 +129,7 @@ function mostrarNom(){
 function mostrarPerLletra(){
     try{
     $conection = connection();
-    $sql = "SELECT nom,cognom,edat,curs FROM `usuaris` ORDER BY nom"; // Replace with your table and column names
+    $sql = "SELECT id,nom,cognom,edat,curs FROM `usuaris` ORDER BY nom"; // Replace with your table and column names
     $stmt = $conection->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -97,7 +143,7 @@ function mostrarPerLletra(){
 function mostrarPerCurs(){
     try{
     $conection = connection();
-    $sql = "SELECT nom,cognom,edat,curs FROM `usuaris` ORDER BY curs"; // Replace with your table and column names
+    $sql = "SELECT id,nom,cognom,edat,curs FROM `usuaris` ORDER BY curs"; // Replace with your table and column names
     $stmt = $conection->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -111,7 +157,7 @@ function mostrarPerCurs(){
 function mostrarPerEdat(){
     try{
     $conection = connection();
-    $sql = "SELECT nom,cognom,edat,curs FROM `usuaris` ORDER BY edat"; // Replace with your table and column names
+    $sql = "SELECT id,nom,cognom,edat,curs FROM `usuaris` ORDER BY edat"; // Replace with your table and column names
     $stmt = $conection->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

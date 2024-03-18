@@ -50,7 +50,6 @@
               </ul>
             </div>
           </nav>
-
           <div class="row-12">
             <div class="col-12 text-center-md text-center">
                 <h1>Material</h1>
@@ -58,6 +57,7 @@
                 <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
                   <form method="post" enctype="multipart/form-data" id="formulariMaterial">
                     <!-- Si no funciona el DropDown es por una clase de boostrap llamada clase="dropdown" -->
+
                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" name="dropdownMenuButton">
                         Filtrar
                       </button>
@@ -68,15 +68,16 @@
                       </ul>
                     <input type="text" id="nomMaterial" name="nomMaterial" aria-label="Nom material" placeholder="Nom Material" required>
                     <input type="number" id="quantitatMaterial" name="quantitatMaterial" value="1" min="0">
-                    <label for='arxiuPujat' class='btn btn-primary' >Search...</label>
+                    <label for='arxiuPujat' class='btn btn-primary' >Inserir imatge</label>
                     <input id='arxiuPujat' type="file" class="btn btn-primary" name="arxiuUsuari">
 
-                    <button type="submit" class="btn btn-primary" id="agregarMaterial" name="agregarMaterial">+</button>
-                    <button type="submit" class="btn btn-primary" id="eliminarMaterial" name="eliminarMaterial">-</button>
+                    <button type="submit" class="btn btn-primary" id="agregarAgregar" name="agregarAgregar">Afegir</button>
+                    <button type="submit" class="btn btn-primary" id="eliminarMaterial" name="eliminarMaterial">Eliminar</button>
+
                   </form>
                 </div>
                 <!--DIV -->
-                <div class="container d-flex flex-wrap">
+                <div class="container d-flex flex-wrap justify-content-center mt-4"">
                     <!--Cards-->
                     <?php
                     mostrarMaterial($_GET["filtrar"] ?? "default");

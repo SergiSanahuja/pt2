@@ -19,6 +19,14 @@ export function crearElement(tipus, atributs, contingut) {
     return element;
 }
 
+const svgNS = "http://www.w3.org/2000/svg";
+export function createElementNS(tipus, atributs) {
+    var element = document.createElementNS(svgNS, tipus);
+    for (var key in atributs) {
+        element.setAttribute(key, atributs[key]);
+    }
+    return element;
+}
 
 export function shuffleArray(array) {
     let currentIndex = array.length;

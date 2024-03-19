@@ -11,14 +11,24 @@
     
     if (isset($_POST['data'])) {
         // Get the data
+        $data = $_POST['data'];
+        $data = json_decode($data);
+        $servername = "localhost";
         if(($_POST['accio'])=='guardar'){
-            $data = $_POST['data'];
-            $data = json_decode($data);
-            $servername = "localhost";
+            
+           
+            if($data[0][4] != null){
+                modificarUser($data);
+                
+               
+            }else{
+                
+                insertarUsuari((array)$data);
+
+            }
             // print_r((array)$data);
-            insertarUsuari((array)$data);
             // echo ((array) $data);
-            echo json_encode(mostrarUsuari());
+           echo json_encode(mostrarUsuari());
 
             exit(); 
         }
@@ -28,6 +38,12 @@
 
             exit();
         
+        }else if (($_POST['accio'])=='borrar'){
+           
+            
+            borrarUsuari($data);
+            exit();
+
         }else if(($_POST['accio'])=='mostrar'){
             $usuari = mostrarUsuari();
 

@@ -21,7 +21,7 @@
      <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
 
      <!--SCRIPTS-->
-      <script defer src="../Controller/js/material.js"></script>
+      <script defer src="../Assets/js/material.js"></script>
 </head>
 <body>
     <div class="container-12">
@@ -71,13 +71,13 @@
                     <label for='arxiuPujat' class='btn btn-primary' >Inserir imatge</label>
                     <input id='arxiuPujat' type="file" class="btn btn-primary" name="arxiuUsuari">
 
-                    <button type="submit" class="btn btn-primary" id="agregarAgregar" name="agregarAgregar">Afegir</button>
-                    <button type="submit" class="btn btn-primary" id="eliminarMaterial" name="eliminarMaterial">Eliminar</button>
+                    <button type="submit" class="btn btn-primary" id="agregarMaterial" name="agregarMaterial">Afegir</button>
+                    <button type="button" class="btn btn-primary" id="eliminarMaterial" name="eliminarMaterial">Eliminar</button>
 
                   </form>
                 </div>
                 <!--DIV -->
-                <div class="container d-flex flex-wrap justify-content-center mt-4"">
+                <div class="container d-flex flex-wrap justify-content-center mt-4">
                     <!--Cards-->
                     <?php
                     mostrarMaterial($_GET["filtrar"] ?? "default");
@@ -87,9 +87,6 @@
                 if ($_SERVER["REQUEST_METHOD"] === "POST") {
                   canviarImg();
                   afegirMaterial();
-                  if(isset($_POST["eliminarMaterial"])){
-                    mostrarError();
-                  }
                 }
                 ?>
             </div> 

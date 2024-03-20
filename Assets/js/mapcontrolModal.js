@@ -40,8 +40,26 @@ $('#modalTaller').on('shown.bs.modal', function() {
 });
 
 function loadModalExistingMarkers() {
-    // Implementar la carga de marcadores existentes
+    $.ajax({
+        url: '../../Controller/getMarkers.php',
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            data.forEach(function(taller) {
+                let marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(parseFloat(taller.lat), parseFloat(taller.lng)),
+                    map: modalMap,
+                    title: taller.nom
+                });
+                modalMarkers.push(marker);
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error("Error al cargar los marcadores: ", status, error);
+        }
+    });
 }
+
 
 function clearModalMarkers() {
     // Eliminar todos los marcadores actuales del mapa

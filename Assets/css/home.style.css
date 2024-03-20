@@ -38,6 +38,8 @@
     height:500px;
     margin:  0 auto;
     padding: 10px;
+    cursor: pointer;
+    
 }
 
 #modalMap {
@@ -46,9 +48,20 @@
         height:500px;
         margin:  0 auto;
         padding: 10px;
+        cursor: pointer;
 }
 
 .btn-mapa{
-    margin: 10px;    
+    margin: 10px; 
     
+}
+
+#explicacion {
+    font-size: 1.5em; /* Aumenta el tamaño del texto */
+    color: #ffffff; /* Cambia el color del texto a blanco */
+    background-color: #5aac70; /* Añade un fondo azul */
+    border-radius: 5px; /* Redondea las esquinas del fondo */
+    text-align: center;
+    margin: 10px auto;
+    max-width: 500px; /* Limita el ancho máximo del bloque */
 }

@@ -14,21 +14,24 @@
         $data = $_POST['data'];
         $data = json_decode($data);
         $servername = "localhost";
+        
+        
         if(($_POST['accio'])=='guardar'){
             
            
             if($data[0][4] != null){
+
                 modificarUser($data);
                 
-               
-            }else{
                 
-                insertarUsuari((array)$data);
-
+            }else{
+                insertarUsuari($data);
+                
             }
+            echo $data[0][3];
             // print_r((array)$data);
             // echo ((array) $data);
-           echo json_encode(mostrarUsuari());
+        //    echo json_encode(mostrarUsuari());
 
             exit(); 
         }

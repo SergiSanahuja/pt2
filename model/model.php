@@ -18,7 +18,6 @@ function insertarUsuari($data){
     
     $sql = "INSERT INTO `usuaris`(`nom`, `cognom`, `edat`, `curs`, `grup`, `admin`, `prof`) VALUES (?, ?, ?, ?, 0, 0, 0)"; // Replace with your table and column names
 
-
     foreach($data as $row){
 
         $stmt = $conection->prepare($sql);

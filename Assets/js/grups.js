@@ -12,7 +12,7 @@ class Grup {
         crearGrup(){
 
             let numGrups = document.getElementById('numDeUsersXGrup').value; // Number of groups you want
-            this.excel = this.excel.filter((index) => index[0] != "Nombre");  
+            this.excel = this.excel.filter((index) => index[0] != "Nombre" + index[1] != "Apellidos");  
             this.llista= lib.shuffleArray(this.excel);
             localStorage.setItem('Grups', JSON.stringify(this.llista));
             this.mostrarGrups(numGrups);
@@ -24,6 +24,7 @@ class Grup {
             let contador = 0         
             if(localStorage.getItem('Grups') != null){
                 llista = JSON.parse(localStorage.getItem('Grups'));
+                
             }else{
                 return;
             }
@@ -45,7 +46,7 @@ class Grup {
             tableContainer.innerHTML = "";
             for (let i = 0; i < numGrups; i++) { // Create Grups
                 let table = lib.crearElement('div',{class:'Grupos col-3',id:'grup'+i},"");
-                let tr = lib.crearElement('div',{class:'fila col-3 nGrup',},'Grup' + (i + 1));
+                let tr = lib.crearElement('div',{class:'fila  nGrup',},'Grup' + (i + 1));
                 table.addEventListener('drop', drop);
                 table.addEventListener('dragover', allowDrop);
                 table.appendChild(tr);
@@ -61,8 +62,8 @@ class Grup {
                 }
 
                 for (let j = 0; j < alXGrup; j++) { //Afegir usuaris
-                    let tr = lib.crearElement('div',{class:'fila col-3',draggable:'true',id:'usuari'+contador++},'');
-                    tr.textContent = llista[0].nom; // Assuming you want to display the first value of each element
+                    let tr = lib.crearElement('div',{class:'fila col',draggable:'true',id:'usuari'+contador++},'');
+                    tr.textContent = llista[0].nom + " "+llista[0].cognom; // Assuming you want to display the first value of each element
                     tr.addEventListener('dragstart', drag);
                     table.appendChild(tr);
                     llista = llista.slice(1);
@@ -80,6 +81,8 @@ window.onload = function() {
     grup.mostrarGrups();
 
 }
+
+
 
 async function enviar(data, accio){
     return $.ajax({

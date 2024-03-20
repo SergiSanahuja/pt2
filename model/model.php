@@ -112,7 +112,7 @@ function mostrarUsuari(){
 function mostrarNom(){
     try{
     $conection = connection();
-    $sql = "SELECT nom FROM `usuaris`"; // Replace with your table and column names
+    $sql = "SELECT nom,cognom FROM `usuaris`"; // Replace with your table and column names
     $stmt = $conection->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

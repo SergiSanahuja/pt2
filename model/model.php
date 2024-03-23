@@ -112,7 +112,7 @@ function mostrarUsuari(){
 function mostrarNom(){
     try{
     $conection = connection();
-    $sql = "SELECT nom,cognom FROM `usuaris`"; // Replace with your table and column names
+    $sql = "SELECT nom,cognom,id,grup FROM `usuaris`"; // Replace with your table and column names
     $stmt = $conection->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -167,4 +167,108 @@ function mostrarPerEdat(){
     }
 }
 
+
+//Grups
+
+function insertGrup($data){
+    try{
+    $conection = connection();
+    
+    $sql = "INSERT INTO `grups`(`nom`, `punts`) VALUES (?, 0)"; // Replace with your table and column names
+
+    $stmt = $conection->prepare($sql);
+    $stmt->bindParam(1, $data);
+    $stmt->execute();
+
+    
+    }catch(Exception $e){
+        echo "Error: " . $data;
+        die();
+    }
+}
+
+function eliminarGrup(){
+    try{
+    $conection = connection();
+    $sql = "DELETE FROM `grups`"; // Replace with your table and column names
+    $stmt = $conection->prepare($sql);
+    $stmt->execute();
+    }catch(Exception $e){
+        echo "Error: " . $e->getMessage();
+        die();
+    }
+}
+
+function insertUsuariGrup($data){
+    try{
+        
+    $conection = connection();
+    
+    $sql = "UPDATE `usuaris` SET `grup`=? WHERE `id`=?"; // Replace with your table and column names
+
+    print_r($data);    
+
+    $stmt = $conection->prepare($sql);
+    $stmt->bindParam(1, $data[0]);
+    $stmt->bindParam(2, $data[1]);
+    $stmt->execute();
+    
+    
+    }catch(Exception $e){
+        echo "Error: " . $data;
+        die();
+    }
+}
+
+function getUsersGrups($data){
+    try{
+    $conection = connection();
+    $sql = "SELECT nom,cognom FROM `usuaris` WHERE grup = ?"; // Replace with your table and column names
+    
+    $stmt = $conection->prepare($sql);
+    $stmt->bindParam(1, $data[1]);
+    $stmt->execute();
+
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
+
+    }catch(Exception $e){
+        echo "Error: " . $e->getMessage();
+        die();
+    }
+}
+
+function getNumGrups(){
+    try{
+    $conection = connection();
+    $sql = "SELECT COUNT(DISTINCT grup) as CountGrups FROM `usuaris`"; // Replace with your table and column names
+    $stmt = $conection->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return $result;
+
+    }catch(Exception $e){
+        echo "Error: " . $e->getMessage();
+        die();
+    }
+}
+
+
+function canviarGrup($data){
+    try{
+    $conection = connection();
+    $sql = "UPDATE `usuaris` SET `grup`=? WHERE `id`=?"; // Replace with your table and column names
+
+
+    $stmt = $conection->prepare($sql);
+    $stmt->bindParam(1, $data->idGrup);
+    $stmt->bindParam(2, $data ->idUser);
+    $stmt->execute();
+
+    }catch(Exception $e){
+        echo "Error: " . $e->getMessage();
+        die();
+    }
+}
 ?>

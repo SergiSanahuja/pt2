@@ -14,9 +14,8 @@ function initMap() {
 }
 
 function loadMarkers() {
-    // Carga los marcadores existentes desde la base de datos
     $.ajax({
-        url: '../../Controller/getMarkers.php',
+        url: '../Controller/getMarkers.php', 
         type: 'GET',
         dataType: 'json',
         success: function(data) {
@@ -34,6 +33,7 @@ function loadMarkers() {
         }
     });
 }
+
 
 $(window).on('load', function() {
     if (typeof google === 'object' && typeof google.maps === 'object') {

@@ -36,7 +36,7 @@ function createMarker(location) {
 // Carga los marcadores existentes llamando a tu backend PHP
 function loadModalExistingMarkers() {
     $.ajax({
-        url: '../../Controller/getMarkers.php', // Asegúrate de que esta ruta es accesible y correcta
+        url: '../Controller/getMarkers.php',  
         type: 'GET',
         dataType: 'json',
         success: function(data) {

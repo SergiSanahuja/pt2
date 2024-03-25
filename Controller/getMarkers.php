@@ -7,9 +7,8 @@ $db = connexio();
 $result = $db->query("SELECT * FROM tallers");
 
 $markers = [];
-
 while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
     $markers[] = $row;
 }
-
 echo json_encode($markers);
+?>

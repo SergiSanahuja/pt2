@@ -43,7 +43,64 @@ input[type=file] {
     color: white;
 }
 
-#eliminarMaterial {
+#btnEliminarMatDialog {
     background-color: #ff0000;
     color: #ffffff;
+}
+
+#btnEliminarMatDialog:hover {
+    background-color: #ff4d4d;
+    color: #ffffff;
+}
+
+.colorNotification{
+    color: #800202;
+}
+
+.centrat {
+	width: 10%;
+	height: 55%;
+	padding: 2rem;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 28rem;
+	background-color: white;
+	border-radius: 1.5rem;
+	box-shadow: 8px 8px 24px 0 rgba(0, 0, 0, 0.5);	
+}
+
+.DialogMaterial{
+    border-radius: 20px;
+    width: 800px;
+    height: 460px;
+    position: relative;
+    background-color: transparent;
+    border: none;
+}
+
+.popUpMaterial{
+    border-radius: 20px;
+    width: 683px;
+    height: 420px;
+    box-shadow: -5px 5px 4px 0 rgba(0, 0, 0, 0.25);
+    background: #eee;
+    position: relative;
+}
+
+.tancar{
+	position:absolute;
+	border-radius:2rem;
+	background-color:#e8e8e8;
+	margin:0;
+	padding: 0.5rem;
+	top:1rem;
+	right:1rem;
+	opacity:0.6;
+	height: 30px;
+	width: 30px;
+}
+.tancar:hover{
+	opacity:1;
 }

@@ -46,77 +46,76 @@ function mostrarMaterial($order){
 }
 
 function afegirMaterial(){
-    if(isset($_POST["agregarMaterial"]) && !empty($_POST["nomMaterial"]) && isset($_POST["quantitatMaterial"])){
+    if(isset($_POST["agregarMaterial"]) && !empty($_POST["nomMaterialAfegir"]) && isset($_POST["quantitatMaterialAfegir"])){
         $conn = connexio();
         $name = $conn->prepare("SELECT nom FROM materials WHERE nom = ?");
 
         // Conseguir el nombre del archivo
-        $img = verificarImatge_Guardar() ?? "default.jpg";
-
-        // Verificar si la cantidad es 0 y actualizar la imagen si es necesario
-        if(intval($_POST["quantitatMaterial"]) == 0){
-            $sql = $conn->prepare("UPDATE materials SET imatge = ? WHERE nom = ?");
-            $sql->execute(array(
-                $img,
-                $_POST["nomMaterial"],
-            ));
-        }
+        $img = verificarImatge_Guardar("arxiuUsuariAfegir") ?? "default.jpg";
 
         $name->execute(array(
-            $_POST["nomMaterial"],
+            $_POST["nomMaterialAfegir"],
         ));
         $resultat = $name->fetch();
         if($resultat !== false && isset($resultat['nom'])){
-            if($img == "default.jpg"){
-                $sql = $conn->prepare("UPDATE materials SET quantitat = quantitat + ? WHERE nom = ?");
-                $sql->execute(array(
-                    $_POST["quantitatMaterial"],
-                    $_POST["nomMaterial"],
-                ));
-            }else{
-                $sql = $conn->prepare("UPDATE materials SET quantitat = quantitat + ? , imatge = ? WHERE nom = ?");
-                $sql->execute(array(
-                    $_POST["quantitatMaterial"],
-                    $img,
-                    $_POST["nomMaterial"],
-                ));
-            }
-
+            echo "<script>alert('Ja existeix el material')</script>";
         }else{
-            $sql = $conn->prepare("INSERT INTO materials (nom, quantitat, imatge) VALUES (?, ?, ?)");
+            $pagat = false;
+            if(isset($_POST["pagatAfegirMat"])){
+                $pagat = true;
+            }
+            $sql = $conn->prepare("INSERT INTO materials (nom, quantitat, imatge, pagat) VALUES (?, ?, ?, ?)");
             $sql->execute(array(
-                $_POST["nomMaterial"],
-                $_POST["quantitatMaterial"],
+                $_POST["nomMaterialAfegir"],
+                $_POST["quantitatMaterialAfegir"],
                 $img,
+                $pagat,
             ));
         }
     }
 }
 
-
-function canviarImg(){
-    if(empty($_POST["arxiuUsuari"])){
-    }else if(isset($_POST["arxiuUsuari"])){
+function modificarMaterial(){
+    if(isset($_POST["modificarMaterial"]) && !empty($_POST["nomMaterialModificar"]) && isset($_POST["quantitatMaterialModificar"])){
         $conn = connexio();
-        verificarImatge_Guardar();
-        $img = "";
-        if(isset($_POST['arxiuUsuari'])){
-            $img = $_FILES['arxiuUsuari'];
-            echo "arribat";
-        }
-        echo $img;
-        $sql = $conn->prepare("UPDATE materials SET imatge = ? WHERE nom = ?");
-        $sql->execute(array(
-            $img,
-            $_POST["nomMaterial"],
+        $comprovarNom = $conn->prepare("SELECT * FROM materials WHERE nom = ?");
+        $comprovarNom->execute(array(
+            $_POST["nomMaterialModificar"],
         ));
-        //header("Location: ../View/material.vista.php");
+        $resultat = $comprovarNom->fetch();
+        $img = verificarImatge_Guardar("arxiuUsuariModificar") ?? $resultat['imatge'] ?? "default.jpg";
+
+        if($resultat !== false){
+            // Verificar si la cantidad es 0 y actualizar la imagen si es necesario
+            if(intval($_POST["quantitatMaterialModificar"]) == 0){
+                $sql = $conn->prepare("UPDATE materials SET imatge = ? WHERE nom = ?");
+                $sql->execute(array(
+                    $img,
+                    $_POST["nomMaterialModificar"],
+                ));
+            }else{
+                $pagat = false;
+                if(isset($_POST["pagatModificarMat"])){
+                    $pagat = true;
+                }
+                $sql = $conn->prepare("UPDATE materials SET quantitat = ?, imatge = ?, pagat = ? WHERE nom = ?");
+                $sql->execute(array(
+                    $_POST["quantitatMaterialModificar"],
+                    $img,
+                    $pagat,
+                    $_POST["nomMaterialModificar"],
+                ));
+            }
+
+        }else {
+            echo "<script>alert('No existeix el material')</script>";
+        }
     }
 }
 
-function verificarImatge_Guardar() {
-    if (isset($_FILES['arxiuUsuari'])) {
-        $file = $_FILES['arxiuUsuari'];
+function verificarImatge_Guardar($id) {
+    if (isset($_FILES[$id])) {
+        $file = $_FILES[$id];
         
         // Verifica si hay errores al subir el archivo
         if ($file['error'] !== UPLOAD_ERR_OK) {
@@ -125,6 +124,14 @@ function verificarImatge_Guardar() {
 
         // Obtener el nombre del archivo
         $fileName = basename($file['name']); // Solo el nombre del archivo, sin ruta
+
+        // Obtener la extensión del archivo
+        $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+
+        // Verificar si la extensión es válida
+        if (!in_array($fileExtension, ['png', 'jpg', 'svg'])) {
+            return;
+        }
 
         // Especificar la carpeta de destino
         $destination = '../Assets/img/material/' . $fileName;
@@ -143,11 +150,11 @@ function eliminarMaterial(){
         echo $data;
 
         // $conn = connexio();
-        // $comprovarNum = $conn->prepare("SELECT * FROM materials WHERE nom = ?");
-        // $comprovarNum->execute(array(
+        // $comprovarNom = $conn->prepare("SELECT * FROM materials WHERE nom = ?");
+        // $comprovarNom->execute(array(
         //     $_POST["nomMaterial"],
         // ));
-        // $resultat = $comprovarNum->fetch();
+        // $resultat = $comprovarNom->fetch();
         // if($resultat !== false && isset($resultat['quantitat']) && $resultat['quantitat'] > $_POST["quantitatMaterial"]){
         //     $sql = $conn->prepare("UPDATE materials SET quantitat = quantitat - ? WHERE nom = ?");
         //     $sql->execute(array(
@@ -196,8 +203,8 @@ if(isset($_POST["data"])){
     }
 }
 
-if(isset($_POST["agregarMaterial"]) || isset($_POST["eliminarMaterial"])){
-    header("Refresh:0");
+if(isset($_POST["agregarMaterial"]) || isset($_POST["eliminarMaterial"]) || isset($_POST["modificarMaterial"])){
+    //header("Refresh:0");
 }
 
 require '../View/material.vista.php';

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-02-2024 a las 22:01:24
+-- Tiempo de generación: 20-03-2024 a las 21:33:28
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -20,7 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `activitat_de_cohesio`
 --
-DROP DATABASE IF EXISTS `activitat_de_cohesio`;
 CREATE DATABASE IF NOT EXISTS `activitat_de_cohesio` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `activitat_de_cohesio`;
 
@@ -30,7 +29,6 @@ USE `activitat_de_cohesio`;
 -- Estructura de tabla para la tabla `grups`
 --
 
-DROP TABLE IF EXISTS `grups`;
 CREATE TABLE `grups` (
   `id` int(11) NOT NULL,
   `nom` varchar(20) NOT NULL,
@@ -43,7 +41,6 @@ CREATE TABLE `grups` (
 -- Estructura de tabla para la tabla `materials`
 --
 
-DROP TABLE IF EXISTS `materials`;
 CREATE TABLE `materials` (
   `id` int(11) NOT NULL,
   `nom` varchar(30) NOT NULL,
@@ -57,7 +54,11 @@ CREATE TABLE `materials` (
 
 INSERT INTO `materials` (`id`, `nom`, `quantitat`, `imatge`) VALUES
 (62, 'a', 9, 'insti.jpg'),
-(63, 'b', 13, 'logo.png');
+(63, 'b', 13, 'logo.png'),
+(64, 'prova', 2, 'default.jpg'),
+(65, 'gfdgfd', 1, 'default.jpg'),
+(66, 'as', 1, '2a53cc1fcfab1a930753da45b4e74526c9876223_full.jpg'),
+(67, 'madera', 1, 'default.jpg');
 
 -- --------------------------------------------------------
 
@@ -65,7 +66,6 @@ INSERT INTO `materials` (`id`, `nom`, `quantitat`, `imatge`) VALUES
 -- Estructura de tabla para la tabla `tallers`
 --
 
-DROP TABLE IF EXISTS `tallers`;
 CREATE TABLE `tallers` (
   `id` int(11) NOT NULL,
   `nom` varchar(45) NOT NULL,
@@ -79,13 +79,13 @@ CREATE TABLE `tallers` (
 -- Estructura de tabla para la tabla `usuaris`
 --
 
-DROP TABLE IF EXISTS `usuaris`;
 CREATE TABLE `usuaris` (
   `id` int(11) NOT NULL,
   `nom` varchar(30) NOT NULL,
   `cognom` varchar(30) NOT NULL,
-  `curs` enum('Daw2nd','Daw1r','SMX1r','') NOT NULL,
-  `grup` enum('Grup1','Grup2','Grup3','') NOT NULL,
+  `edat` int(11) NOT NULL,
+  `curs` varchar(20) NOT NULL,
+  `grup` int(11) NOT NULL,
   `admin` tinyint(1) NOT NULL DEFAULT 0,
   `prof` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -132,7 +132,7 @@ ALTER TABLE `grups`
 -- AUTO_INCREMENT de la tabla `materials`
 --
 ALTER TABLE `materials`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT de la tabla `tallers`
@@ -144,7 +144,7 @@ ALTER TABLE `tallers`
 -- AUTO_INCREMENT de la tabla `usuaris`
 --
 ALTER TABLE `usuaris`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=673;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

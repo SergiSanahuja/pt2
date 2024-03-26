@@ -208,15 +208,15 @@ function eliminarMaterial(){
                 $sql->execute(array($nomMat));
 
                 if($sql->rowCount() == 0){
-                    echo json_encode(array("success" => false, "message" => "No existeix el material"));
+                    echo "No existeix el material";
                 } else {
                     echo json_encode(array("success" => true));
                 }
             } else {
-                echo json_encode(array("success" => false, "message" => "No existeix el material"));
+                echo "No existeix el material";
             }
         } else {
-            echo json_encode(array("success" => false, "message" => "Falta omplir algun camp"));
+            echo "Falta omplir algun camp";
         }
     } catch (PDOException $e) {
         echo json_encode(array("success" => false, "message" => "Error al eliminar material: " . $e->getMessage()));

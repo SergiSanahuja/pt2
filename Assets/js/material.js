@@ -16,12 +16,11 @@ async function confirmDelete() {
                 url: "./material.php",
                 method: "POST",
                 data: peticio,
-                dataType: "json",
                 success: function(response) {
                     if(response.success){
                         alert("Material eliminat correctament");
                     } else {
-                        alert(response.message);
+                        alert(response); // Mostrar el mensaje directamente
                     }
                 },
                 error: function(xhr, status, error) {
@@ -40,8 +39,6 @@ if (btnEliminar) {
         confirmDelete();
     });
 }
-
-
 
 //Afegir material
 let btnAfegirDialog = document.getElementById("btnAfegirMatDialog");

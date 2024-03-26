@@ -22,10 +22,11 @@
 
      <!--SCRIPTS-->
       <script defer src="../Assets/js/material.js"></script>
+      <script defer src="../Assets/js/global.js"></script>
 </head>
 <body>
     <div class="container-12">
-        <nav class="navbar navbar-expand-lg ">
+    <nav class="navbar navbar-expand-lg ">
             <img src="../Assets/img/logo.png" alt="logo" width="auto" height="50">
             <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarText">
                 <span class="navbar-toggler-icon"></span>
@@ -44,8 +45,10 @@
                 <li class="nav-item">
                   <a class="nav-link" href="../Controller/grups.php">Grups</a>
                 </li>
-                <li>
-                    <div class="cercle"></div>
+              </ul>
+              <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <button class="btnLogOut" id="btnTancarSessio">Tancar sessió</button>
                 </li>
               </ul>
             </div>

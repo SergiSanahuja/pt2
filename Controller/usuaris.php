@@ -31,7 +31,7 @@
             echo $data[0][3];
             // print_r((array)$data);
             // echo ((array) $data);
-        //    echo json_encode(mostrarUsuari());
+            // echo json_encode(mostrarUsuari());
 
             exit(); 
         }

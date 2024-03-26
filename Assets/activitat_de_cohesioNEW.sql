@@ -77,16 +77,16 @@ CREATE TABLE IF NOT EXISTS `tallers` (
 
 DROP TABLE IF EXISTS `usuaris`;
 CREATE TABLE IF NOT EXISTS `usuaris` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `nom` varchar(30) NOT NULL,
   `cognom` varchar(30) NOT NULL,
-  `curs` enum('Daw2nd','Daw1r','SMX1r','') NOT NULL,
-  `grup` enum('Grup1','Grup2','Grup3','') NOT NULL,
+  `edat` int(11) NOT NULL,
+  `curs` varchar(20) NOT NULL,
+  `grup` int(11) NOT NULL,
   `admin` tinyint(1) NOT NULL DEFAULT 0,
-  `prof` tinyint(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`)
+  `prof` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-COMMIT;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

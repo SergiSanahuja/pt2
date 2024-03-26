@@ -69,7 +69,7 @@ function modificarUser($data){
 function eliminarUsuari(){
     try{
     $conection = connection();
-    $sql = "DELETE FROM `usuaris`"; // Replace with your table and column names
+    $sql = "DELETE FROM `usuaris` where prof=0"; // Replace with your table and column names
     $stmt = $conection->prepare($sql);
     $stmt->execute();
     }catch(Exception $e){
@@ -98,7 +98,7 @@ function borrarUsuari($data){
 function mostrarUsuari(){
     try{
     $conection = connection();
-    $sql = "SELECT id,nom,cognom,edat,curs FROM `usuaris`"; // Replace with your table and column names
+    $sql = "SELECT id,nom,cognom,edat,curs FROM `usuaris` where prof=0"; // Replace with your table and column names
     $stmt = $conection->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -112,7 +112,7 @@ function mostrarUsuari(){
 function mostrarNom(){
     try{
     $conection = connection();
-    $sql = "SELECT nom,cognom,id,grup FROM `usuaris`"; // Replace with your table and column names
+    $sql = "SELECT nom,cognom,id,grup FROM `usuaris` where prof=0"; // Replace with your table and column names
     $stmt = $conection->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -128,7 +128,7 @@ function mostrarNom(){
 function mostrarPerLletra(){
     try{
     $conection = connection();
-    $sql = "SELECT id,nom,cognom,edat,curs FROM `usuaris` ORDER BY nom"; // Replace with your table and column names
+    $sql = "SELECT id,nom,cognom,edat,curs FROM `usuaris` Where prof=0 ORDER BY nom"; // Replace with your table and column names
     $stmt = $conection->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -142,7 +142,7 @@ function mostrarPerLletra(){
 function mostrarPerCurs(){
     try{
     $conection = connection();
-    $sql = "SELECT id,nom,cognom,edat,curs FROM `usuaris` ORDER BY curs"; // Replace with your table and column names
+    $sql = "SELECT id,nom,cognom,edat,curs FROM `usuaris` Where prof=0 ORDER BY curs"; // Replace with your table and column names
     $stmt = $conection->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -156,7 +156,7 @@ function mostrarPerCurs(){
 function mostrarPerEdat(){
     try{
     $conection = connection();
-    $sql = "SELECT id,nom,cognom,edat,curs FROM `usuaris` ORDER BY edat"; // Replace with your table and column names
+    $sql = "SELECT id,nom,cognom,edat,curs FROM `usuaris` WHERE prof=0 ORDER BY edat"; // Replace with your table and column names
     $stmt = $conection->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -223,7 +223,7 @@ function insertUsuariGrup($data){
 function getUsersGrups($data){
     try{
     $conection = connection();
-    $sql = "SELECT nom,cognom FROM `usuaris` WHERE grup = ?"; // Replace with your table and column names
+    $sql = "SELECT nom,cognom FROM `usuaris` WHERE grup = ? and prof=0"; // Replace with your table and column names
     
     $stmt = $conection->prepare($sql);
     $stmt->bindParam(1, $data[1]);
@@ -241,7 +241,7 @@ function getUsersGrups($data){
 function getNumGrups(){
     try{
     $conection = connection();
-    $sql = "SELECT COUNT(DISTINCT grup) as CountGrups FROM `usuaris`"; // Replace with your table and column names
+    $sql = "SELECT COUNT(nom) as CountGrups FROM `grups`"; // Replace with your table and column names
     $stmt = $conection->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

@@ -51,7 +51,8 @@ class Grup {
             let llista = JSON.parse(await enviar([],'getUsuaris'))
             let numGrups = JSON.parse(await enviar([],'getNumGrups'));
             numGrups = numGrups[0].CountGrups;
-            
+        
+
             for (let i = 0; i < numGrups; i++) {
 
                 let table = lib.crearElement('div',{class:'Grupos col-3',id:'Grup'+(i+1)},"");

@@ -83,7 +83,6 @@
                 if ($_SERVER["REQUEST_METHOD"] === "POST") {
                   afegirMaterial();
                   modificarMaterial();
-                  eliminarMaterial();
                 }
                 ?>
             </div> 
@@ -100,7 +99,7 @@
           <input type="number" id="quantitatMaterialAfegir" name="quantitatMaterialAfegir" required min="1" value="1"><br><br>
           <label for='arxiuUsuariAfegir' class='btn btn-primary' >Inserir imatge</label>
           <input id='arxiuUsuariAfegir' type="file" class="btn btn-primary" name="arxiuUsuariAfegir"><br><br>
-          <label for="pagatAfegirMat">Pagat</label>
+          <label for="pagatAfegirMat">S'ha de comprar?</label>
           <input type="checkbox" id="pagatAfegirMat" name="pagatAfegirMat"><br><br>
           <button type="submit" class="btn btn-primary" id="agregarMaterial" name="agregarMaterial">Afegir</button>
         </form>
@@ -118,9 +117,20 @@
           <p class="colorNotification">(Si vols canviar solament l'imatge, pots posar la quantitat a 0)</p>
           <label for='arxiuUsuariModificar' class='btn btn-primary' >Inserir imatge</label>
           <input id='arxiuUsuariModificar' type="file" class="btn btn-primary" name="arxiuUsuariModificar"><br><br>
-          <label for="pagatModificarMat">Pagat</label>
+          <label for="pagatModificarMat">S'ha de comprar?</label>
           <input type="checkbox" id="pagatModificarMat" name="pagatModificarMat"><br><br>
           <button type="submit" class="btn btn-primary" id="modificarMaterial" name="modificarMaterial">Modificar</button>
+        </form>
+      </div>
+    </dialog>
+    <dialog id="eliminarMaterialDialog" class="DialogMaterial">
+      <div class="centrat popUpMaterial">
+        <img id="tancarEliminarMat" class="tancar" src="../Assets/img/close.svg">
+        <h2>Eliminar Material</h2>
+        <form method="post" enctype="multipart/form-data" id="formulariEliminarMaterial">
+          <label for="nomMaterialEliminar">Nom del material a eliminar</label>
+          <input type="text" id="nomMaterialEliminar" name="nomMaterialEliminar" required><br><br>
+          <button type="submit" class="btn btn-primary" id="eliminarMaterial" name="eliminarMaterial">Eliminar</button>
         </form>
       </div>
     </dialog>

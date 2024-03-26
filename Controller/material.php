@@ -13,6 +13,7 @@ function mostrarMaterial($order){
             echo "<div class='card-body'>";
             echo "<h5 class='card-title'>".$material['nom']."</h5>";
             echo "<p class='card-text'>Quantitat: ".$material['quantitat']."</p>";
+            echo "<p class='card-text'>Comprar: ".($material['pagat'] == 0 ? "No" : "Sí")."</p>";
             echo "</div>";
             echo "</div>";
         }
@@ -26,6 +27,7 @@ function mostrarMaterial($order){
             echo "<div class='card-body'>";
             echo "<h5 class='card-title'>".$material['nom']."</h5>";
             echo "<p class='card-text'>Quantitat: ".$material['quantitat']."</p>";
+            echo "<p class='card-text'>Comprar: ".($material['pagat'] == 0 ? "No" : "Sí")."</p>";
             echo "</div>";
             echo "</div>";
         }
@@ -39,6 +41,7 @@ function mostrarMaterial($order){
             echo "<div class='card-body'>";
             echo "<h5 class='card-title'>".$material['nom']."</h5>";
             echo "<p class='card-text'>Quantitat: ".$material['quantitat']."</p>";
+            echo "<p class='card-text'>Comprar: ".($material['pagat'] == 0 ? "No" : "Sí")."</p>";
             echo "</div>";
             echo "</div>";
         }
@@ -50,9 +53,6 @@ function afegirMaterial(){
         $conn = connexio();
         $name = $conn->prepare("SELECT nom FROM materials WHERE nom = ?");
 
-        // Conseguir el nombre del archivo
-        $img = verificarImatge_Guardar("arxiuUsuariAfegir") ?? "default.jpg";
-
         $name->execute(array(
             $_POST["nomMaterialAfegir"],
         ));
@@ -60,6 +60,9 @@ function afegirMaterial(){
         if($resultat !== false && isset($resultat['nom'])){
             echo "<script>alert('Ja existeix el material')</script>";
         }else{
+            // Conseguir el nombre del archivo
+            $img = verificarImatge_Guardar("arxiuUsuariAfegir") ?? "default.jpg";
+
             $pagat = false;
             if(isset($_POST["pagatAfegirMat"])){
                 $pagat = true;
@@ -75,29 +78,65 @@ function afegirMaterial(){
     }
 }
 
-function modificarMaterial(){
-    if(isset($_POST["modificarMaterial"]) && !empty($_POST["nomMaterialModificar"]) && isset($_POST["quantitatMaterialModificar"])){
+function modificarMaterial() {
+    if (isset($_POST["modificarMaterial"]) && !empty($_POST["nomMaterialModificar"]) && isset($_POST["quantitatMaterialModificar"])) {
         $conn = connexio();
+        
         $comprovarNom = $conn->prepare("SELECT * FROM materials WHERE nom = ?");
         $comprovarNom->execute(array(
             $_POST["nomMaterialModificar"],
         ));
+        
         $resultat = $comprovarNom->fetch();
-        $img = verificarImatge_Guardar("arxiuUsuariModificar") ?? $resultat['imatge'] ?? "default.jpg";
 
-        if($resultat !== false){
+        if ($resultat !== false) {
+            $img = verificarImatge_Guardar("arxiuUsuariModificar") ?? $resultat['imatge'] ?? "default.jpg";
+
             // Verificar si la cantidad es 0 y actualizar la imagen si es necesario
-            if(intval($_POST["quantitatMaterialModificar"]) == 0){
+            if (intval($_POST["quantitatMaterialModificar"]) == 0) {
+                // Eliminar la imagen anterior si no la está usando otro artículo
+                $oldImage = $resultat['imatge'];
+                if ($oldImage != "default.jpg") {
+                    $comprovarImatge = $conn->prepare("SELECT COUNT(*) as count FROM materials WHERE imatge = ?");
+                    $comprovarImatge->execute(array(
+                        $oldImage,
+                    ));
+
+                    $resultatImatge = $comprovarImatge->fetch();
+
+                    if ($resultatImatge !== false && $resultatImatge['count'] == 1) {
+                        $oldImagePath = '../Assets/img/material/' . $oldImage;
+                        if (file_exists($oldImagePath)) {
+                            unlink($oldImagePath);
+                        }
+                    }
+                }
+                
                 $sql = $conn->prepare("UPDATE materials SET imatge = ? WHERE nom = ?");
                 $sql->execute(array(
                     $img,
                     $_POST["nomMaterialModificar"],
                 ));
-            }else{
-                $pagat = false;
-                if(isset($_POST["pagatModificarMat"])){
-                    $pagat = true;
+            } else {
+                $oldImage = $resultat['imatge'];
+                if ($oldImage != "default.jpg") {
+                    $comprovarImatge = $conn->prepare("SELECT COUNT(*) as count FROM materials WHERE imatge = ?");
+                    $comprovarImatge->execute(array(
+                        $oldImage,
+                    ));
+
+                    $resultatImatge = $comprovarImatge->fetch();
+
+                    if ($resultatImatge !== false && $resultatImatge['count'] == 1) {
+                        $oldImagePath = '../Assets/img/material/' . $oldImage;
+                        if (file_exists($oldImagePath)) {
+                            unlink($oldImagePath);
+                        }
+                    }
                 }
+
+                $pagat = isset($_POST["pagatModificarMat"]) ? true : false;
+                
                 $sql = $conn->prepare("UPDATE materials SET quantitat = ?, imatge = ?, pagat = ? WHERE nom = ?");
                 $sql->execute(array(
                     $_POST["quantitatMaterialModificar"],
@@ -106,8 +145,7 @@ function modificarMaterial(){
                     $_POST["nomMaterialModificar"],
                 ));
             }
-
-        }else {
+        } else {
             echo "<script>alert('No existeix el material')</script>";
         }
     }
@@ -145,66 +183,48 @@ function verificarImatge_Guardar($id) {
 }
 
 function eliminarMaterial(){
-    if(isset($_POST["material.php"]) && !empty($_POST["nomMaterial"]) && !empty($_POST["quantitatMaterial"])){
-        $data = $_POST["material.php"];
-        echo $data;
+    if(isset($_POST["accio"]) && $_POST["accio"] == "eliminarMaterial" && isset($_POST["nomMaterialEliminar"]) && !empty($_POST["nomMaterialEliminar"])){
+        $nomMat = $_POST["nomMaterialEliminar"];
+        $conn = connexio();
+        $sql = $conn->prepare("SELECT imatge FROM materials WHERE nom = ?");
+        $sql->execute(array($nomMat));
+        $resultat = $sql->fetch();
 
-        // $conn = connexio();
-        // $comprovarNom = $conn->prepare("SELECT * FROM materials WHERE nom = ?");
-        // $comprovarNom->execute(array(
-        //     $_POST["nomMaterial"],
-        // ));
-        // $resultat = $comprovarNom->fetch();
-        // if($resultat !== false && isset($resultat['quantitat']) && $resultat['quantitat'] > $_POST["quantitatMaterial"]){
-        //     $sql = $conn->prepare("UPDATE materials SET quantitat = quantitat - ? WHERE nom = ?");
-        //     $sql->execute(array(
-        //         $_POST["quantitatMaterial"],
-        //         $_POST["nomMaterial"],
-        //     ));
-        // }else if($resultat !== false && isset($resultat['quantitat']) && $resultat['quantitat'] == $_POST["quantitatMaterial"]){
-        //     // Verificar si la imagen está siendo utilizada por otros materiales
-        //     $num_usos_imagen = $conn->prepare("SELECT COUNT(*) as total FROM materials WHERE imatge = ?");
-        //     $num_usos_imagen->execute(array(
-        //         $resultat['imatge'],
-        //     ));
-        //     $num_usos_result = $num_usos_imagen->fetch();
-        //     if ($num_usos_result['total'] <= 1) {
-        //         // Solo eliminar la imagen si es el único artículo que la está utilizando
-        //         // Ruta de la imagen
-        //         $ruta_imagen = "../Assets/img/material/".$resultat['imatge'];
-        //         // Verificar si el archivo de imagen existe antes de intentar eliminarlo
-        //         if (file_exists($ruta_imagen)) {
-        //             // Eliminar la imagen
-        //             if (unlink($ruta_imagen)) {
-        //                 //echo "La imagen ".$resultat['imatge']." fue eliminada con éxito.";
-        //             } else {
-        //                 //echo "No se pudo eliminar la imagen ".$resultat['imatge'].".";
-        //             }
-        //         } else {
-        //             //echo "La imagen ".$resultat['imatge']." no existe.";
-        //         }
-        //     }
-        //     // Eliminar el material de la base de datos
-        //     $sql = $conn->prepare("DELETE FROM materials WHERE nom = ?");
-        //     $sql->execute(array(
-        //         $_POST["nomMaterial"],
-        //     ));       
-        // }else {
-        //     echo "<script>alert('No existeix el material')</script>";
-        // }
-    }else{
-        echo "<script>Falta omplir algun camp</script>";
+        if($resultat !== false){
+            $img = $resultat['imatge'];
+            $comprovarImatge = $conn->prepare("SELECT COUNT(*) as count FROM materials WHERE imatge = ?");
+            $comprovarImatge->execute(array($img));
+            $resultatImatge = $comprovarImatge->fetch();
+
+            if($resultatImatge !== false && $resultatImatge['count'] == 1 && $img != "default.jpg"){
+                $oldImagePath = '../Assets/img/material/' . $img;
+                if(file_exists($oldImagePath)){
+                    unlink($oldImagePath);
+                }
+            }
+
+            $sql = $conn->prepare("DELETE FROM materials WHERE nom = ?");
+            $sql->execute(array($nomMat));
+
+            if($sql->rowCount() == 0){
+                echo json_encode(array("success" => false, "message" => "No existeix el material"));
+            } else {
+                echo json_encode(array("success" => true));
+            }
+        } else {
+            echo json_encode(array("success" => false, "message" => "No existeix el material"));
+        }
+    } else {
+        echo json_encode(array("success" => false, "message" => "Falta omplir algun camp"));
     }
 }
 
-if(isset($_POST["data"])){
-    if($_POST["accio"] == "eliminarMaterial"){
-       echo json_encode(eliminarMaterial($_POST["data"])); 
-    }
+if(isset($_POST["accio"]) && $_POST["accio"] == "eliminarMaterial"){
+    eliminarMaterial();
 }
 
 if(isset($_POST["agregarMaterial"]) || isset($_POST["eliminarMaterial"]) || isset($_POST["modificarMaterial"])){
-    //header("Refresh:0");
+    header("Refresh:0");
 }
 
 require '../View/material.vista.php';

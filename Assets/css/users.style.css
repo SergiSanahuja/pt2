@@ -60,10 +60,14 @@ dialog{
     border: none;
     border-bottom: 1px solid #ccc;
     font-size: 16px;
-    padding: 10px 0;
+    padding: 10px 0px;
     transition: border-color 0.3s;
     margin-top: 10px;
     margin-bottom: 10px;
 
 
+}
+
+#AfegirUsuari{
+    padding: 10px;
 }

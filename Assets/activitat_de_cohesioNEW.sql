@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `usuaris` (
   `cognom` varchar(30) NOT NULL,
   `edat` int(11) NOT NULL,
   `curs` varchar(20) NOT NULL,
-  `grup` int(11) NOT NULL,
+  `grup` varchar(20) NOT NULL,
   `admin` tinyint(1) NOT NULL DEFAULT 0,
   `prof` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

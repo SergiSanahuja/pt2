@@ -26,7 +26,7 @@ async function confirmDelete() {
                 },
                 error: function(xhr, status, error) {
                     console.error(xhr.responseText);
-                    alert("Error al eliminar material.");
+                    alert("Error al eliminar material. Detall: " + xhr.responseText);
                 }
             });
         }
@@ -40,6 +40,7 @@ if (btnEliminar) {
         confirmDelete();
     });
 }
+
 
 
 //Afegir material

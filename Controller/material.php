@@ -183,39 +183,43 @@ function verificarImatge_Guardar($id) {
 }
 
 function eliminarMaterial(){
-    if(isset($_POST["accio"]) && $_POST["accio"] == "eliminarMaterial" && isset($_POST["nomMaterialEliminar"]) && !empty($_POST["nomMaterialEliminar"])){
-        $nomMat = $_POST["nomMaterialEliminar"];
-        $conn = connexio();
-        $sql = $conn->prepare("SELECT imatge FROM materials WHERE nom = ?");
-        $sql->execute(array($nomMat));
-        $resultat = $sql->fetch();
-
-        if($resultat !== false){
-            $img = $resultat['imatge'];
-            $comprovarImatge = $conn->prepare("SELECT COUNT(*) as count FROM materials WHERE imatge = ?");
-            $comprovarImatge->execute(array($img));
-            $resultatImatge = $comprovarImatge->fetch();
-
-            if($resultatImatge !== false && $resultatImatge['count'] == 1 && $img != "default.jpg"){
-                $oldImagePath = '../Assets/img/material/' . $img;
-                if(file_exists($oldImagePath)){
-                    unlink($oldImagePath);
-                }
-            }
-
-            $sql = $conn->prepare("DELETE FROM materials WHERE nom = ?");
+    try {
+        if(isset($_POST["accio"]) && $_POST["accio"] == "eliminarMaterial" && isset($_POST["nomMaterialEliminar"]) && !empty($_POST["nomMaterialEliminar"])){
+            $nomMat = $_POST["nomMaterialEliminar"];
+            $conn = connexio();
+            $sql = $conn->prepare("SELECT imatge FROM materials WHERE nom = ?");
             $sql->execute(array($nomMat));
+            $resultat = $sql->fetch();
 
-            if($sql->rowCount() == 0){
-                echo json_encode(array("success" => false, "message" => "No existeix el material"));
+            if($resultat !== false){
+                $img = $resultat['imatge'];
+                $comprovarImatge = $conn->prepare("SELECT COUNT(*) as count FROM materials WHERE imatge = ?");
+                $comprovarImatge->execute(array($img));
+                $resultatImatge = $comprovarImatge->fetch();
+
+                if($resultatImatge !== false && $resultatImatge['count'] == 1 && $img != "default.jpg"){
+                    $oldImagePath = '../Assets/img/material/' . $img;
+                    if(file_exists($oldImagePath)){
+                        unlink($oldImagePath);
+                    }
+                }
+
+                $sql = $conn->prepare("DELETE FROM materials WHERE nom = ?");
+                $sql->execute(array($nomMat));
+
+                if($sql->rowCount() == 0){
+                    echo "No existeix el material";
+                } else {
+                    echo json_encode(array("success" => true));
+                }
             } else {
-                echo json_encode(array("success" => true));
+                echo "No existeix el material";
             }
         } else {
-            echo json_encode(array("success" => false, "message" => "No existeix el material"));
+            echo "Falta omplir algun camp";
         }
-    } else {
-        echo json_encode(array("success" => false, "message" => "Falta omplir algun camp"));
+    } catch (PDOException $e) {
+        echo json_encode(array("success" => false, "message" => "Error al eliminar material: " . $e->getMessage()));
     }
 }
 

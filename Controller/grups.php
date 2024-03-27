@@ -18,7 +18,7 @@ if (isset($_POST['data'])) {
             break;
         case 'crearGrup':
             insertGrup($data);
-            echo $data;
+       
             break;
         case 'afegirUsuari':
             // echo json_encode($data);

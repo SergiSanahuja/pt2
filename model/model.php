@@ -174,9 +174,9 @@ function insertGrup($data){
     try{
     $conection = connection();
     
-    $sql = "INSERT INTO `grups`(`nom`, `punts`,email,contrasenya) VALUES (?, 0, ?, ?)"; // Replace with your table and column names
+    $sql = "INSERT INTO `grups`(`nom`, `punts`,`email`,`password`) VALUES (?, 0, ?, ?)"; // Replace with your table and column names
 
-        
+    print_r($data);
 
     $stmt = $conection->prepare($sql);
     $stmt->bindParam(1, $data[0]);

@@ -174,10 +174,14 @@ function insertGrup($data){
     try{
     $conection = connection();
     
-    $sql = "INSERT INTO `grups`(`nom`, `punts`) VALUES (?, 0)"; // Replace with your table and column names
+    $sql = "INSERT INTO `grups`(`nom`, `punts`,email,contrasenya) VALUES (?, 0, ?, ?)"; // Replace with your table and column names
+
+        
 
     $stmt = $conection->prepare($sql);
-    $stmt->bindParam(1, $data);
+    $stmt->bindParam(1, $data[0]);
+    $stmt->bindParam(2, $data[1]);
+    $stmt->bindParam(3, $data[2]);
     $stmt->execute();
 
     
@@ -206,7 +210,7 @@ function insertUsuariGrup($data){
     
     $sql = "UPDATE `usuaris` SET `grup`=? WHERE `id`=?"; // Replace with your table and column names
 
-    print_r($data);    
+    
 
     $stmt = $conection->prepare($sql);
     $stmt->bindParam(1, $data[0]);

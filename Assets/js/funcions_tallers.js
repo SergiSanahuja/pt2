@@ -19,10 +19,13 @@ $(document).ready(function() {
             alert('Taller agregado con éxito');
             $('#modalTaller').modal('hide');
             refrescarMainMapMarkers(); 
+            $('#form')[0].reset();
+            // Limpia el array de marcadores
+            nuevoModalMarkers = [];
         } else {
             alert('Error al agregar el taller: ' + response.error);
         }
-    })    
+    })
       .fail(function(jqXHR, textStatus, errorThrown) {
           console.error('Error en la petición: ', textStatus, errorThrown);
           alert('Ocurrió un error al agregar el taller.');

@@ -1,6 +1,7 @@
 let googleModalApiKey = "AIzaSyBkQGLnLx2qAYY82w34el8Dbc4xp1TdyTY"; // Tu clave API real
 let modalMap;
-let modalMarkers = [];
+let modalMarkers = []; // Marcadores existentes
+let nuevoModalMarkers = []; // Nuevos marcadores agregados por el usuario
 
 // Esta función inicializa el mapa dentro del modal
 function initModalMap() {
@@ -13,15 +14,19 @@ function initModalMap() {
 
     // Listener para cuando se hace clic en el mapa y se agrega un nuevo marcador
     modalMap.addListener('click', function(event) {
-        clearModalMarkers();
         createMarker(event.latLng);
     });
 
     loadModalExistingMarkers();
 }
 
-// Crea un marcador y lo añade al array modalMarkers
+// Crea un marcador y lo añade al array newModalMarkers
 function createMarker(location) {
+    // Si ya se ha agregado un marcador, no agregue otro
+    if (nuevoModalMarkers.length >= 1) {
+        return;
+    }
+
     let marker = new google.maps.Marker({
         position: location,
         map: modalMap
@@ -30,7 +35,7 @@ function createMarker(location) {
     document.getElementById('modalLat').value = location.lat();
     document.getElementById('modalLng').value = location.lng();
 
-    modalMarkers.push(marker);
+    nuevoModalMarkers.push(marker);
 }
 
 // Carga los marcadores existentes llamando a tu backend PHP
@@ -42,7 +47,12 @@ function loadModalExistingMarkers() {
         success: function(data) {
             data.forEach(function(taller) {
                 let location = new google.maps.LatLng(parseFloat(taller.lat), parseFloat(taller.lng));
-                createMarker(location);
+                let marker = new google.maps.Marker({
+                    position: location,
+                    map: modalMap,
+                    title: taller.nom,
+                });
+                modalMarkers.push(marker);
             });
         },
         error: function(xhr, status, error) {
@@ -51,7 +61,6 @@ function loadModalExistingMarkers() {
     });
 }
 
-// Elimina todos los marcadores del mapa modal
 function clearModalMarkers() {
     modalMarkers.forEach(function(marker) {
         marker.setMap(null);
@@ -72,10 +81,19 @@ $('#modalTaller').on('shown.bs.modal', function() {
     if (typeof google === 'object' && typeof google.maps === 'object') {
         google.maps.event.trigger(modalMap, 'resize'); // Trigger resize event to ensure map is displayed correctly
     }
-    });
-    
-    // Evento que se dispara cuando se oculta el modal
-    $('#modalTaller').on('hidden.bs.modal', function() {
+});
+
+// Evento que se dispara cuando se oculta el modal
+$('#modalTaller').on('hidden.bs.modal', function() {
     // Opcional: limpia los marcadores si no deseas mantenerlos entre sesiones del modal
     clearModalMarkers();
+});
+
+$(document).ready(function() {
+    document.getElementById('btnMapaEliminarUltimoMarcador').addEventListener('click', function() {
+        if (nuevoModalMarkers.length > 0) {
+            let lastMarker = nuevoModalMarkers.pop();
+            lastMarker.setMap(null);
+        }
     });
+});

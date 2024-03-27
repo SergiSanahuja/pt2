@@ -1,36 +1,31 @@
-$(document).ready(function(){
-  $('#afegirTaller').click(function(e){
-    e.preventDefault();
-    let formData = new FormData($('#form')[0]);
+$(document).ready(function() {
+  $('#afegirTaller').click(function(e) {
+      e.preventDefault();
+      let formData = new FormData($('#form')[0]);
 
-    // Agrega la latitud y longitud del marcador al objeto FormData
-    let lat = parseFloat($('#modalLat').val());
-    let lng = parseFloat($('#modalLng').val());
+      formData.append('lat', $('#modalLat').val());
+      formData.append('lng', $('#modalLng').val());
 
-    if (isNaN(lat) || isNaN(lng)) {
-        alert('Latitud o longitud no válidas: ' + lat + ', ' + lng);
-        return;
-    }
-
-    formData.append('lat', lat);
-    formData.append('lng', lng);
-
-    $.ajax({
-      url: '../Controller/afegirTaller.php',
-      type: 'POST',
-      data: formData,
-      success: function(data){
-        let response = JSON.parse(data);
-        if(response.success){
-          alert('Taller agregado con éxito');
-          $('#modalTaller').modal('hide');
+      $.ajax({
+          url: '../Controller/afegirTaller.php',
+          type: 'POST',
+          data: formData,
+          processData: false,
+          contentType: false, 
+          dataType: 'json' // Esperar respuesta en formato JSON
+      })
+      .done(function(response) {
+        if (response.success) {
+            alert('Taller agregado con éxito');
+            $('#modalTaller').modal('hide');
+            refrescarMainMapMarkers(); 
         } else {
-          alert('Error al agregar el taller: ' + response.error);
+            alert('Error al agregar el taller: ' + response.error);
         }
-      },
-      cache: false,
-      contentType: false,
-      processData: false
-    });
+    })    
+      .fail(function(jqXHR, textStatus, errorThrown) {
+          console.error('Error en la petición: ', textStatus, errorThrown);
+          alert('Ocurrió un error al agregar el taller.');
+      });
   });
 });

@@ -1,4 +1,4 @@
-let googleApiKey = "AIzaSyBkQGLnLx2qAYY82w34el8Dbc4xp1TdyTY"; // Reemplaza con tu clave API real
+let googleApiKey = "AIzaSyBkQGLnLx2qAYY82w34el8Dbc4xp1TdyTY";
 let mainMap;
 let mainMarkers = [];
 
@@ -34,6 +34,29 @@ function loadMarkers() {
     });
 }
 
+// Crea un marcador y lo añade al array newModalMarkers
+function createMarker(location) {
+    // Si ya se ha agregado un marcador, no agregue otro
+    if (mainMarkers.length >= 1) {
+        return;
+    }
+
+    let marker = new google.maps.Marker({
+        position: location,
+        map: mainMap
+    });
+
+    document.getElementById('modalLat').value = location.lat();
+    document.getElementById('modalLng').value = location.lng();
+
+    mainMarkers.push(marker); // Add the marker to the mainMarkers array
+}
+
+function refrescarMainMapMarkers() {
+    mainMarkers.forEach(marker => marker.setMap(null));
+    mainMarkers = [];
+    loadMarkers();
+}
 
 $(window).on('load', function() {
     if (typeof google === 'object' && typeof google.maps === 'object') {

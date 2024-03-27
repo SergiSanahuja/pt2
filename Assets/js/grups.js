@@ -31,7 +31,7 @@ class Grup {
                     alXGrup = nGrup;
                 }
 
-                enviar("Grup"+(i+1) , 'crearGrup'); // Afegir grup a la BD
+                enviar(["Grup"+(i+1), "Grup"+(i+1)+"@gmail.com","Grup"+(i+1)] , 'crearGrup'); // Afegir grup a la BD
         
                 for (let j = 0; j < alXGrup; j++) { //Afegir usuaris
                     enviar(["Grup"+(i+1),this.llista[0].id], 'afegirUsuari'); // Afegir usuari a la BD

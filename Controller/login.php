@@ -1,7 +1,9 @@
 <?php
 include_once '../model/model.php';  // Replace with the correct path
 
-session_start();
+if(session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+  }
 
 //if the user pressed the button to log out
 if (isset($_GET['logout'])) {

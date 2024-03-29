@@ -44,7 +44,9 @@
               <a class="nav-link active" href="#"><b>Grups</b></a>
             </li>
             <?php 
-              session_start();
+               if(session_status() !== PHP_SESSION_ACTIVE) {
+                session_start();
+              }
               if (isset($_SESSION['email'])) {
                 $correo = $_SESSION['email'];
                 if ($correo === 'admin@example.com') { ?>

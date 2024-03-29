@@ -1,13 +1,17 @@
 <?php
 //Comprovar que tiene la session iniciada
-session_start();
+if(session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+  }
 if (!isset($_SESSION['email'])) {
     header('Location: login.php');
     exit();
 }
 
 //Comprovar que tiene la session iniciada de admin@example.com
-session_start();
+if(session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+  }
 if (isset($_SESSION['email'])) {
     $correo = $_SESSION['email'];
     if ($correo !== 'admin@example.com') {

@@ -51,7 +51,9 @@
               <a class="nav-link" href="../Controller/grups.php">Grups</a>
             </li>
             <?php 
-              session_start();
+              if(session_status() !== PHP_SESSION_ACTIVE) {
+                session_start();
+              }
               if (isset($_SESSION['email'])) {
                 $correo = $_SESSION['email'];
                 if ($correo === 'admin@example.com') { ?>

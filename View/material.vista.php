@@ -37,7 +37,7 @@
                   <a class="nav-link" href="../Controller/home.php">Tallers</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" href="#">Material</a>
+                  <a class="nav-link active" href="#"><b>Material</b></a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="../Controller/usuaris.php">Usuaris</a>
@@ -45,6 +45,17 @@
                 <li class="nav-item">
                   <a class="nav-link" href="../Controller/grups.php">Grups</a>
                 </li>
+                <?php 
+                  session_start();
+                  if (isset($_SESSION['email'])) {
+                    $correo = $_SESSION['email'];
+                    if ($correo === 'admin@example.com') { ?>
+                      <li class="nav-item">
+                        <a class="nav-link" href="../Controller/crearProfes.php">Crear professors</a>
+                      </li>
+                    <?php }
+                  }
+                ?>
               </ul>
               <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
@@ -79,15 +90,9 @@
                 <div class="container d-flex flex-wrap justify-content-center mt-4">
                     <!--Cards-->
                     <?php
-                    mostrarMaterial($_GET["filtrar"] ?? "default");
+                    echo mostrarMaterial($_GET["filtrar"] ?? "default");
                     ?>
                 </div>
-                <?php
-                if ($_SERVER["REQUEST_METHOD"] === "POST") {
-                  afegirMaterial();
-                  modificarMaterial();
-                }
-                ?>
             </div> 
         </div>
     </div>

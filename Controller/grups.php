@@ -1,4 +1,11 @@
 <?php
+//Comprovar que tiene la session iniciada
+session_start();
+if (!isset($_SESSION['email'])) {
+    header('Location: login.php');
+    exit();
+}
+
 require '../model/model.php';
 
 if (isset($_POST['data'])) {
@@ -44,5 +51,5 @@ if (isset($_POST['data'])) {
     }
 }
 
-require '../View/grups.vista.html';
+require '../View/grups.vista.php';
 ?>

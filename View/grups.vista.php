@@ -41,8 +41,19 @@
               <a class="nav-link" href="../Controller/usuaris.php">Usuaris</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="#">Grups</a>
+              <a class="nav-link active" href="#"><b>Grups</b></a>
             </li>
+            <?php 
+              session_start();
+              if (isset($_SESSION['email'])) {
+                $correo = $_SESSION['email'];
+                if ($correo === 'admin@example.com') { ?>
+                  <li class="nav-item">
+                    <a class="nav-link" href="../Controller/crearProfes.php">Crear professors</a>
+                  </li>
+                <?php }
+              }
+            ?>
           </ul>
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">

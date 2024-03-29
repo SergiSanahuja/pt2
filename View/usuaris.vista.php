@@ -13,6 +13,7 @@
      <!-- JS -->
      <script type="module" src="../Assets/js/funcions.js"></script>
      <script type="module" src="../Assets/js/usuaris.js"></script>
+      <script defer src="../Assets/js/global.js"></script>
 
     <!-- leer Excel con js -->
     <script src="https://unpkg.com/read-excel-file@5.x/bundle/read-excel-file.min.js"></script>
@@ -44,11 +45,22 @@
               <a class="nav-link" href="../Controller/material.php">Material</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="#">Usuaris</a>
+              <a class="nav-link active" href="#"><b>Usuaris</b></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="../Controller/grups.php">Grups</a>
             </li>
+            <?php 
+              session_start();
+              if (isset($_SESSION['email'])) {
+                $correo = $_SESSION['email'];
+                if ($correo === 'admin@example.com') { ?>
+                  <li class="nav-item">
+                    <a class="nav-link" href="../Controller/crearProfes.php">Crear professors</a>
+                  </li>
+                <?php }
+              }
+            ?>
           </ul>
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">

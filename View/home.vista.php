@@ -40,7 +40,7 @@
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link active" href="#">Tallers</a>
+            <a class="nav-link active" href="#"><b>Tallers</b></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../Controller/material.php">Material</a>
@@ -51,7 +51,19 @@
           <li class="nav-item">
             <a class="nav-link" href="../Controller/grups.php">Grups</a>
           </li>
+          <?php 
+            session_start();
+            if (isset($_SESSION['email'])) {
+              $correo = $_SESSION['email'];
+              if ($correo === 'admin@example.com') { ?>
+                <li class="nav-item">
+                  <a class="nav-link" href="../Controller/crearProfes.php">Crear professors</a>
+                </li>
+              <?php }
+            }
+          ?>
         </ul>
+        
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
               <button class="btnLogOut" id="btnTancarSessio">Tancar sessió</button>

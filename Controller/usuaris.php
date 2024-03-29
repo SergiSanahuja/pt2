@@ -1,4 +1,10 @@
 <?php
+//Comprovar que tiene la session iniciada
+session_start();
+if (!isset($_SESSION['email'])) {
+    header('Location: login.php');
+    exit();
+}
 
     require '../model/model.php';
 
@@ -82,5 +88,5 @@
     
 
 
-require '../View/usuaris.vista.html';
+require '../View/usuaris.vista.php';
 ?>

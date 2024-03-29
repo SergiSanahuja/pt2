@@ -1,4 +1,11 @@
 <?php
+//Comprovar que tiene la session iniciada
+session_start();
+if (!isset($_SESSION['email'])) {
+    header('Location: login.php');
+    exit();
+}
+
 include_once 'connexio.php';
 
 function mostrarMaterial($order){
@@ -129,7 +136,7 @@ function modificarMaterial() {
 
                     if ($resultatImatge !== false && $resultatImatge['count'] == 1) {
                         $oldImagePath = '../Assets/img/material/' . $oldImage;
-                        if (file_exists($oldImagePath)) {
+                        if (file_exists($oldImagePath) && isset($_FILES["arxiuUsuariModificar"]) && $_FILES["arxiuUsuariModificar"]["error"] !== UPLOAD_ERR_NO_FILE) {
                             unlink($oldImagePath);
                         }
                     }
@@ -222,10 +229,17 @@ function eliminarMaterial(){
         echo json_encode(array("success" => false, "message" => "Error al eliminar material: " . $e->getMessage()));
     }
 }
-
+//llamar a las respectivas funciones para mostrar, añadir, modificar y eliminar materiales
+if(isset($_POST["agregarMaterial"])){
+    afegirMaterial();
+}
+if($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["modificarMaterial"])){
+    modificarMaterial();
+}
 if(isset($_POST["accio"]) && $_POST["accio"] == "eliminarMaterial"){
     eliminarMaterial();
 }
+
 
 if(isset($_POST["agregarMaterial"]) || isset($_POST["eliminarMaterial"]) || isset($_POST["modificarMaterial"])){
     header("Refresh:0");

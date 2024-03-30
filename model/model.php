@@ -231,6 +231,22 @@ function getNumGrups(){
     }
 }
 
+function getNomGrups(){
+    try{
+    $conection = connexio();
+    $sql = "SELECT * FROM `grups`"; // Replace with your table and column names
+    $stmt = $conection->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return $result;
+
+    }catch(Exception $e){
+        echo "Error: " . $e->getMessage();
+        die();
+    }
+}
+
 
 function canviarGrup($data){
     try{
@@ -287,6 +303,42 @@ function getPasswordByEmail($email){
             return false;
         }
 
+    } catch(Exception $e){
+        echo "Error: " . $e->getMessage();
+        die();
+    }
+}
+
+function getGrupByEmail($email){
+    try {
+        $conection = connexio();
+        $sql = "SELECT `grup` FROM `usuaris` WHERE `email` = ?";
+        
+        $stmt = $conection->prepare($sql);
+        $stmt->bindParam(1, $email);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if($result){
+            return $result['grup'];
+        } else {
+            return false;
+        }
+
+    } catch(Exception $e){
+        echo "Error: " . $e->getMessage();
+        die();
+    }
+}
+
+function getActivitats(){
+    try {
+        $conection = connexio();
+        $sql = "SELECT * FROM `tallers`";
+        $stmt = $conection->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $result;
     } catch(Exception $e){
         echo "Error: " . $e->getMessage();
         die();

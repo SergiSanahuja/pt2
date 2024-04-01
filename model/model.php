@@ -293,50 +293,6 @@ function canviarGrup($data){
     }
 }
 
-function getUserByEmail($email){
-    try {
-        $conection = connexio();
-        $sql = "SELECT `email` FROM `login` WHERE `email` = ?";
-        
-        $stmt = $conection->prepare($sql);
-        $stmt->bindParam(1, $email);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if($result){
-            return true;
-        } else {
-            return false;
-        }
-
-    } catch(Exception $e){
-        echo "Error: " . $e->getMessage();
-        die();
-    }
-}
-
-function getPasswordByEmail($email){
-    try {
-        $conection = connexio();
-        $sql = "SELECT `password` FROM `login` WHERE `email` = ?";
-        
-        $stmt = $conection->prepare($sql);
-        $stmt->bindParam(1, $email);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if($result){
-            return $result['password'];
-        } else {
-            return false;
-        }
-
-    } catch(Exception $e){
-        echo "Error: " . $e->getMessage();
-        die();
-    }
-}
-
 function getGrupByEmail($email){
     try {
         $conection = connexio();

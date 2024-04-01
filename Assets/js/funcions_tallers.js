@@ -11,15 +11,21 @@ function actualizarTablaDeTalleres() {
                 tablaHtml += "<td>" + taller.nom + "</td>";
                 tablaHtml += "<td>" + taller.material + "</td>";
                 tablaHtml += "<td>" + taller.professor + "</td>";
-                tablaHtml += `<td><button class="btn btn-primary btn-editar" data-id="${taller.id}">Editar</button></td>`;
+                tablaHtml += `<td><button class="btn btn-primary btn-editar" data-id="${taller.id}">Editar</button>
+                <button class="btn btn-danger btn-eliminar" data-id="${taller.id}">Eliminar</button></td>`;
+                
                 tablaHtml += "</tr>";
             });
             $('#talleresTable tbody').html(tablaHtml);
             
             // Agrega el evento click a cada botón de edición
             $('.btn-editar').on('click', function() {
-                var tallerId = $(this).data('id');
+                let tallerId = $(this).data('id');
                 abrirModalEdicion(tallerId);
+            });
+            $('.btn-eliminar').on('click', function() {
+                let tallerId = $(this).data('id');
+                eliminarTaller(tallerId);
             });
         },
         error: function(xhr, status, error) {
@@ -53,6 +59,27 @@ function abrirModalEdicion(tallerId) {
             alert('Ocurrió un error al obtener los datos del taller: ' + error);
         }
     });
+}
+function eliminarTaller(tallerId) {
+    if (confirm('¿Estás seguro de que deseas eliminar este taller?')) {
+        $.ajax({
+            url: '../Controller/eliminarTaller.php',
+            type: 'POST',
+            data: { id: tallerId },
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    alert('Taller eliminado con éxito');
+                    actualizarTablaDeTalleres();
+                } else {
+                    alert('Error al eliminar el taller: ' + response.error);
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('Ocurrió un error al eliminar el taller: ' + error);
+            }
+        });
+    }
 }
 
 $(document).ready(function() {

@@ -27,6 +27,9 @@ if (isset($_POST['data'])) {
             eliminarUsuari();
             break;
         case 'crearGrup':
+
+            
+
             insertGrup($data);
        
             break;

@@ -1,122 +1,89 @@
-let api = "https://analisi.transparenciacatalunya.cat/resource/tasf-thgu.json";
 let googleApiKey = "AIzaSyBkQGLnLx2qAYY82w34el8Dbc4xp1TdyTY";
-let markers = [];
-let modifyingMarker = false;
-
-window.onload = function() {
-    $.getScript("https://maps.googleapis.com/maps/api/js?key=" + googleApiKey + "&callback=initMap");
-    window.initMap = initMap;
-}
-
-let map;
+let mainMap;
+let mainMarkers = [];
 
 function initMap() {
-    map = new google.maps.Map(document.getElementById('mapa'), {
-        center: {
-            lat: 41.67857183725525,
-            lng: 2.7803433802871513
-        },
+    mainMap = new google.maps.Map(document.getElementById('mapa'), {
+        center: { lat: 41.67857183725525, lng: 2.7803433802871513 },
         zoom: 19,
         disableDefaultUI: true,
         mapTypeId: 'satellite'
     });
-    
-    map.addListener('click', function(event) {
-        let marker = new google.maps.Marker({
-            position: event.latLng,
-            map: map
-        });
-        markers.push(marker);
 
-        // Agrega un evento de clic al marcador
-        marker.addListener('click', function() {
-            // Si hay un marcador seleccionado, restablece su icono
-            if (selectedMarker) {
-                selectedMarker.setIcon(null);
-            }
+    loadMarkers();
+}
 
-            // Cambia el icono del marcador seleccionado
-            marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+function loadMarkers() {
+    $.ajax({
+        url: '../Controller/getMarkers.php',
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            data.forEach(function(markerData) {
+                let position = new google.maps.LatLng(parseFloat(markerData.lat), parseFloat(markerData.lng));
+                let marker = new google.maps.Marker({
+                    position: position,
+                    map: mainMap,
+                    title: markerData.nom
+                });
+                mainMarkers.push(marker);
 
-            // Actualiza el marcador seleccionado
-            selectedMarker = marker;
+                // Crear contenido para InfoWindow
+                let infoWindowContent = `<div>
+                                            <h3>${markerData.nom}</h3>
+                                            <p><b>Material:</b> ${markerData.material}</p>
+                                            <p><b>Profesor:</b> ${markerData.professor}</p>
+                                         </div>`;
 
-            if (modifyingMarker) {
-                // Pide al usuario que ingrese un nuevo tooltip para el marcador
-                let newTooltip = prompt("Por favor, ingresa un nuevo tooltip para el marcador:");
-                if (newTooltip !== null) {
-                    // Si el usuario ingresó un tooltip, actualiza el tooltip del marcador
-                    marker.setTitle(newTooltip);
-                }
-                modifyingMarker = false;
-            }
-        });
+                // Crear una InfoWindow
+                let infoWindow = new google.maps.InfoWindow({
+                    content: infoWindowContent
+                });
+
+                // Agregar evento para abrir InfoWindow al hacer clic en el marcador
+                marker.addListener('click', function() {
+                    infoWindow.open(mainMap, marker);
+                });
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error("Error al cargar los marcadores: ", status, error);
+        }
     });
 }
 
-let selectedMarker = null;
 
-function eliminarMarcador() {
-    if (markers.length === 0) {
-        // Muestra una alerta si no hay marcadores en el mapa
-        alert("No hay marcadores para eliminar.");
-    } else if (selectedMarker) {
-        // Elimina el marcador seleccionado del mapa
-        selectedMarker.setMap(null);
-
-        // Elimina el marcador seleccionado del array
-        const index = markers.indexOf(selectedMarker);
-        if (index > -1) {
-            markers.splice(index, 1);
-        }
-
-        // Resetea el marcador seleccionado
-        selectedMarker = null;
-    } else {
-        // Muestra una alerta si no hay ningún marcador seleccionado
-        alert("Por favor, selecciona un marcador para eliminar.");
+// Crea un marcador y lo añade al array newModalMarkers
+function createMarker(location) {
+    // Si ya se ha agregado un marcador, no agregue otro
+    if (mainMarkers.length >= 1) {
+        return;
     }
+
+    let marker = new google.maps.Marker({
+        position: location,
+        map: mainMap
+    });
+
+    document.getElementById('modalLat').value = location.lat();
+    document.getElementById('modalLng').value = location.lng();
+
+    mainMarkers.push(marker); // Add the marker to the mainMarkers array
 }
 
-function eliminarTodosMarcadores() {
-    if (markers.length === 0) {
-        // Muestra una alerta si no hay marcadores en el mapa
-        alert("No hay marcadores para eliminar.");
-    } else {
-        // Muestra un cuadro de diálogo de confirmación
-        let confirmar = confirm("¿Estás seguro de que quieres eliminar todos los marcadores?");
-        if (confirmar) {
-            // Si el usuario hace clic en Aceptar, elimina todos los marcadores
-            for (let i = 0; i < markers.length; i++) {
-                markers[i].setMap(null);
-            }
-            markers = [];
-        }
-    }
+function refrescarMainMapMarkers() {
+    mainMarkers.forEach(marker => marker.setMap(null));
+    mainMarkers = [];
+    loadMarkers();
 }
 
-function modificarMarcador() {
-    if (markers.length === 0) {
-        // Muestra una alerta si no hay marcadores en el mapa
-        alert("No hay marcadores para modificar.");
+$(window).on('load', function() {
+    if (typeof google === 'object' && typeof google.maps === 'object') {
+        initMap();
     } else {
-        if (selectedMarker) {
-            // Si ya hay un marcador seleccionado, pide al usuario que ingrese un nuevo tooltip
-            let nuevoToolTip = prompt("Por favor, ingresa un nuevo tooltip para el marcador:");
-            if (nuevoToolTip !== null) {
-                // Si el usuario ingresó un tooltip, actualiza el tooltip del marcador
-                selectedMarker.setTitle(nuevoToolTip);
-            }
-        } else {
-            // Si no hay un marcador seleccionado, activa el modo de modificación
-            modifyingMarker = true;
-            alert("Por favor, selecciona un marcador para modificar.");
-        }
+        $.getScript(`https://maps.googleapis.com/maps/api/js?key=${googleApiKey}&callback=initMap`)
+            .fail(function(jqxhr, settings, exception) {
+                console.error("Error loading Google Maps script: ", exception);
+            });
     }
-}
-
-document.addEventListener('DOMContentLoaded', (event) => {
-    document.getElementById('btnMapaEliminarMarcador').addEventListener('click', eliminarMarcador);
-    document.getElementById('btnMapaEliminarTodosMarcadores').addEventListener('click', eliminarTodosMarcadores);
-    document.getElementById('btnMapaModificarMarcador').addEventListener('click', modificarMarcador);
 });

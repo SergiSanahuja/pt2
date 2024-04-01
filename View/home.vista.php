@@ -26,8 +26,9 @@
   <!-- JS -->
   <script src="../Assets/js/funcions.js"></script>
   <script type="module" src="../Assets/js/funcions_tallers.js"></script>
-      <script src="../Assets/js/mapcontrol.js"></script>
-      <script defer src="../Assets/js/global.js"></script>
+  <script src="../Assets/js/mapcontrol.js"></script>
+  <script src="../Assets/js/mapcontrolModal.js"></script>
+  <script defer src="../Assets/js/global.js"></script>
 </head>
 
 <body>
@@ -40,7 +41,8 @@
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link active" href="#"><b>Tallers</b></a>
+            <a class="nav-link active" href="#">Tallers</a>
+
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../Controller/material.php">Material</a>
@@ -76,11 +78,32 @@
     <div class="row-12">
       <div class="col-12 text-center-md text-center">
         <h1>Tallers</h1>
-        <!-- btn para insertar talleres -->
         <!-- Botón para activar el modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTaller">Afegir taller</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTaller">
+          Afegir taller
+        </button>
+
+        <!-- Tabla de talleres -->
+        <div class="d-flex justify-content-start"></div>
+        <div class="table-responsive">
+          <table id="talleresTable" class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Material</th>
+                <th>Profesor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Las filas de la tabla se llenarán con JavaScript -->
+            </tbody>
+          </table>
+        </div>
 
         <!-- Modal -->
+
+       <!-- Modal para añadir taller -->
         <div class="modal fade" id="modalTaller" tabindex="-1" aria-labelledby="modalTallerLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -89,21 +112,30 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
+                <div id="modalMap" style="height: 300px; width: 450px;"></div>
+                <p>Per afegir un marcador, fes clic al mapa després de prémer.</p>
+                <button type="button" class="btn btn-warning" id="btnMapaEliminarUltimoMarcador">
+                  Eliminar últim marcador
+                </button>
                 <form id="form">
-                  <div class="mb-3">
-                    <input class="form-control" type="text" id="nom" name="nom" aria-label="Nom del taller"placeholder="Nom del taller">
-                  </div>
-                  <div class="mb-3">
-                    <input class="form-control" type="text" id="professor" name="professor"
-                      aria-label="Nom del professor responsable" placeholder="Professor">
-                  </div>
-                  <div class="mb-3">
-                    <input class="form-control" type="file" id="fil" name="fil" aria-label="Imatge del taller"
-                      placeholder="img">
-                  </div>
-                  <div class="mb-3">
-                    <textarea class="form-control" id="material" name="material" aria-label="Material" placeholder="Material" rows="3"></textarea>
-                  </div>
+                    <div class="mb-3">
+                        <input class="form-control" type="text" id="nom" name="nom" aria-label="Nom del taller"
+                            placeholder="Nom del taller">
+                    </div>
+                    <div class="mb-3">
+                        <input class="form-control" type="text" id="professor" name="professor"
+                            aria-label="Nom del professor responsable" placeholder="Professor">
+                    </div>
+                    <div class="mb-3">
+                        <input class="form-control" type="file" id="fil" name="fil" aria-label="Imatge del taller"
+                            placeholder="img">
+                    </div>
+                    <div class="mb-3">
+                        <textarea class="form-control" id="material" name="material" aria-label="Material"
+                            placeholder="Material" rows="3"></textarea>
+                    </div>
+                    <input type="hidden" id="modalLat" name="lat">
+                    <input type="hidden" id="modalLng" name="lng">
                 </form>
               </div>
               <div class="modal-footer">
@@ -113,22 +145,48 @@
             </div>
           </div>
         </div>
+        <div class="modal fade" id="modalEditarTaller" tabindex="-1" aria-labelledby="modalEditarTallerLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalEditarTallerLabel">Editar Taller</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div id="editarModalMap" style="height: 300px; width: 450px;"></div> 
+                <form id="formEditar">
+                  <input type="hidden" id="editarId" name="id">
+                  <input type="hidden" id="formState" value="new">
+                  <input type="hidden" id="editingTallerId">
+                  <div class="mb-3">
+                    <label for="editarNom" class="form-label">Nombre del Taller:</label>
+                    <input class="form-control" type="text" id="editarNom" name="nom">
+                  </div>
+                  <div class="mb-3">
+                    <label for="editarProfessor" class="form-label">Profesor:</label>
+                    <input class="form-control" type="text" id="editarProfessor" name="professor">
+                  </div>
+                  <div class="mb-3">
+                    <label for="editarMaterial" class="form-label">Material:</label>
+                    <textarea class="form-control" id="editarMaterial" name="material" rows="3"></textarea>
+                  </div>
+                  <input type="hidden" id="editarLat" name="lat">
+                  <input type="hidden" id="editarLng" name="lng">
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="actualizarCambiosTaller">Actualizar Cambios</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col mapa">
-    <div id="mapa" class="mapa"></div>
-    <div class="d-flex justify-content-between">
-        <button type="button" class="btn btn-primary btn-mapa" id="btnMapaAfegirMarcador">Afegir marcador</button>
-        <button type="button" class="btn btn-primary btn-mapa" id="btnMapaModificarMarcador">Modificar marcador</button>
-        <button type="button" class="btn btn-danger btn-mapa" id="btnMapaEliminarMarcador">Eliminar marcador</button>
+    <div class="col-12">
+      <div id="mapa" class="mapa"></div>
+      <p id="explicacion">Fes clic a un marcador del mapa para ver +info</p>
     </div>
-    <div class="row">
-        <button type="button" class="btn btn-danger btn-mapa" id="btnMapaEliminarTodosMarcadores">Eliminar todos los marcadores</button>
-    </div>
-    <!-- <div>
-      <button type="button" class="btn btn-primary btn-mapa" id="btnObtenerLatLngCentro">Centrar marcador</button>
-    </div> -->
 </div>
 </body>
 

@@ -58,11 +58,30 @@
     <div class="row-12">
       <div class="col-12 text-center-md text-center">
         <h1>Tallers</h1>
-        <!-- btn para insertar talleres -->
         <!-- Botón para activar el modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTaller">Afegir taller</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTaller">
+          Afegir taller
+        </button>
 
-        <!-- Modal -->
+        <!-- Tabla de talleres -->
+        <div class="d-flex justify-content-start"></div>
+        <div class="table-responsive">
+          <table id="talleresTable" class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Material</th>
+                <th>Profesor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Las filas de la tabla se llenarán con JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Modal para añadir taller -->
         <div class="modal fade" id="modalTaller" tabindex="-1" aria-labelledby="modalTallerLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -73,10 +92,13 @@
               <div class="modal-body">
                 <div id="modalMap" style="height: 300px; width: 450px;"></div>
                 <p>Per afegir un marcador, fes clic al mapa després de prémer.</p>
-                <button type="button" class="btn btn-warning" id="btnMapaEliminarUltimoMarcador">Eliminar últim marcador</button>
+                <button type="button" class="btn btn-warning" id="btnMapaEliminarUltimoMarcador">
+                  Eliminar últim marcador
+                </button>
                 <form id="form">
                   <div class="mb-3">
-                    <input class="form-control" type="text" id="nom" name="nom" aria-label="Nom del taller"placeholder="Nom del taller">
+                    <input class="form-control" type="text" id="nom" name="nom" aria-label="Nom del taller"
+                      placeholder="Nom del taller">
                   </div>
                   <div class="mb-3">
                     <input class="form-control" type="text" id="professor" name="professor"
@@ -87,13 +109,13 @@
                       placeholder="img">
                   </div>
                   <div class="mb-3">
-                    <textarea class="form-control" id="material" name="material" aria-label="Material" placeholder="Material" rows="3"></textarea>
+                    <textarea class="form-control" id="material" name="material" aria-label="Material"
+                      placeholder="Material" rows="3"></textarea>
                   </div>
                   <input type="hidden" id="modalLat" name="lat">
                   <input type="hidden" id="modalLng" name="lng">
                 </form>
-              </div>
-              <div class="modal-footer">
+                </ <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancelar">Cancelar</button>
                 <button type="button" class="btn btn-primary" id="afegirTaller">Afegir Taller</button>
               </div>
@@ -102,21 +124,11 @@
         </div>
       </div>
     </div>
+    <div class="col-12">
+      <div id="mapa" class="mapa"></div>
+      <p id="explicacion">Fes clic a un marcador del mapa para ver +info</p>
+    </div>
   </div>
-  <div class="col mapa">
-    <div id="mapa" class="mapa"></div>
-    <p id="explicacion">Fes clic en el mapa per a afegir un marcador</p>
-    <div class="d-flex justify-content-between">
-        <button type="button" class="btn btn-primary btn-mapa" id="btnMapaModificarMarcador">Modificar marcador</button>
-        <button type="button" class="btn btn-danger btn-mapa" id="btnMapaEliminarMarcador">Eliminar marcador</button>
-    </div>
-    <div class="row">
-        <button type="button" class="btn btn-danger btn-mapa" id="btnMapaEliminarTodosMarcadores">Eliminar todos los marcadores</button>
-    </div>
-    <!-- <div>
-      <button type="button" class="btn btn-primary btn-mapa" id="btnObtenerLatLngCentro">Centrar marcador</button>
-    </div> -->
-</div>
 </body>
 
 </html>

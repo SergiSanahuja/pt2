@@ -15,17 +15,35 @@ function initMap() {
 
 function loadMarkers() {
     $.ajax({
-        url: '../Controller/getMarkers.php', 
+        url: '../Controller/getMarkers.php',
         type: 'GET',
         dataType: 'json',
         success: function(data) {
             data.forEach(function(markerData) {
+                let position = new google.maps.LatLng(parseFloat(markerData.lat), parseFloat(markerData.lng));
                 let marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(parseFloat(markerData.lat), parseFloat(markerData.lng)),
+                    position: position,
                     map: mainMap,
                     title: markerData.nom
                 });
                 mainMarkers.push(marker);
+
+                // Crear contenido para InfoWindow
+                let infoWindowContent = `<div>
+                                            <h3>${markerData.nom}</h3>
+                                            <p><b>Material:</b> ${markerData.material}</p>
+                                            <p><b>Profesor:</b> ${markerData.professor}</p>
+                                         </div>`;
+
+                // Crear una InfoWindow
+                let infoWindow = new google.maps.InfoWindow({
+                    content: infoWindowContent
+                });
+
+                // Agregar evento para abrir InfoWindow al hacer clic en el marcador
+                marker.addListener('click', function() {
+                    infoWindow.open(mainMap, marker);
+                });
             });
         },
         error: function(xhr, status, error) {
@@ -33,6 +51,7 @@ function loadMarkers() {
         }
     });
 }
+
 
 // Crea un marcador y lo añade al array newModalMarkers
 function createMarker(location) {

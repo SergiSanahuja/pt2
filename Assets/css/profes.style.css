@@ -1,50 +1,10 @@
-input[type=file] {
-    width: 0.1px;
-    height: 0.1px;
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
-}
-
-#nomMaterial{
-    width: 30%;
-    box-sizing: border-box;
-    border: none;
-    border-bottom: 1px solid #ccc;
-    font-size: 16px;
-    padding: 10px 0;
-    transition: border-color 0.3s;
-    margin-top: 10px;
-    margin-bottom: 10px;
-
+h2{
+    font-family: "permanent marker" ;
+    font-size: 3rem;
 }
 
 .btn{
     font-size:1.2rem;
-}
-
-#quantitatMaterial{
-    width: 10%;
-    border-radius: 10px;
-    font-size: 1.2rem;
-    padding: 10px 0;
-    transition: border-color 0.3s;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.navbar{
-    background: linear-gradient(#6093CE,rgba(0, 0, 0, 0.034)) ;
-}
-
-
-.nav-link {
-    color: white;
-}
-
-.colorNotification{
-    color: #800202;
 }
 
 .centrat {
@@ -61,7 +21,7 @@ input[type=file] {
 	box-shadow: 8px 8px 24px 0 rgba(0, 0, 0, 0.5);	
 }
 
-.DialogMaterial{
+.DialogProfes{
     border-radius: 20px;
     width: 800px;
     height: 460px;
@@ -70,7 +30,7 @@ input[type=file] {
     border: none;
 }
 
-.popUpMaterial{
+.popUpProfes{
     border-radius: 20px;
     width: 683px;
     height: 420px;

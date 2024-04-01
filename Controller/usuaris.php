@@ -3,7 +3,8 @@
 if(session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
   }
-if (!isset($_SESSION['email'])) {
+if (!isset($_SESSION['prof'])) {
+    session_destroy();
     header('Location: login.php');
     exit();
 }

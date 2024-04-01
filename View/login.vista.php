@@ -16,7 +16,6 @@
 <body>
     <div class="container-12">
         <h1>LogIn</h1>
-      
         <div class="container">
             <form action="../Controller/login.php" method="post">
                    <div class="row">

@@ -53,19 +53,18 @@
           <li class="nav-item">
             <a class="nav-link" href="../Controller/grups.php">Grups</a>
           </li>
-          <?php 
-             if(session_status() !== PHP_SESSION_ACTIVE) {
-              session_start();
-            }
-            if (isset($_SESSION['email'])) {
-              $correo = $_SESSION['email'];
-              if ($correo === 'admin@example.com') { ?>
-                <li class="nav-item">
-                  <a class="nav-link" href="../Controller/crearProfes.php">Crear professors</a>
-                </li>
-              <?php }
-            }
-          ?>
+            <?php 
+              if(session_status() !== PHP_SESSION_ACTIVE) {
+                session_start();
+              }
+              if (isset($_SESSION['admin'])) {
+                ?>
+                  <li class="nav-item">
+                    <a class="nav-link" href="../Controller/profes.php">Professors</a>
+                  </li>
+                <?php
+              }
+            ?>
         </ul>
         
         <ul class="navbar-nav ms-auto">

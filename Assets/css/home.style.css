@@ -38,9 +38,30 @@
     height:500px;
     margin:  0 auto;
     padding: 10px;
+    cursor: pointer;
+    
+}
+
+#modalMap {
+        margin:.5rem 0;
+        width: 500px;
+        height:500px;
+        margin:  0 auto;
+        padding: 10px;
+        cursor: pointer;
 }
 
 .btn-mapa{
-    margin: 10px;    
+    margin: 10px; 
     
+}
+
+#explicacion {
+    font-size: 1.5em; 
+    color: #ffffff; 
+    background-color: #5aac70; 
+    border-radius: 5px; 
+    text-align: center;
+    margin: 10px auto;
+    max-width: 500px; 
 }

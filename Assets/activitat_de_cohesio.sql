@@ -100,6 +100,8 @@ CREATE TABLE IF NOT EXISTS `tallers` (
   `nom` varchar(45) NOT NULL,
   `material` text NOT NULL,
   `professor` varchar(45) NOT NULL,
+  `lat` float NOT NULL,
+  `lng` float NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

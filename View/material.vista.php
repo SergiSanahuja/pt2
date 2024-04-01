@@ -46,16 +46,15 @@
                   <a class="nav-link" href="../Controller/grups.php">Grups</a>
                 </li>
                 <?php 
-                   if(session_status() !== PHP_SESSION_ACTIVE) {
+                  if(session_status() !== PHP_SESSION_ACTIVE) {
                     session_start();
                   }
-                  if (isset($_SESSION['email'])) {
-                    $correo = $_SESSION['email'];
-                    if ($correo === 'admin@example.com') { ?>
+                  if (isset($_SESSION['admin'])) {
+                    ?>
                       <li class="nav-item">
-                        <a class="nav-link" href="../Controller/crearProfes.php">Crear professors</a>
+                        <a class="nav-link" href="../Controller/profes.php">Professors</a>
                       </li>
-                    <?php }
+                    <?php
                   }
                 ?>
               </ul>
@@ -85,7 +84,7 @@
 
                     <button type="button" class="btn btn-primary" id="btnAfegirMatDialog" name="btnAfegirMatDialog">Afegir Material</button>
                     <button type="button" class="btn btn-primary" id="btnModificarMatDialog" name="btnModificarMatDialog">Modificar Material</button>
-                    <button type="button" class="btn btn-primary" id="btnEliminarMatDialog" name="btnEliminarMatDialog">Eliminar Material</button>
+                    <button type="button" class="btn btn-danger" id="btnEliminarMatDialog" name="btnEliminarMatDialog">Eliminar Material</button>
                   </form>
                 </div>
                 <!--DIV -->

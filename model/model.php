@@ -43,7 +43,7 @@ function modificarUser($data){
 function eliminarUsuari(){
     try {
         $conection = connexio();
-        $sql = "DELETE FROM `usuaris` where prof=0";
+        $sql = "DELETE FROM `usuaris` where prof=0 AND admin=0";
         $stmt = $conection->prepare($sql);
         $stmt->execute();
     } catch(Exception $e){
@@ -141,14 +141,21 @@ function mostrarPerEdat(){
 function insertGrup($data){
     try {
         $conection = connexio();
-        $sql = "INSERT INTO `grups`(`nom`, `punts`,`email`,`password`) VALUES (?, 0, ?, ?)";
+        $sql = "INSERT INTO `grups`(`nom`, `punts`) VALUES (?, 0)";
 
         $stmt = $conection->prepare($sql);
+        $stmt->bindParam(1, $data[0]);
+        $stmt->execute();
+
+        $grups = "INSERT INTO `usuaris` (`nom`,`email`,`password`, prof, admin) VALUES (?, ?, ?, 0, 0)";
+
+        $stmt = $conection->prepare($grups);
         $stmt->bindParam(1, $data[0]);
         $stmt->bindParam(2, $data[1]);
         $passwordHash = password_hash($data[2], PASSWORD_DEFAULT);
         $stmt->bindParam(3, $passwordHash);
         $stmt->execute();
+
     } catch(Exception $e){
         echo "Error: " . $e->getMessage();
         die();
@@ -182,11 +189,15 @@ function insertUsuariGrup($data){
     }
 }
 
-function createUser($email, $password){
+function createUser($email, $password, $type){
     try {
-        $conection = connexio();
-        $sql = "INSERT INTO `login`(`email`, `password`) VALUES (?, ?)";
-        
+        if($type == 'admin'){
+            $conection = connexio();
+            $sql = "INSERT INTO `usuaris`(`email`, `password`, `admin`) VALUES (?, ?, 1)";
+        }else if($type == 'prof'){
+            $conection = connexio();
+            $sql = "INSERT INTO `usuaris`(`email`, `password`, `prof`) VALUES (?, ?, 1)";
+        }        
         $stmt = $conection->prepare($sql);
         $stmt->bindParam(1, $email);
         $stmt->bindParam(2, $password);
@@ -249,47 +260,4 @@ function canviarGrup($data){
     }
 }
 
-function getUserByEmail($email){
-    try {
-        $conection = connexio();
-        $sql = "SELECT `email` FROM `login` WHERE `email` = ?";
-        
-        $stmt = $conection->prepare($sql);
-        $stmt->bindParam(1, $email);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if($result){
-            return true;
-        } else {
-            return false;
-        }
-
-    } catch(Exception $e){
-        echo "Error: " . $e->getMessage();
-        die();
-    }
-}
-
-function getPasswordByEmail($email){
-    try {
-        $conection = connexio();
-        $sql = "SELECT `password` FROM `login` WHERE `email` = ?";
-        
-        $stmt = $conection->prepare($sql);
-        $stmt->bindParam(1, $email);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if($result){
-            return $result['password'];
-        } else {
-            return false;
-        }
-
-    } catch(Exception $e){
-        echo "Error: " . $e->getMessage();
-        die();
-    }
-}
 ?>

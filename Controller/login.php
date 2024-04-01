@@ -1,5 +1,6 @@
 <?php
-include_once '../model/model.php';  // Replace with the correct path
+include_once '../model/login.model.php';
+include_once '../model/model.php';
 
 if(session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
@@ -30,14 +31,14 @@ if (!getUserByEmail($adminEmail)) {
     $hashedAdminPassword = password_hash($adminPassword, PASSWORD_DEFAULT);
     
     // Create the admin user in the database
-    createUser($adminEmail, $hashedAdminPassword);
+    createUser($adminEmail, $hashedAdminPassword, 'admin');
 }
 if (!getUserByEmail($provaEmail)) {
     // Hash the admin password
     $hashedProvaPassword = password_hash($provaPassword, PASSWORD_DEFAULT);
     
     // Create the admin user in the database
-    createUser($provaEmail, $hashedProvaPassword);
+    createUser($provaEmail, $hashedProvaPassword, 'prof');
 }
 
 $error = '';
@@ -61,7 +62,15 @@ if (isset($_POST['submit']) && !empty($_POST['correu']) && !empty($_POST['pass']
 
     if ($hashed_password && password_verify($password, $hashed_password)) {
         $_SESSION['logged_in'] = true;
-        $_SESSION['email'] = $email; // Guardar el correo electrónico en la sesión
+        $_SESSION['email'] = $email;
+        //Comrpovar que el usuario es admin
+        if(comprovarAdmin($email)){
+            $_SESSION['admin'] = true;
+            $_SESSION['prof'] = true;
+        }
+        if(comprovarProf($email)){
+            $_SESSION['prof'] = true;
+        }
         header('Location: home.php');  // Redirigir a la página de inicio después de un inicio de sesión exitoso
         exit();
     } else {
@@ -73,5 +82,5 @@ if (!empty($error)) {
     echo $error;
 }
 
-require '../View/login.vista.html';
+require '../View/login.vista.php';
 ?>

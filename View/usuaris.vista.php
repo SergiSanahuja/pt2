@@ -54,13 +54,12 @@
               if(session_status() !== PHP_SESSION_ACTIVE) {
                 session_start();
               }
-              if (isset($_SESSION['email'])) {
-                $correo = $_SESSION['email'];
-                if ($correo === 'admin@example.com') { ?>
+              if (isset($_SESSION['admin'])) {
+                ?>
                   <li class="nav-item">
-                    <a class="nav-link" href="../Controller/crearProfes.php">Crear professors</a>
+                    <a class="nav-link" href="../Controller/profes.php">Professors</a>
                   </li>
-                <?php }
+                <?php
               }
             ?>
           </ul>

@@ -15,6 +15,7 @@
 
     <!-- JS -->
     <script type="module" src="../Assets/js/grups.js"></script>
+    <script defer src="../Assets/js/global.js"></script>
 
      <!-- link google Font -->
      <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,7 +41,25 @@
               <a class="nav-link" href="../Controller/usuaris.php">Usuaris</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="#">Grups</a>
+              <a class="nav-link active" href="#"><b>Grups</b></a>
+            </li>
+            <?php 
+               if(session_status() !== PHP_SESSION_ACTIVE) {
+                session_start();
+              }
+              if (isset($_SESSION['email'])) {
+                $correo = $_SESSION['email'];
+                if ($correo === 'admin@example.com') { ?>
+                  <li class="nav-item">
+                    <a class="nav-link" href="../Controller/crearProfes.php">Crear professors</a>
+                  </li>
+                <?php }
+              }
+            ?>
+          </ul>
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <button class="btnLogOut" id="btnTancarSessio">Tancar sessió</button>
             </li>
           </ul>
         </div>
@@ -48,10 +67,11 @@
       <div class="row-12">
         <div class="col-12 text-center-md text-center">
             <h1>Grups</h1>
-
+            <p>Posa el número de grups que vols crear:</p>
+            <p>Per actualitzar has de recargar la pàgina</p>
         <div class="llistaGrups">
-          <input type="number" id="numDeUsersXGrup">
-          <button type="button" id="crearGrups">Realitzar sorteig</button>
+          <input type="number" id="numDeUsersXGrup" min="0"  value="0">
+          <button type="button" id="crearGrups" >Realitzar sorteig</button>
         </div>          
             
         <div class="container">

@@ -28,6 +28,7 @@
   <script type="module" src="../Assets/js/funcions_tallers.js"></script>
   <script src="../Assets/js/mapcontrol.js"></script>
   <script src="../Assets/js/mapcontrolModal.js"></script>
+  <script defer src="../Assets/js/global.js"></script>
 </head>
 
 <body>
@@ -41,6 +42,7 @@
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
             <a class="nav-link active" href="#">Tallers</a>
+
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../Controller/material.php">Material</a>
@@ -50,6 +52,25 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../Controller/grups.php">Grups</a>
+          </li>
+          <?php 
+             if(session_status() !== PHP_SESSION_ACTIVE) {
+              session_start();
+            }
+            if (isset($_SESSION['email'])) {
+              $correo = $_SESSION['email'];
+              if ($correo === 'admin@example.com') { ?>
+                <li class="nav-item">
+                  <a class="nav-link" href="../Controller/crearProfes.php">Crear professors</a>
+                </li>
+              <?php }
+            }
+          ?>
+        </ul>
+        
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+              <button class="btnLogOut" id="btnTancarSessio">Tancar sessió</button>
           </li>
         </ul>
       </div>
@@ -81,7 +102,9 @@
           </table>
         </div>
 
-        <!-- Modal para añadir taller -->
+        <!-- Modal -->
+
+       <!-- Modal para añadir taller -->
         <div class="modal fade" id="modalTaller" tabindex="-1" aria-labelledby="modalTallerLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -96,26 +119,27 @@
                   Eliminar últim marcador
                 </button>
                 <form id="form">
-                  <div class="mb-3">
-                    <input class="form-control" type="text" id="nom" name="nom" aria-label="Nom del taller"
-                      placeholder="Nom del taller">
-                  </div>
-                  <div class="mb-3">
-                    <input class="form-control" type="text" id="professor" name="professor"
-                      aria-label="Nom del professor responsable" placeholder="Professor">
-                  </div>
-                  <div class="mb-3">
-                    <input class="form-control" type="file" id="fil" name="fil" aria-label="Imatge del taller"
-                      placeholder="img">
-                  </div>
-                  <div class="mb-3">
-                    <textarea class="form-control" id="material" name="material" aria-label="Material"
-                      placeholder="Material" rows="3"></textarea>
-                  </div>
-                  <input type="hidden" id="modalLat" name="lat">
-                  <input type="hidden" id="modalLng" name="lng">
+                    <div class="mb-3">
+                        <input class="form-control" type="text" id="nom" name="nom" aria-label="Nom del taller"
+                            placeholder="Nom del taller">
+                    </div>
+                    <div class="mb-3">
+                        <input class="form-control" type="text" id="professor" name="professor"
+                            aria-label="Nom del professor responsable" placeholder="Professor">
+                    </div>
+                    <div class="mb-3">
+                        <input class="form-control" type="file" id="fil" name="fil" aria-label="Imatge del taller"
+                            placeholder="img">
+                    </div>
+                    <div class="mb-3">
+                        <textarea class="form-control" id="material" name="material" aria-label="Material"
+                            placeholder="Material" rows="3"></textarea>
+                    </div>
+                    <input type="hidden" id="modalLat" name="lat">
+                    <input type="hidden" id="modalLng" name="lng">
                 </form>
-                </ <div class="modal-footer">
+              </div>
+              <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancelar">Cancelar</button>
                 <button type="button" class="btn btn-primary" id="afegirTaller">Afegir Taller</button>
               </div>
@@ -164,7 +188,7 @@
       <div id="mapa" class="mapa"></div>
       <p id="explicacion">Fes clic a un marcador del mapa para ver +info</p>
     </div>
-  </div>
+</div>
 </body>
 
 </html>

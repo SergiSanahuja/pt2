@@ -1,4 +1,12 @@
 <?php
+//Comprovar que tiene la session iniciada
+if(session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+  }
+if (!isset($_SESSION['email'])) {
+    header('Location: login.php');
+    exit();
+}
 
     require '../model/model.php';
 
@@ -11,14 +19,27 @@
     
     if (isset($_POST['data'])) {
         // Get the data
+        $data = $_POST['data'];
+        $data = json_decode($data);
+        $servername = "localhost";
+        
+        
         if(($_POST['accio'])=='guardar'){
-            $data = $_POST['data'];
-            $data = json_decode($data);
-            $servername = "localhost";
+            
+           
+            if($data[0][4] != null){
+
+                modificarUser($data);
+                
+                
+            }else{
+                insertarUsuari($data);
+                
+            }
+            echo $data[0][3];
             // print_r((array)$data);
-            insertarUsuari((array)$data);
             // echo ((array) $data);
-            echo json_encode(mostrarUsuari());
+            // echo json_encode(mostrarUsuari());
 
             exit(); 
         }
@@ -28,6 +49,12 @@
 
             exit();
         
+        }else if (($_POST['accio'])=='borrar'){
+           
+            
+            borrarUsuari($data);
+            exit();
+
         }else if(($_POST['accio'])=='mostrar'){
             $usuari = mostrarUsuari();
 
@@ -63,5 +90,5 @@
     
 
 
-require '../View/usuaris.vista.html';
+require '../View/usuaris.vista.php';
 ?>

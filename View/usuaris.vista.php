@@ -13,6 +13,7 @@
      <!-- JS -->
      <script type="module" src="../Assets/js/funcions.js"></script>
      <script type="module" src="../Assets/js/usuaris.js"></script>
+      <script defer src="../Assets/js/global.js"></script>
 
     <!-- leer Excel con js -->
     <script src="https://unpkg.com/read-excel-file@5.x/bundle/read-excel-file.min.js"></script>
@@ -44,10 +45,28 @@
               <a class="nav-link" href="../Controller/material.php">Material</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="#">Usuaris</a>
+              <a class="nav-link active" href="#"><b>Usuaris</b></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="../Controller/grups.php">Grups</a>
+            </li>
+            <?php 
+              if(session_status() !== PHP_SESSION_ACTIVE) {
+                session_start();
+              }
+              if (isset($_SESSION['email'])) {
+                $correo = $_SESSION['email'];
+                if ($correo === 'admin@example.com') { ?>
+                  <li class="nav-item">
+                    <a class="nav-link" href="../Controller/crearProfes.php">Crear professors</a>
+                  </li>
+                <?php }
+              }
+            ?>
+          </ul>
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <button class="btnLogOut" id="btnTancarSessio">Tancar sessió</button>
             </li>
           </ul>
         </div>
@@ -58,26 +77,26 @@
         </div>
     </div>
     <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
-      <form method="post" enctype="multipart/form-data">
+     
         <!-- Si no funciona el DropDown es por una clase de boostrap llamada clase="dropdown" -->
         <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" name="dropdownMenuButton">
             Filtrar
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li></li>
-            <li><a class="dropdown-item" id="filtrarLletra" name="mostrarMaterial">Per lletra</a></li>
+            <li><a class="dropdown-item" id="filtrarLletra" name="mostrarMaterial">A-Z</a></li>
             <li><a class="dropdown-item" id="filtrarCurs" name="filtrarCurs">Per Curs</a></li>
             <li><a class="dropdown-item" id="filtrarEdat" name="filtrarEdat">Per Edat</a></li>
           </ul>
-        <input type="text" id="nomUsuari" name="nomUsuari" aria-label="Nom Usuari" placeholder="Nom Usuari" required>
-        <button type="submit" class="btn btn-primary" id="AfegirUsuari" name="AfegirUsuari">+</button>
-        <button type="submit" class="btn btn-primary" id="EliminarUsuari" name="EliminarUsuari">-</button>
-      </form>
+        <input type="text" id="nomUsuari" name="nomUsuari" aria-label="Nom Usuari" placeholder="Filtrar Nom Usuari" required>
+        <button type="submit" class="btn btn-primary" id="AfegirUsuari" name="AfegirUsuari">Afegir Nou Usuari</button>
+       
+    
     </div>
 
     <div class="m-5">
       <input type="file" id="excelFile" class="form-control">     
-      <button type="submit" class="mt-3" id="clearStorage">Borrar Ususaris</button>
+      <button type="submit" class="mt-3" id="clearStorage">Borrar tot el llistat</button>
     </div>
     
     <div id="taulaAlumnes" class="d-flex justify-content-center">
@@ -88,20 +107,20 @@
     </div>
     
     <dialog  id="newF">
-      <h3>Dades de la factura i del client</h3>
+      <h3>Usuari</h3>
       <table id="newUserTable">
 
           <tr>
               <th>Nom</th>
-              <td><input type="text" id="newNom" required placeholder="Sergi"></td>
+              <td><input type="text" id="newNom" required placeholder="Nom"></td>
           </tr>
           <tr>
               <th>Cognom</th>
-              <td><input type="text" id="newCognom" required placeholder="Sanahuja Torrent"></td>
+              <td><input type="text" id="newCognom" required placeholder="Cognom"></td>
           </tr>
           <tr>
               <th>Edat</th>
-              <td><input type="text" id="Edat" required placeholder="21"></td>
+              <td><input type="text" id="Edat" required placeholder="Edat"></td>
           </tr>
           <tr><th class="spacing"></th></tr>
           <tr>
@@ -119,6 +138,8 @@
           <tr><th class="spacing"></th></tr>
       </table>
       <div id="newFGuardar"><button id="Guardar">Guardar</button></div>
+      <div id="NewBorrar"><button id="borrar">Eliminar</button></div>
+
   </dialog>
 
 

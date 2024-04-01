@@ -3,7 +3,7 @@ import * as lib from './lib.js';
 
 let afegirUser = document.getElementById('newF');
 let llistaUsers = [];
-
+let idAlumne
 
 class Excel {
     constructor(content) {
@@ -35,6 +35,7 @@ async function init() {
         
         mostrarUsers(content);
         guardarEnBD(content);
+        location.reload();
     });
 
     
@@ -111,7 +112,7 @@ $('#nomUsuari').on('keyup', function() {
     table = document.getElementById("Alumnes");
     tr = table.getElementsByTagName("tr");
     for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
+        td = tr[i].getElementsByTagName("td")[1];
         if(td){
             txtValue = td.textContent || td.innerText;
             if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -151,6 +152,7 @@ async function enviar(data, accio){
         method: 'POST',
         data: {data: JSON.stringify(data), accio:accio},
         // success: function (response) {
+        //     alert(response);
         //     return response;
         // },
         error: function () {
@@ -165,29 +167,10 @@ function mostrarUsers(t) {
     let table = document.getElementById('Alumnes');  
     table.innerHTML = '';
 
-    if (excel2 == null) {
-
-        excel2.forEach((row, index) => {
-        let tr = document.createElement('tr');
-        Object.values(row).forEach(cell => {
-            let cellElement;
-            if (index === 0) {
-                // Si es la primera fila, crear un elemento th
-                cellElement = document.createElement('th');
-            } else {
-                // Si no es la primera fila, crear un elemento td
-                cellElement = document.createElement('td');
-                cellElement.setAttribute('name', cell);
-            }
-            cellElement.textContent = cell;
-            tr.appendChild(cellElement);
-        });
-        table.appendChild(tr);
-        }
-        );
-    }else{
+    
 
        let tr = document.createElement('tr');
+       tr.appendChild(lib.crearElement('th', {}, 'id'));
        tr.appendChild(lib.crearElement('th', {}, 'Nombre'));
        tr.appendChild(lib.crearElement('th', {}, 'Apellidos'));
        tr.appendChild(lib.crearElement('th', {}, 'Edad'));
@@ -196,23 +179,41 @@ function mostrarUsers(t) {
        table.appendChild(tr);
            
         excel2.forEach((row, index) => {
-            tr = document.createElement('tr');
+            tr = lib.crearElement('tr', {id: index,class:'tr'}, '');
+
             Object.values(row).forEach(cell => {
                 let cellElement;
                
                     // Si no es la primera fila, crear un elemento td
+              
                 cellElement = document.createElement('td');
+
+
                 cellElement.setAttribute('name', cell);
                 
                 cellElement.textContent = cell;
                 tr.appendChild(cellElement);
             });
+
             table.appendChild(tr);
             }
-            );
-    }
+            );    
 
 }
+
+$('#Alumnes').on('click', '.tr', function() {
+    let data = [];
+    $(this).find('td').each(function() {
+        data.push($(this).text());
+    });
+    idAlumne = data[0];
+    $('#newNom').val(data[1]);
+    $('#newCognom').val(data[2]);
+    $('#Edat').val(data[3]);
+    $('#Curs').val(data[4]);
+    afegirUser.showModal();
+});
+
 
 
 
@@ -222,6 +223,10 @@ function mostrarUsers(t) {
 $('#AfegirUsuari').on('click', function() {
     afegirUser.showModal();
 
+    idAlumne = null;
+    $('#newNom').val('');
+    $('#newCognom').val('');
+    $('#Edat').val('');
 });
 
 afegirUser.addEventListener("click", ev => {
@@ -242,8 +247,11 @@ $('#Guardar').on('click', function() {
     let cognom = $('#newCognom').val();
     let edat = $('#Edat').val();
     let curs = $('#Curs').val();
+ 
 
-    let data = [nom, cognom, edat, curs];
+    let data = [nom, cognom, parseInt(edat), curs, parseInt(idAlumne)];
+
+  
 
     if (nom === '' || cognom === '' || edat === '' || curs === '') {
         alert('Has d\'omplir tots els camps');
@@ -263,8 +271,22 @@ $('#Guardar').on('click', function() {
     afegirUser.close();
     $('#cont').css('filter', 'none');
     
-
+    location.reload();
    
+});
+
+$('#borrar').on('click', function() {
+    
+    if(confirm('Estas segur que vols esborrar aquest alumne?')){
+        let data = [idAlumne];
+     
+        enviar([data], 'borrar');
+        alert('Alumne esborrat');
+        location.reload();
+    }else{
+        alert('Operació cancelada');
+    }
+
 });
 
 init();

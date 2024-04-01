@@ -4,5 +4,5 @@ include_once 'connexio.php';
 $connexio = connexio();
 
 
-require '../View/home.vista.html';
+require '../View/home.vista.php';
 ?>

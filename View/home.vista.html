@@ -122,6 +122,42 @@
             </div>
           </div>
         </div>
+        <div class="modal fade" id="modalEditarTaller" tabindex="-1" aria-labelledby="modalEditarTallerLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalEditarTallerLabel">Editar Taller</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div id="editarModalMap" style="height: 300px; width: 450px;"></div> 
+                <form id="formEditar">
+                  <input type="hidden" id="editarId" name="id">
+                  <input type="hidden" id="formState" value="new">
+                  <input type="hidden" id="editingTallerId">
+                  <div class="mb-3">
+                    <label for="editarNom" class="form-label">Nombre del Taller:</label>
+                    <input class="form-control" type="text" id="editarNom" name="nom">
+                  </div>
+                  <div class="mb-3">
+                    <label for="editarProfessor" class="form-label">Profesor:</label>
+                    <input class="form-control" type="text" id="editarProfessor" name="professor">
+                  </div>
+                  <div class="mb-3">
+                    <label for="editarMaterial" class="form-label">Material:</label>
+                    <textarea class="form-control" id="editarMaterial" name="material" rows="3"></textarea>
+                  </div>
+                  <input type="hidden" id="editarLat" name="lat">
+                  <input type="hidden" id="editarLng" name="lng">
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="actualizarCambiosTaller">Actualizar Cambios</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-12">

@@ -1,7 +1,9 @@
 let googleModalApiKey = "AIzaSyBkQGLnLx2qAYY82w34el8Dbc4xp1TdyTY"; // Tu clave API real
 let modalMap;
+let editarModalMap;
 let modalMarkers = []; // Marcadores existentes
 let nuevoModalMarkers = []; // Nuevos marcadores agregados por el usuario
+
 
 // Esta función inicializa el mapa dentro del modal
 function initModalMap() {
@@ -17,9 +19,26 @@ function initModalMap() {
         createMarker(event.latLng);
     });
 
-    loadModalExistingMarkers();
+    loadModalExistingMarkers(modalMap);
 }
+function initEditarModalMap(lat, lng) {
+    var editarModalMapElement = document.getElementById('editarModalMap');
+    if (editarModalMapElement) {
+        editarModalMap = new google.maps.Map(editarModalMapElement, {
+            center: { lat: lat, lng: lng },
+            zoom: 19,
+            disableDefaultUI: true,
+            mapTypeId: 'satellite'
+        });
 
+        // Listener para cuando se hace clic en el mapa y se agrega un nuevo marcador
+        editarModalMap.addListener('click', function(event) {
+            createMarker(event.latLng);
+        });
+
+        loadModalExistingMarkers(editarModalMap);
+    }
+}
 // Crea un marcador y lo añade al array newModalMarkers
 function createMarker(location) {
     // Si ya se ha agregado un marcador, no agregue otro
@@ -39,7 +58,7 @@ function createMarker(location) {
 }
 
 // Carga los marcadores existentes llamando a tu backend PHP
-function loadModalExistingMarkers() {
+function loadModalExistingMarkers(map) {
     $.ajax({
         url: '../Controller/getMarkers.php',  
         type: 'GET',
@@ -49,7 +68,7 @@ function loadModalExistingMarkers() {
                 let location = new google.maps.LatLng(parseFloat(taller.lat), parseFloat(taller.lng));
                 let marker = new google.maps.Marker({
                     position: location,
-                    map: modalMap,
+                    map: map, 
                     title: taller.nom,
                 });
                 modalMarkers.push(marker);
@@ -85,7 +104,18 @@ $('#modalTaller').on('shown.bs.modal', function() {
 
 // Evento que se dispara cuando se oculta el modal
 $('#modalTaller').on('hidden.bs.modal', function() {
-    // Opcional: limpia los marcadores si no deseas mantenerlos entre sesiones del modal
+    clearModalMarkers();
+});
+
+$('#modalEditarTaller').on('shown.bs.modal', function() {
+    if (typeof google === 'object' && typeof google.maps === 'object') {
+        let lat = parseFloat($('#editarLat').val());
+        let lng = parseFloat($('#editarLng').val());
+        initEditarModalMap(lat, lng);
+    }
+});
+
+$('#modalEditarTaller').on('hidden.bs.modal', function() {
     clearModalMarkers();
 });
 

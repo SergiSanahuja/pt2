@@ -19,3 +19,8 @@ h1{
     margin: 0 auto;
     margin-top: 5px;
   }
+
+  #editarModalMap {
+    height: 300px; /* O cualquier otra altura */
+    width: 100%; /* Para que tome el ancho completo del modal */
+}

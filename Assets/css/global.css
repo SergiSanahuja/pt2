@@ -27,7 +27,7 @@ h1{
 #editarModalMap {
     height: 300px; /* O cualquier otra altura */
     width: 100%; /* Para que tome el ancho completo del modal */
-
+}
 .btnLogOut{
     background-color: #d73c30;
     color: white;

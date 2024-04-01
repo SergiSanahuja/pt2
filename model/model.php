@@ -247,6 +247,23 @@ function getNomGrups(){
     }
 }
 
+function getGrup($email){
+    try{
+    $conection = connexio();
+    $sql = "SELECT * FROM `grups` WHERE `email` = ?"; // Replace with your table and column names
+    $stmt = $conection->prepare($sql);
+    $stmt->bindParam(1, $email);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_OBJ);
+
+    return $result;
+
+    }catch(Exception $e){
+        echo "Error: " . $e->getMessage();
+        die();
+    }
+}
+
 
 function canviarGrup($data){
     try{

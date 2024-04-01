@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
+    
     <link rel="stylesheet" href="../Assets/Css/global.css">
     <!-- link google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,6 +23,7 @@
 
 </head>
 <body>
+
 <nav class="navbar navbar-expand-lg ">
             <img src="../Assets/img/logo.png" alt="logo" width="auto" height="50">
             <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarText">
@@ -38,45 +40,36 @@
                 </li>
                 <li>
                 <div class="configuracio">
-                    <a href="perfil.conf.php">Perfil</a>
+                    <a href="Controller/perfil.conf.php">Perfil</a>
                 </div>
                 </li>
               </ul>
             </div>
           </nav>
+
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <h1>Activitats</h1>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Professor</th>
-                            <th>Accions</th>
-                        
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach($activitats as $activitat): ?>
-                            <tr>
-                               
-                                <td><?php echo $activitat->nom ?></td>
-                                <td><?php echo $activitat->professor ?></td>
-                                <td>
-                                    <?php echo is_array($nomGrups[0][0]) ? $nomGrups[0][0]['nom'] : 'N/A';  ?>
-                                    <?php echo '-' ?>
-                                    <?php echo is_array($nomGrups[0][1]) ? $nomGrups[0][1]['nom'] : 'N/A';  ?>
-                                </td>
-                                
-                               
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+            <div class="justify-content-center">
+        
+                <h1>Perfil</h1>
+
             </div>
         </div>
-    </div>
-    
+        <div class="">
+            <div class="col-md-8 col-sm-10 offset-2 offset-md-4 ">
+
+                <div class="info  ">
+                    
+                    <form action="Controller.perfil.conf.php" method="POST">
+                        <div class="form-group ">
+                            <label for="nom">Nom</label>
+                            <input type="text" class="form-control" id="nom" name="nom" value="<?php echo $grup->nom ?>">
+                            <input type="file" class="form-control" id="fotoPerfil" name="fotoPerfil">
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
 </body>
 </html>

@@ -16,6 +16,7 @@
 <body>
     <div class="container-12">
         <h1>LogIn</h1>
+      
         <div class="container">
             <form action="../Controller/login.php" method="post">
                    <div class="row">
@@ -33,6 +34,11 @@
                    </div>
             </form>
         </div>
+        <?php if (!empty($error)): ?>
+            <div class="alert alert-danger" role="alert">
+                <?php echo $error; ?>
+            </div>
+        <?php endif; ?>
     </div>
     
 </body>

@@ -69,9 +69,7 @@ if (isset($_POST['submit']) && !empty($_POST['correu']) && !empty($_POST['pass']
     }
 }
 
-if (!empty($error)) {
-    echo $error;
-}
 
-require '../View/login.vista.html';
+
+require '../View/login.vista.php';
 ?>

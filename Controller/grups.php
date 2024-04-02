@@ -35,7 +35,6 @@ if (isset($_POST['data'])) {
         case 'crearGrup':
 
             
-
             insertGrup($data);
        
             break;

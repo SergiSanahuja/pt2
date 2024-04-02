@@ -53,14 +53,17 @@
           </nav>
     <div class="container">
 
-      <div class="row">
+      <div class="row justify-content-between">
+          <div class="col">
+            <h1>Alumnes del  <?php echo is_object($grup) ? $grup->nom : 'N/A'; ?></h1>
+          </div>
           <div class="col-12">
-          <h1>Alumnes del  <?php echo is_object($grup) ? $grup->nom : 'N/A'; ?></h1>
+              <h2>Puntuacio:  <?php echo is_object($puntuacio) ? $puntuacio->punts : 'N/A'; ?></h2>
           </div>
       </div>  
       <div class="row">
         <?php foreach($UsuarisGrup as $alumne): ?>
-        <div class="col-4">
+        <div class="col-3 mb-1">
           <div class="card">
             <div class="card-body">
                         <h5 class="card-title"><?php echo is_array($alumne) ? $alumne['nom'] : 'N/A'; ?></h5>

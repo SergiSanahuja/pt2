@@ -5,7 +5,7 @@ session_start();
 
 $grup = getGrup($_SESSION['email']);
 
-
+$puntuacio = getPuntuacio($grup->nom); 
 
 $UsuarisGrup = getUsuarisGrup($grup->nom);
 

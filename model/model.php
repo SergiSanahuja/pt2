@@ -321,6 +321,24 @@ function getGrupByEmail($email){
     }
 }
 
+function getUsuarisGrup($Grup){
+    try {
+        $conection = connexio();
+        $sql = "SELECT * FROM `usuaris` WHERE `grup` = ?";
+        
+        $stmt = $conection->prepare($sql);
+        $stmt->bindParam(1, $Grup);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
+
+    } catch(Exception $e){
+        echo "Error: " . $e->getMessage();
+        die();
+    }
+}
+
 function getActivitats(){
     try {
         $conection = connexio();

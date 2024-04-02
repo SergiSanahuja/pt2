@@ -33,6 +33,10 @@
                 <li class="nav-item">
                   <a class="nav-link active" href="alumnes.activitats.php">Activitats</a>
                 </li>
+              
+                <li class="nav-item">
+                  <a class="nav-link " href="alumnes.grup.php">Grup</a>
+                </li>
 
               </ul>
               

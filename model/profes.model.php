@@ -50,7 +50,7 @@ function afegirProfesBD($nom, $cognom, $email, $password){
 function modificarProfesBD($id, $nom, $cognom, $email, $password){
     try {
         $conection = connexio();
-        $sql = "SELECT COUNT(*), `password` FROM `usuaris` WHERE `id` = ?";
+        $sql = "SELECT COUNT(*), `password` FROM `usuaris` WHERE `id` = ? AND `prof` = 1";
         
         $stmt = $conection->prepare($sql);
         $stmt->bindParam(1, $id);
@@ -105,7 +105,7 @@ function modificarProfesBD($id, $nom, $cognom, $email, $password){
             $stmt->execute();
             
         } else {
-            echo "<script>alert('El professor amb l'ID $id no existeix');</script>";
+            echo "<script>alert('El professor amb l\'ID $id no existeix');</script>";
         }
     } catch(Exception $e){
         echo "Error: " . $e->getMessage();

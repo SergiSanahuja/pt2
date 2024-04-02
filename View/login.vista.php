@@ -20,7 +20,7 @@
             <form action="../Controller/login.php" method="post">
                    <div class="row">
                         <div class="col-12 col-md-12">
-                            <label for="correu">Correu Grup:</label>
+                            <label for="correu">Correu:</label>
                             <input type="email" name="correu" id="correu" class="form-control" required>
                         </div>
                         <div class="col-12 col-md-12 mb-4">

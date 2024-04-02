@@ -24,25 +24,26 @@
   </head>
   <body>
     <div class="container-12">
-      <nav class="navbar navbar-expand-lg ">
-        <img src="../Assets/img/logo.png" alt="logo" width="auto" height="50">
-        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarText">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarText">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="../Controller/home.php">Tallers</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="../Controller/material.php">Material</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="../Controller/usuaris.php">Usuaris</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="#"><b>Grups</b></a>
-            </li>
+    <nav class="navbar navbar-expand-lg ">
+      <img src="../Assets/img/logo.png" alt="logo" width="auto" height="50">
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarText">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link active" href="#"><b>Tallers</b></a>
+
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../Controller/material.php">Material</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../Controller/usuaris.php">Usuaris</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../Controller/grups.php">Grups</a>
+          </li>
             <?php 
               if(session_status() !== PHP_SESSION_ACTIVE) {
                 session_start();
@@ -55,13 +56,11 @@
                 <?php
               }
             ?>
-          </ul>
-          <ul class="navbar-nav ms-auto">
+            
+        </ul>
+        
+        <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-                <button type="button" class="btn btn-primary" id="canviarContrasenya">Canviar contrasenya</button>
-                <button class="btnLogOut" id="btnTancarSessio">Tancar sessió</button>
-            </li>
-            <li>
             <?php 
               if(session_status() !== PHP_SESSION_ACTIVE) {
                 session_start();
@@ -69,15 +68,19 @@
               if (isset($_SESSION['admin'])) {
                 ?>
                   <li class="nav-item">
-                    <a class="nav-link" href="../Controller/AcabarActivitats.php"><button id="Acabar">Acabar Activitats</button></a>
+                    <a class="nav-link" href="../Controller/AcabarActivitats.php"><button id="Acabar" class="btn mt-2 btn-primary">Acabar Activitats</button></a>
                   </li>
                 <?php
               }
             ?>
-            </li>
-          </ul>
-        </div>
-      </nav>
+            </li> 
+          <li class="nav-item">
+              <button type="button" class="btn btn-primary" id="canviarContrasenya">Canviar contrasenya</button>
+              <button class="btnLogOut" id="btnTancarSessio">Tancar sessió</button>
+          </li>
+        </ul>
+      </div>
+    </nav>
       <div class="row-12">
         <div class="col-12 text-center-md text-center">
             <h1>Grups</h1>

@@ -65,9 +65,24 @@
                 <?php
               }
             ?>
+            
         </ul>
         
         <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+            <?php 
+              if(session_status() !== PHP_SESSION_ACTIVE) {
+                session_start();
+              }
+              if (isset($_SESSION['admin'])) {
+                ?>
+                  <li class="nav-item">
+                    <a class="nav-link" href="../Controller/AcabarActivitats.php"><button id="Acabar" class="btn mt-2 btn-primary">Acabar Activitats</button></a>
+                  </li>
+                <?php
+              }
+            ?>
+            </li> 
           <li class="nav-item">
               <button type="button" class="btn btn-primary" id="canviarContrasenya">Canviar contrasenya</button>
               <button class="btnLogOut" id="btnTancarSessio">Tancar sessió</button>

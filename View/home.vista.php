@@ -126,10 +126,7 @@
                         <input class="form-control" type="text" id="professor" name="professor"
                             aria-label="Nom del professor responsable" placeholder="Professor">
                     </div>
-                    <div class="mb-3">
-                        <input class="form-control" type="file" id="fil" name="fil" aria-label="Imatge del taller"
-                            placeholder="img">
-                    </div>
+                    
                     <div class="mb-3">
                         <textarea class="form-control" id="material" name="material" aria-label="Material"
                             placeholder="Material" rows="3"></textarea>

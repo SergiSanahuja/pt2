@@ -44,7 +44,7 @@ if (isset($_POST['data'])) {
             break;
 
         case 'eliminarGrups':
-            eliminarGrup($data);
+            eliminarGrup();
             break;
       
        case 'getNumGrups':

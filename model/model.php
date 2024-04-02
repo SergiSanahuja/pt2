@@ -180,6 +180,35 @@ function eliminarGrup(){
     }
 }
 
+function getRanking(){
+    try {
+        $conection = connexio();
+        $sql = "SELECT * FROM `grups` ORDER BY punts DESC";
+        $stmt = $conection->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    } catch(Exception $e){
+        echo "Error: " . $e->getMessage();
+        die();
+    }
+
+}
+
+function getGrupGuanyador(){
+    try{
+        $conection = connexio();
+        $sql = "SELECT * FROM `grups` ORDER BY punts DESC LIMIT 1";
+        $stmt = $conection->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_OBJ);
+        return $result;
+    } catch(Exception $e){
+        echo "Error: " . $e->getMessage();
+        die();
+    }
+}
+
 function insertUsuariGrup($data){
     try {
         $conection = connexio();

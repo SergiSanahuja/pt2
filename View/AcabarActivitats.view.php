@@ -31,11 +31,13 @@
               <ul class="navbar-nav mr-auto">
               
                 <li class="nav-item">
-                  <a class="nav-link active" href="alumnes.activitats.php">Activitats</a>
+                  <a class="nav-link " href="alumnes.activitats.php">Activitats</a>
                 </li>
-              
                 <li class="nav-item">
-                  <a class="nav-link " href="alumnes.grup.php">Grup</a>
+                  <a class="nav-link active" href="alumnes.grup.php">Grup</a>
+                </li>
+                <li>
+                    <a href="diploma.php">Diploma</a>
                 </li>
               </ul>
               
@@ -48,43 +50,39 @@
                     <a href="perfil.conf.php">Perfil</a>
                 </div>
                 </li>
-                
               </ul>
             </div>
           </nav>
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h1>Activitats</h1>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Professor</th>
-                            <th>Accions</th>
-                        
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach($activitats as $activitat): ?>
-                            <tr>
-                               
-                                <td><?php echo $activitat->nom ?></td>
-                                <td><?php echo $activitat->professor ?></td>
-                                <td>
-                                    <?php echo is_array($nomGrups[0][0]) ? $nomGrups[0][0]['nom'] : 'N/A';  ?>
-                                    <?php echo '-' ?>
-                                    <?php echo is_array($nomGrups[0][1]) ? $nomGrups[0][1]['nom'] : 'N/A';  ?>
-                                </td>
-                                
-                               
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
     
+    <div class="container" id="Ranking">
+    <table class="ranking-table">
+        <thead>
+            <tr >
+                <th>Posició</th>
+                <th>Nom</th>
+                <th>Puntuació</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <?php
+                $posicion = 1;
+                foreach ($Grups as $Grup) {
+                    echo "<tr>";
+                    echo "<td>" . $posicion . "</td>";
+                    echo "<td>" . $Grup['nom'] . "</td>";
+                    echo "<td>" . $Grup['punts'] . "</td>";
+                    echo "</tr>";
+                    $posicion++;
+                }
+            ?>
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
 </body>
 </html>

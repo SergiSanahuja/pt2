@@ -4,6 +4,13 @@ import * as lib from './lib.js';
 let afegirUser = document.getElementById('newF');
 let llistaUsers = [];
 let idAlumne
+let btnCanviarContrasenya = document.getElementById('canviarContrasenya');
+
+if (btnCanviarContrasenya) {
+    btnCanviarContrasenya.addEventListener('click', function() {
+        window.location.href = '../Controller/canviarContrasenya.php';
+    });
+}
 
 class Excel {
     constructor(content) {

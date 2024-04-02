@@ -1,4 +1,13 @@
 import * as lib from './lib.js';
+
+let btnCanviarContrasenya = document.getElementById('canviarContrasenya');
+
+if (btnCanviarContrasenya) {
+    btnCanviarContrasenya.addEventListener('click', function() {
+        window.location.href = '../Controller/canviarContrasenya.php';
+    });
+}
+
 class Grup {
     excel = [];
 

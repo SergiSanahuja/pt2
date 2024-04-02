@@ -1,3 +1,11 @@
+let btnCanviarContrasenya = document.getElementById('canviarContrasenya');
+
+if (btnCanviarContrasenya) {
+    btnCanviarContrasenya.addEventListener('click', function() {
+        window.location.href = '../Controller/canviarContrasenya.php';
+    });
+}
+
 async function confirmDelete() {
     let conf = confirm('Estas segur que vols eliminar el material?');
     if (conf) {

@@ -52,6 +52,7 @@
                   if (isset($_SESSION['admin'])) {
                     ?>
                       <li class="nav-item">
+                        
                         <a class="nav-link" href="../Controller/profes.php">Professors</a>
                       </li>
                     <?php
@@ -60,6 +61,7 @@
               </ul>
               <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
+                    <button type="button" class="btn btn-primary" id="canviarContrasenya">Canviar contrasenya</button>
                     <button class="btnLogOut" id="btnTancarSessio">Tancar sessió</button>
                 </li>
               </ul>
@@ -82,9 +84,9 @@
                         <li><a class="dropdown-item" href="?filtrar=quantitat" id="filtrarQuantitat" name="filtrarQuantitat">Per quantitat</a></li>
                       </ul><br><br>
 
-                    <button type="button" class="btn btn-primary" id="btnAfegirMatDialog" name="btnAfegirMatDialog">Afegir Material</button>
-                    <button type="button" class="btn btn-primary" id="btnModificarMatDialog" name="btnModificarMatDialog">Modificar Material</button>
-                    <button type="button" class="btn btn-danger" id="btnEliminarMatDialog" name="btnEliminarMatDialog">Eliminar Material</button>
+                    <button type="button" class="btn2 btn btn-primary" id="btnAfegirMatDialog" name="btnAfegirMatDialog">Afegir Material</button>
+                    <button type="button" class="btn2 btn btn-primary" id="btnModificarMatDialog" name="btnModificarMatDialog">Modificar Material</button>
+                    <button type="button" class="btn2 btn btn-danger" id="btnEliminarMatDialog" name="btnEliminarMatDialog">Eliminar Material</button>
                   </form>
                 </div>
                 <!--DIV -->

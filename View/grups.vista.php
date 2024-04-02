@@ -58,6 +58,7 @@
           </ul>
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
+                <button type="button" class="btn btn-primary" id="canviarContrasenya">Canviar contrasenya</button>
                 <button class="btnLogOut" id="btnTancarSessio">Tancar sessió</button>
             </li>
             <li>

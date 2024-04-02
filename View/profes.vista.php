@@ -54,6 +54,7 @@
               
               <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
+                    <button type="button" class="btn btn-primary" id="canviarContrasenya">Canviar contrasenya</button>
                     <button class="btnLogOut" id="btnTancarSessio">Tancar sessió</button>
                 </li>
               </ul>
@@ -63,9 +64,9 @@
         <h1 class="row justify-content-center m-5">Professors</h1>
         <!--2 buttons para abrir dialog -->
         <div class="col-12 text-center-md text-center">
-          <button type="button" class="btn btn-primary" id="btnAfegirProfe" name="btnAfegirProfe">Afegir Professor</button>
-          <button type="button" class="btn btn-primary" id="btnModificarProfe" name="btnModificarProfe">Modificar Professor</button>
-          <button type="button" class="btn btn-danger" id="btnEliminarProfe" name="btnEliminarProfe">Eliminar Professor</button>
+          <button type="button" class="btn2 btn btn-primary" id="btnAfegirProfe" name="btnAfegirProfe">Afegir Professor</button>
+          <button type="button" class="btn2 btn btn-primary" id="btnModificarProfe" name="btnModificarProfe">Modificar Professor</button>
+          <button type="button" class="btn2 btn btn-danger" id="btnEliminarProfe" name="btnEliminarProfe">Eliminar Professor</button>
         </div>
         <h2 class="row justify-content-center m-5">Llista de professors</h2>
         <div class="container mt-5">

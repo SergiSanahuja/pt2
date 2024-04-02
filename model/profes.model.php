@@ -50,14 +50,14 @@ function afegirProfesBD($nom, $cognom, $email, $password){
 function modificarProfesBD($id, $nom, $cognom, $email, $password){
     try {
         $conection = connexio();
-        $sql = "SELECT COUNT(*) FROM `usuaris` WHERE `id` = ?";
+        $sql = "SELECT COUNT(*), `password` FROM `usuaris` WHERE `id` = ?";
         
         $stmt = $conection->prepare($sql);
         $stmt->bindParam(1, $id);
         $stmt->execute();
-        $result = $stmt->fetchColumn();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($result > 0) {
+        if ($result['COUNT(*)'] > 0) {
             $conection = connexio();
             
             // Construct the SQL query based on which fields were provided
@@ -77,8 +77,16 @@ function modificarProfesBD($id, $nom, $cognom, $email, $password){
                 $params[] = $email;
             }
             if (!empty($password)) {
+                // Si se proporciona una nueva contraseña, la encriptamos
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
                 $sql .= "`password` = ?, ";
-                $params[] = $password;
+                $params[] = $hashed_password;
+            } else {
+                // Si no se proporciona una nueva contraseña, verificamos la existente
+                if (password_verify($password, $result['password'])) {
+                    $sql .= "`password` = ?, ";
+                    $params[] = $result['password'];
+                }
             }
 
             // Remove trailing comma and space

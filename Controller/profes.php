@@ -4,7 +4,12 @@ if(session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
 
-if (!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] !== true) {
+if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true && isset($_SESSION['alumno']) && $_SESSION['alumno'] === true){
+  header('Location: alumnes.activitats.php');
+  exit();
+}
+
+if (!isset($_SESSION['prof']) && $_SESSION['prof'] !== true) {
     header('Location: home.php');
     exit();
 }
@@ -57,8 +62,7 @@ function modificarProfes(){
   $email = $_POST['emailProfesModificar'];
   $password = $_POST['passwordProfesModificar'];
   if(!empty($id)){
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    modificarProfesBD($id, $nom, $cognom, $email, $hashedPassword);
+    modificarProfesBD($id, $nom, $cognom, $email, $password);
   } else {
     if(empty($id)) {
       echo "Error: Falta el campo 'id' para modificar el profesor.";
@@ -77,7 +81,6 @@ function eliminarProfes(){
       echo json_encode(array("success" => false, "message" => "Error al eliminar material: " . $e->getMessage()));
   }
 }
-
 
 if(isset($_POST['agregarProfes'])){
   afegirProfes();

@@ -1,7 +1,14 @@
 <?php
+if(session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+
+if (!isset($_SESSION['logged_in'])) {
+    header('Location: login.php');
+    exit();
+}
 
 require_once '../Model/model.php';
-session_start();
 
 $grup = getGrup($_SESSION['email']);
 

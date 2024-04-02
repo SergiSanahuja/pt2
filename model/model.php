@@ -141,10 +141,11 @@ function mostrarPerEdat(){
 function insertGrup($data){
     try {
         $conection = connexio();
-        $sql = "INSERT INTO `grups`(`nom`, `punts`) VALUES (?, 0)";
+        $sql = "INSERT INTO `grups`(`titol`, `image`, `nom`, `punts`) VALUES (?,'default.jpg' ,?, 0)";
 
         $stmt = $conection->prepare($sql);
         $stmt->bindParam(1, $data[0]);
+        $stmt->bindParam(2, $data[0]);
         $stmt->execute();
 
         $grups = "INSERT INTO `usuaris` (`nom`,`email`,`password`, prof, admin) VALUES (?, ?, ?, 0, 0)";
@@ -217,7 +218,7 @@ function createUser($email, $password, $type){
 function getUsersGrups($data){
     try {
         $conection = connexio();
-        $sql = "SELECT nom,cognom FROM `usuaris` WHERE grup = ? and prof=0"; // Replace with your table and column names
+        $sql = "SELECT nom,cognom FROM `usuaris` WHERE grup = ? and prof=0";
     
     $stmt = $conection->prepare($sql);
     $stmt->bindParam(1, $data[1]);
@@ -235,7 +236,7 @@ function getUsersGrups($data){
 function getNumGrups(){
     try{
     $conection = connexio();
-    $sql = "SELECT COUNT(nom) as CountGrups FROM `grups`"; // Replace with your table and column names
+    $sql = "SELECT COUNT(nom) as CountGrups FROM `grups`";
     $stmt = $conection->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -251,7 +252,7 @@ function getNumGrups(){
 function getNomGrups(){
     try{
     $conection = connexio();
-    $sql = "SELECT * FROM `grups`"; // Replace with your table and column names
+    $sql = "SELECT * FROM `grups`";
     $stmt = $conection->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -267,13 +268,19 @@ function getNomGrups(){
 function getGrup($email){
     try{
     $conection = connexio();
-    $sql = "SELECT * FROM `usuaris` WHERE `email` = ?"; // Replace with your table and column names
+    $sql = "SELECT * FROM `usuaris` WHERE `email` = ?";
     $stmt = $conection->prepare($sql);
     $stmt->bindParam(1, $email);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_OBJ);
 
-    return $result;
+    $grups = "SELECT * FROM `grups` WHERE `nom` = ?";
+    $stmt = $conection->prepare($grups);
+    $stmt->bindParam(1, $result->nom);
+    $stmt->execute();
+    $resultGrup = $stmt->fetch(PDO::FETCH_OBJ);
+
+    return $resultGrup;
 
     }catch(Exception $e){
         echo "Error: " . $e->getMessage();
@@ -284,7 +291,7 @@ function getGrup($email){
 function getPuntuacio($grup){
     try{
     $conection = connexio();
-    $sql = "SELECT * FROM `grups` WHERE `nom` = ?"; // Replace with your table and column names
+    $sql = "SELECT * FROM `grups` WHERE `nom` = ?";
     $stmt = $conection->prepare($sql);
     $stmt->bindParam(1, $grup);
     $stmt->execute();
@@ -302,7 +309,7 @@ function getPuntuacio($grup){
 function canviarGrup($data){
     try{
     $conection = connexio();
-    $sql = "UPDATE `usuaris` SET `grup`=? WHERE `id`=?"; // Replace with your table and column names
+    $sql = "UPDATE `usuaris` SET `grup`=? WHERE `id`=?";
 
 
     $stmt = $conection->prepare($sql);
@@ -369,4 +376,65 @@ function getActivitats(){
         die();
     }
 }
+
+function updatePerfil($nomGrup, $fotoPerfil, $nom){
+    try {
+        $conection = connexio();
+        
+        // Obtener el nombre de la imagen actual si existe
+        $sql_select = "SELECT `image` FROM `grups` WHERE `nom` = ?";
+        $stmt_select = $conection->prepare($sql_select);
+        $stmt_select->bindParam(1, $nom);
+        $stmt_select->execute();
+        $result = $stmt_select->fetch(PDO::FETCH_ASSOC);
+        
+        // Si se ha subido una nueva imagen
+        if($fotoPerfil && $fotoPerfil !== 'default.jpg') {
+            
+            // Eliminar la imagen anterior si no es 'default.jpg'
+            $uploads_dir = '../Assets/img/grups/';
+            if($result['image'] && $result['image'] !== 'default.jpg' && file_exists($uploads_dir . $result['image'])) {
+                unlink($uploads_dir . $result['image']);
+            }
+            
+            $sql = "UPDATE `grups` SET `titol` = ?, `image` = ? WHERE `nom` = ?";
+            
+        } elseif($fotoPerfil === 'default.jpg') {
+            // Si se selecciona default.jpg, eliminar la imagen existente si no es default.jpg
+            $uploads_dir = '../Assets/img/grups/';
+            if($result['image'] && $result['image'] !== 'default.jpg' && file_exists($uploads_dir . $result['image'])) {
+                unlink($uploads_dir . $result['image']);
+            }
+            
+            $sql = "UPDATE `grups` SET `titol` = ?, `image` = ? WHERE `nom` = ?";
+            
+        } elseif(!$fotoPerfil && $result['image'] !== 'default.jpg') {
+            // Si no se ha subido una nueva imagen y la imagen existente no es default.jpg, no hacer nada
+            $sql = "UPDATE `grups` SET `titol` = ? WHERE `nom` = ?";
+            
+        } else {
+            // No se ha subido una nueva imagen o es la misma imagen
+            $sql = "UPDATE `grups` SET `titol` = ?, `image` = ? WHERE `nom` = ?";
+        }
+        
+        $stmt = $conection->prepare($sql);
+        
+        if($fotoPerfil){
+            $stmt->bindParam(1, $nomGrup);
+            $stmt->bindParam(2, $fotoPerfil);
+            $stmt->bindParam(3, $nom);
+        } else {
+            $stmt->bindParam(1, $nomGrup);
+            $stmt->bindParam(2, $nom);
+        }
+        
+        $stmt->execute();
+        return true;
+        
+    } catch(Exception $e){
+        echo "Error: " . $e->getMessage();
+        die();
+    }
+}
+
 ?>

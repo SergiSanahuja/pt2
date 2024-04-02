@@ -46,11 +46,6 @@
                 <li class="nav-item">
                     <button class="btnLogOut" id="btnTancarSessio">Tancar sessió</button>
                 </li>
-                <li>
-                <div class="configuracio">
-                    <a href="Controller/perfil.conf.php">Perfil</a>
-                </div>
-                </li>
               </ul>
             </div>
           </nav>
@@ -68,14 +63,14 @@
 
                 <div class="info ">
                     
-                    <form action="perfil.conf.php" method="POST">
-                        <div class="form-group ">
-                            <label for="nom">Nom</label>
-                            <input type="text" class="form-control" id="nom" name="nom" value="<?php echo $grup->nom ?>">
-                            <input type="file" class="form-control" id="fotoPerfil" name="fotoPerfil">
-                        </div>
-                        <button class="m-3 enviar" type="submit">Canviar</button>
-                    </form>
+                <form action="perfil.conf.php" method="POST" enctype="multipart/form-data">
+                  <div class="form-group">
+                      <label for="nom">Nom</label>
+                      <input type="text" class="form-control" id="nom" name="nom" value="<?php echo $grup->titol ?>" required>
+                      <input type="file" class="form-control" id="fotoPerfil" name="fotoPerfil">
+                  </div>
+                  <button class="m-3 enviar" type="submit">Canviar</button>
+                </form>
                     
                 </div>
             </div>

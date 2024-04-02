@@ -55,7 +55,8 @@
 
       <div class="row justify-content-between">
           <div class="col">
-            <h1>Alumnes del  <?php echo is_object($grup) ? $grup->nom : 'N/A'; ?></h1>
+            <h1>Alumnes del  <?php echo is_object($grup) ? $grup->titol : 'N/A'; ?></h1>
+            <img src="../Assets/img/grups/<?php echo is_object($grup) ? $grup->image : 'N/A'; ?>" alt="imatgeGrup" width="200" height="200">
           </div>
           <div class="col-12">
               <h2>Puntuacio:  <?php echo is_object($puntuacio) ? $puntuacio->punts : 'N/A'; ?></h2>

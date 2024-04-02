@@ -168,6 +168,12 @@ function eliminarGrup(){
         $sql = "DELETE FROM `grups`";
         $stmt = $conection->prepare($sql);
         $stmt->execute();
+
+
+        $sql = "DELETE FROM `usuaris` WHERE prof=0 AND admin=0 and edat=0";
+        $stmt = $conection->prepare($sql);
+        $stmt->execute();
+        
     } catch(Exception $e){
         echo "Error: " . $e->getMessage();
         die();

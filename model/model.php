@@ -267,7 +267,7 @@ function getNomGrups(){
 function getGrup($email){
     try{
     $conection = connexio();
-    $sql = "SELECT * FROM `grups` WHERE `email` = ?"; // Replace with your table and column names
+    $sql = "SELECT * FROM `usuaris` WHERE `email` = ?"; // Replace with your table and column names
     $stmt = $conection->prepare($sql);
     $stmt->bindParam(1, $email);
     $stmt->execute();

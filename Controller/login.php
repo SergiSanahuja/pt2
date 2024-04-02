@@ -30,8 +30,6 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
 // Create an admin user and password
 $adminEmail = 'admin@example.com';
 $adminPassword = 'admin123';
-$provaEmail = 'prova@example.com';
-$provaPassword = 'prova123';
 
 // Check if the admin user exists in the database
 if (!getUserByEmail($adminEmail)) {
@@ -40,13 +38,6 @@ if (!getUserByEmail($adminEmail)) {
     
     // Create the admin user in the database
     createUser($adminEmail, $hashedAdminPassword, 'admin');
-}
-if (!getUserByEmail($provaEmail)) {
-    // Hash the admin password
-    $hashedProvaPassword = password_hash($provaPassword, PASSWORD_DEFAULT);
-    
-    // Create the admin user in the database
-    createUser($provaEmail, $hashedProvaPassword, 'prof');
 }
 
 $error = '';
@@ -83,7 +74,7 @@ if (isset($_POST['submit']) && !empty($_POST['correu']) && !empty($_POST['pass']
             $_SESSION['alumno'] = true;
 
         }
-        if(isset($_SESSION['admin']) && $_SESSION['admin'] === true && isset($_SESSION['prof']) && $_SESSION['prof'] === true){
+        if(isset($_SESSION['admin']) && $_SESSION['admin'] === true  || isset($_SESSION['prof']) && $_SESSION['prof'] === true){
             header('Location: home.php');
             exit();
         }else if(isset($_SESSION['alumno']) && $_SESSION['alumno'] === true){

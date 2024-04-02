@@ -1,3 +1,11 @@
+let btnCanviarContrasenya = document.getElementById('canviarContrasenya');
+
+if (btnCanviarContrasenya) {
+    btnCanviarContrasenya.addEventListener('click', function() {
+        window.location.href = '../Controller/canviarContrasenya.php';
+    });
+}
+
 function actualizarTablaDeTalleres() {
     $.ajax({
         url: '../Controller/getMarkers.php',

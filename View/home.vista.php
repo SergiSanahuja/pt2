@@ -41,7 +41,7 @@
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link active" href="#">Tallers</a>
+            <a class="nav-link active" href="#"><b>Tallers</b></a>
 
           </li>
           <li class="nav-item">
@@ -69,6 +69,7 @@
         
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
+              <button type="button" class="btn btn-primary" id="canviarContrasenya">Canviar contrasenya</button>
               <button class="btnLogOut" id="btnTancarSessio">Tancar sessió</button>
           </li>
         </ul>

@@ -10,8 +10,8 @@ async function confirmDelete() {
             return;
         } else {
             let peticio = {
-                accio: "eliminarMaterial",
-                idProfeEliminar: idProfe,
+                accio: "eliminarProfessor",  // Corregido
+                idProfesEliminar: idProfe,
             };
             //Enviar peticion en AJAX al php
             console.log(peticio);
@@ -19,21 +19,25 @@ async function confirmDelete() {
                 url: "./profes.php",
                 method: "POST",
                 data: peticio,
+                dataType: "json",
                 success: function(response) {
                     if(response.success){
                         alert("Professor eliminat correctament");
+                        location.reload(); // Recargar la página para reflejar el cambio
                     } else {
-                        alert(response); // Mostrar el mensaje directamente
+                        alert(response.message); // Mostrar el mensaje de error
                     }
                 },
                 error: function(xhr, status, error) {
                     console.error(xhr.responseText);
-                    alert("Error al eliminar professor. Detall: " + xhr.responseText);
+                    let errorMessage = JSON.parse(xhr.responseText).message;
+                    alert("Error al eliminar professor. Detall: " + errorMessage);
                 }
-            });
+            });            
         }
     }
 }
+
 
 let btnEliminar = document.getElementById("eliminarProfes");
 

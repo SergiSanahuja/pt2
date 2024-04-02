@@ -4,7 +4,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    
     <link rel="stylesheet" href="../Assets/Css/global.css">
     <!-- link google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +14,6 @@
       <script defer src="../Assets/js/global.js"></script>
 
       <!-- css -->
-      <link rel="stylesheet" href="../Assets/Css/Perfil.css">
       <link rel="stylesheet" href="../Assets/Css/alumne.activitats.css">
 
     <!-- BOOTSTRAP -->
@@ -34,12 +32,11 @@
               <ul class="navbar-nav mr-auto">
               
                 <li class="nav-item">
-                  <a class="nav-link" href="alumnes.activitats.php">Activitats</a>
+                  <a class="nav-link " href="alumnes.activitats.php">Activitats</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link " href="alumnes.grup.php">Grup</a>
+                  <a class="nav-link active" href="alumnes.grup.php">Grup</a>
                 </li>
-               
               </ul>
               
               <ul class="navbar-nav ms-auto">
@@ -48,37 +45,37 @@
                 </li>
                 <li>
                 <div class="configuracio">
-                    <a href="Controller/perfil.conf.php">Perfil</a>
+                    <a href="perfil.conf.php">Perfil</a>
                 </div>
                 </li>
               </ul>
             </div>
           </nav>
-
     <div class="container">
-        <div class="row">
-            <div class="justify-content-center">
-        
-                <h1>Perfil</h1>
 
-            </div>
-        </div>
-        <div class="">
-            <div class="col-md-8 col-sm-10 offset-2 offset-md-4 ">
+      <div class="row justify-content-between">
+          <div class="col">
+            <h1>Alumnes del  <?php echo is_object($grup) ? $grup->nom : 'N/A'; ?></h1>
+          </div>
+          <div class="col-12">
+              <h2>Puntuacio:  <?php echo is_object($puntuacio) ? $puntuacio->punts : 'N/A'; ?></h2>
+          </div>
+      </div>  
+      <div class="row">
+        <?php foreach($UsuarisGrup as $alumne): ?>
+        <div class="col-3 mb-1">
+          <div class="card">
+            <div class="card-body">
+                        <h5 class="card-title"><?php echo is_array($alumne) ? $alumne['nom'] : 'N/A'; ?></h5>
+                        <p class="card-text"><?php echo is_array($alumne) ? $alumne['cognom'] : 'N/A'; ?></p>
+                        <p class="card-text"><?php echo is_array($alumne) ? $alumne['curs'] : 'N/A'; ?></p>
+                      </div>
+                    </div>
+                  </div>
+                  <?php endforeach; ?>
+                  
+      </div>
 
-                <div class="info ">
-                    
-                    <form action="perfil.conf.php" method="POST">
-                        <div class="form-group ">
-                            <label for="nom">Nom</label>
-                            <input type="text" class="form-control" id="nom" name="nom" value="<?php echo $grup->nom ?>">
-                            <input type="file" class="form-control" id="fotoPerfil" name="fotoPerfil">
-                        </div>
-                        <button class="m-3 enviar" type="submit">Canviar</button>
-                    </form>
-                    
-                </div>
-            </div>
-        </div>
+    
 </body>
 </html>

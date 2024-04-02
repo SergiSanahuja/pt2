@@ -30,6 +30,14 @@
             <div class="collapse navbar-collapse" id="navbarText">
               <ul class="navbar-nav mr-auto">
               
+                <li class="nav-item">
+                  <a class="nav-link active" href="alumnes.activitats.php">Activitats</a>
+                </li>
+              
+                <li class="nav-item">
+                  <a class="nav-link " href="alumnes.grup.php">Grup</a>
+                </li>
+
               </ul>
               
               <ul class="navbar-nav ms-auto">

@@ -267,7 +267,7 @@ function getNomGrups(){
 function getGrup($email){
     try{
     $conection = connexio();
-    $sql = "SELECT * FROM `grups` WHERE `email` = ?"; // Replace with your table and column names
+    $sql = "SELECT * FROM `usuaris` WHERE `email` = ?"; // Replace with your table and column names
     $stmt = $conection->prepare($sql);
     $stmt->bindParam(1, $email);
     $stmt->execute();
@@ -281,6 +281,23 @@ function getGrup($email){
     }
 }
 
+function getPuntuacio($grup){
+    try{
+    $conection = connexio();
+    $sql = "SELECT * FROM `grups` WHERE `nom` = ?"; // Replace with your table and column names
+    $stmt = $conection->prepare($sql);
+    $stmt->bindParam(1, $grup);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_OBJ);
+
+    return $result;
+
+    }catch(Exception $e){
+        echo "Error: " . $e->getMessage();
+        die();
+    }
+
+}
 
 function canviarGrup($data){
     try{
@@ -314,6 +331,24 @@ function getGrupByEmail($email){
         } else {
             return false;
         }
+
+    } catch(Exception $e){
+        echo "Error: " . $e->getMessage();
+        die();
+    }
+}
+
+function getUsuarisGrup($Grup){
+    try {
+        $conection = connexio();
+        $sql = "SELECT * FROM `usuaris` WHERE `grup` = ?";
+        
+        $stmt = $conection->prepare($sql);
+        $stmt->bindParam(1, $Grup);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
 
     } catch(Exception $e){
         echo "Error: " . $e->getMessage();

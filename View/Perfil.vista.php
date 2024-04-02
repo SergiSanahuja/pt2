@@ -15,6 +15,7 @@
       <script defer src="../Assets/js/global.js"></script>
 
       <!-- css -->
+      <link rel="stylesheet" href="../Assets/Css/Perfil.css">
       <link rel="stylesheet" href="../Assets/Css/alumne.activitats.css">
 
     <!-- BOOTSTRAP -->
@@ -32,6 +33,10 @@
             <div class="collapse navbar-collapse" id="navbarText">
               <ul class="navbar-nav mr-auto">
               
+                <li class="nav-item">
+                  <a class="nav-link" href="alumnes.activitats.php">Activitats</a>
+                </li>
+               
               </ul>
               
               <ul class="navbar-nav ms-auto">
@@ -58,14 +63,15 @@
         <div class="">
             <div class="col-md-8 col-sm-10 offset-2 offset-md-4 ">
 
-                <div class="info  ">
+                <div class="info ">
                     
-                    <form action="Controller.perfil.conf.php" method="POST">
+                    <form action="perfil.conf.php" method="POST">
                         <div class="form-group ">
                             <label for="nom">Nom</label>
                             <input type="text" class="form-control" id="nom" name="nom" value="<?php echo $grup->nom ?>">
                             <input type="file" class="form-control" id="fotoPerfil" name="fotoPerfil">
                         </div>
+                        <button class="m-3 enviar" type="submit">Canviar</button>
                     </form>
                     
                 </div>

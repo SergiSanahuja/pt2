@@ -75,10 +75,10 @@ function eliminarProfes(){
     if(isset($_POST["accio"]) && $_POST["accio"] == "eliminarProfessor" && isset($_POST["idProfesEliminar"]) && !empty($_POST["idProfesEliminar"])){
       eliminarProfesBD($_POST["idProfesEliminar"]);
     } else {
-        echo "Falta omplir algun camp";
+        echo json_encode(array("success" => false, "message" => "Falta omplir algun camp"));
     }
   } catch (PDOException $e) {
-      echo json_encode(array("success" => false, "message" => "Error al eliminar material: " . $e->getMessage()));
+      echo json_encode(array("success" => false, "message" => "Error al eliminar professor: " . $e->getMessage()));
   }
 }
 

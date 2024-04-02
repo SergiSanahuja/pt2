@@ -83,7 +83,7 @@
         <h1>Certificat</h1>
         <h2>Guanyadors de les Activitats </h2>
         <h3><?php echo $guanyador->nom  ?></h3>
-        <img  src="../Assets/img/grups/<?php echo $guanyador->image ?>" alt="imatgeGrup" width="300" height="300">>
+        <img  src="../Assets/img/grups/<?php echo $guanyador->image ?>" alt="imatgeGrup" width="300" height="300">
         
         <p><?php echo date("d/m/Y"); ?></p>
         <p>Firma del Instructor</p>

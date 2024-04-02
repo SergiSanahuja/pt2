@@ -17,12 +17,13 @@ async function confirmDelete() {
                 method: "POST",
                 data: peticio,
                 success: function(response) {
+                    response = JSON.parse(response); // Convertir la respuesta JSON a un objeto JavaScript
                     if(response.success){
                         alert("Material eliminat correctament");
                     } else {
-                        alert(response); // Mostrar el mensaje directamente
+                        alert(response.message);
                     }
-                },
+                },                
                 error: function(xhr, status, error) {
                     console.error(xhr.responseText);
                     alert("Error al eliminar material. Detall: " + xhr.responseText);

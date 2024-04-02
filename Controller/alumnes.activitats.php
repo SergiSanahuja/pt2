@@ -1,4 +1,12 @@
 <?php
+if(session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+
+if (!isset($_SESSION['logged_in'])) {
+    header('Location: login.php');
+    exit();
+}
 
 require '../model/model.php';
 

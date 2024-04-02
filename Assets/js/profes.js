@@ -1,6 +1,14 @@
 //Per tractar la taula de mostrar professors
 let table = new DataTable('#myTable');
 
+let btnCanviarContrasenya = document.getElementById('canviarContrasenya');
+
+if (btnCanviarContrasenya) {
+    btnCanviarContrasenya.addEventListener('click', function() {
+        window.location.href = '../Controller/canviarContrasenya.php';
+    });
+}
+
 async function confirmDelete() {
     let conf = confirm('Estas segur que vols eliminar el professor?');
     if (conf) {

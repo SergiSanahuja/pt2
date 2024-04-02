@@ -14,9 +14,17 @@ if (isset($_GET['logout'])) {
 }
 
 // If user is already logged in, redirect to home page
-if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true && isset($_SESSION['admin']) && $_SESSION['admin'] === true || isset($_SESSION['prof']) && $_SESSION['prof'] === true) {
     header('Location: home.php');
     exit();
+}else if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true && isset($_SESSION['alumno']) && $_SESSION['alumno'] === true){
+    header('Location: alumnes.activitats.php');
+    exit();
+}
+
+//Cuando cargue la pagina destruir la session
+if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+    session_destroy();
 }
 
 // Create an admin user and password
@@ -71,8 +79,17 @@ if (isset($_POST['submit']) && !empty($_POST['correu']) && !empty($_POST['pass']
         if(comprovarProf($email)){
             $_SESSION['prof'] = true;
         }
-        header('Location: home.php');  // Redirigir a la página de inicio después de un inicio de sesión exitoso
-        exit();
+        if(comprovarAlumno($email)){
+            $_SESSION['alumno'] = true;
+
+        }
+        if(isset($_SESSION['admin']) && $_SESSION['admin'] === true && isset($_SESSION['prof']) && $_SESSION['prof'] === true){
+            header('Location: home.php');
+            exit();
+        }else if(isset($_SESSION['alumno']) && $_SESSION['alumno'] === true){
+            header('Location: alumnes.activitats.php');
+            exit();
+        }
     } else {
         $error = "Credencials incorrectes";
     }

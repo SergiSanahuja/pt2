@@ -59,12 +59,13 @@ function eliminarMaterial(){
         if(isset($_POST["accio"]) && $_POST["accio"] == "eliminarMaterial" && isset($_POST["nomMaterialEliminar"]) && !empty($_POST["nomMaterialEliminar"])){
             eliminarMaterialBD();
         } else {
-            echo "Falta omplir algun camp";
+            echo json_encode(array("success" => false, "message" => "Falta omplir algun camp"));
         }
     } catch (PDOException $e) {
         echo json_encode(array("success" => false, "message" => "Error al eliminar material: " . $e->getMessage()));
     }
 }
+
 
 //llamar a las respectivas funciones para mostrar, añadir, modificar y eliminar materiales
 if(isset($_POST["agregarMaterial"])){

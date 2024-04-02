@@ -45,6 +45,28 @@ function comprovarProf($email){
     }
 }
 
+function comprovarAlumno($email){
+    try {
+        $conection = connexio();
+        $sql = "SELECT `email` FROM `usuaris` WHERE `email` = ? AND `prof` = 0 AND `admin` = 0";
+        
+        $stmt = $conection->prepare($sql);
+        $stmt->bindParam(1, $email);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if($result){
+            return true;
+        } else {
+            return false;
+        }
+
+    } catch(Exception $e){
+        echo "Error: " . $e->getMessage();
+        die();
+    }
+}
+
 function getUserByEmail($email){
     try {
         $conection = connexio();

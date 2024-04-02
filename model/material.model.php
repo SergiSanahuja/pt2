@@ -103,7 +103,7 @@ function modificarMaterialBD(){
 
                 if ($resultatImatge !== false && $resultatImatge['count'] == 1) {
                     $oldImagePath = '../Assets/img/material/' . $oldImage;
-                    if (file_exists($oldImagePath)) {
+                    if (file_exists($oldImagePath) && isset($_FILES["arxiuUsuariModificar"]) && $_FILES["arxiuUsuariModificar"]["error"] !== UPLOAD_ERR_NO_FILE) {
                         unlink($oldImagePath);
                     }
                 }
@@ -142,6 +142,7 @@ function modificarMaterialBD(){
                 $_POST["nomMaterialModificar"],
             ));
         }
+        echo "<script>alert('Material modificat')</script>";
     } else {
         echo "<script>alert('No existeix el material')</script>";
     }
